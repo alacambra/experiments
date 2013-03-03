@@ -1,7 +1,6 @@
 package albert.lacambra.server.filters;
 
 import java.io.IOException;
-//com.sun.jersey.core.impl.provider.entity.StringProvider
 import static albert.lacambra.server.ofy.OfyService.ofy;
 
 

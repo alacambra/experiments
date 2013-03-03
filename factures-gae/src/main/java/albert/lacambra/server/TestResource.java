@@ -30,15 +30,15 @@ import com.googlecode.objectify.Key;
 
 @Path("/")
 @NoArgsConstructor
-public class TestAction {
+public class TestResource {
 	
 	Bracelet bracelet;
 	ObjectMapper m = new ObjectMapper();
 	
 	@SuppressWarnings("unchecked")
 	@Inject
-	public TestAction(@Context HttpServletRequest request, Bracelet bracelet) {
-		
+	public TestResource(@Context HttpServletRequest request, Bracelet bracelet) {
+//		org.jboss.resteasy.plugins.guice.GuiceResteasyBootstrapServletContextListener
 		this.bracelet = bracelet;
 		this.bracelet.login((Key<Person>) request.getAttribute("key"));
 		
