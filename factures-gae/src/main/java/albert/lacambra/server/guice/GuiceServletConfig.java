@@ -13,7 +13,8 @@ public class GuiceServletConfig extends GuiceServletContextListener {
 
 			@Override
 			protected void configureServlets() {
-				serve("/rest/*").with(org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher.class);
+				serve("/rest/*").with(GuiceContainer.class);
+//				serve("/rest/*").with(org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher.class);
 			}
 		});	
 	}
