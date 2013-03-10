@@ -120,6 +120,16 @@
 			<classifier />
 		</dependency>
 		<dependency>
+			<groupId>com.gwtplatform</groupId>
+			<artifactId>gwtp-mvp-client</artifactId>
+			<version>1.0-RC-2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.gwtplatform</groupId>
+			<artifactId>gwtp-clients-common</artifactId>
+			<version>1.0-RC-2</version>
+		</dependency>
+		<dependency>
 			<groupId>com.googlecode.objectify</groupId>
 			<artifactId>objectify</artifactId>
 			<version>4.0b1</version>
@@ -299,10 +309,10 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-	<repositories>
-		<repository>
-			<id>jboss</id>
-			<url>http://repository.jboss.org/maven2</url>
-		</repository>
-	</repositories>
+	<!-- <repositories> -->
+	<!-- <repository> -->
+	<!-- <id>jboss</id> -->
+	<!-- <url>http://repository.jboss.org/maven2</url> -->
+	<!-- </repository> -->
+	<!-- </repositories> -->
 </project>
