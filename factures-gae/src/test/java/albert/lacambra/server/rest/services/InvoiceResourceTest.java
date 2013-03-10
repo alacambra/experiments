@@ -40,7 +40,7 @@ public class InvoiceResourceTest {
 	
 	@Test 
 	public void type() throws Exception {
-		assertNotNull(InvoiceResource.class);
+		assertNotNull(InvoiceService.class);
 	}
 
 	private void doTest() {
@@ -53,7 +53,7 @@ public class InvoiceResourceTest {
 	
 	@Test 
 	public void instantiation() throws Exception {
-		IInvoiceResource target = new InvoiceResource();
+		IInvoiceService target = new InvoiceService();
 		assertNotNull(target);
 	}
 
@@ -62,7 +62,7 @@ public class InvoiceResourceTest {
 		Invoice i = new Invoice(new Long(1), Person.key("test@example.com"));
 		ofy().save().entity(i).now();
 		
-		InvoiceResource target = new InvoiceResource();
+		InvoiceService target = new InvoiceService();
 		
 //		Invoice actual = target.getInvoice((long) 1);
 ////		Invoice expected = i;

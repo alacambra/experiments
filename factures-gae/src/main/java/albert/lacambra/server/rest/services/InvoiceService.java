@@ -3,37 +3,21 @@ package albert.lacambra.server.rest.services;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
 
-import com.google.inject.Inject;
 import com.googlecode.objectify.Key;
 import static albert.lacambra.server.ofy.OfyService.ofy;
-import albert.lacambra.server.auth.Bracelet;
 import albert.lacambra.server.models.Invoice;
-import albert.lacambra.server.models.Person;
 
-public class InvoiceResource implements IInvoiceResource {
-
-	Bracelet bracelet;
-	ObjectMapper m = new ObjectMapper();
-
-	public InvoiceResource() { }
+public class InvoiceService extends BasicService implements IInvoiceService {
 
 
-	@SuppressWarnings("unchecked")
-	@Inject
-	public InvoiceResource(@Context HttpServletRequest request, Bracelet bracelet) {
-
-		this.bracelet = bracelet;
-		this.bracelet.login((Key<Person>) request.getAttribute("key"));
-
+	public InvoiceService() { 
+		super();
 	}
 
 	@Override
@@ -54,15 +38,16 @@ public class InvoiceResource implements IInvoiceResource {
 
 	@Override
 	public Response saveInvoice( Invoice invoice ) {
+		
 		invoice.setOwner(bracelet.getMeKey());
 		long id = ofy().save().entity(invoice).now().getId();
+		
 		return Response.status(Status.CREATED).header("x-insertedid", String.valueOf(id)).build();
 	}
 
 
 	@Override
 	public Response getInvoices() throws JsonGenerationException, JsonMappingException, IOException {
-		ObjectMapper m = new ObjectMapper();
 		List<Invoice> l = ofy().load().type(Invoice.class).ancestor(bracelet.getMeKey()).list();
 
 		if ( l == null ) {
