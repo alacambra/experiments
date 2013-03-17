@@ -1,7 +1,7 @@
-package albert.lacambra.factures.app.place;
+package albert.lacambra.client.place;
 
 
-import albert.lacambra.factures.app.place.DefaultPlace;
+import albert.lacambra.client.place.DefaultPlace;
 
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;

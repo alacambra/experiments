@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module rename-to='factures'>
-	<!-- Inherit the core Web Toolkit stuff. -->
 	<inherits name='com.google.gwt.user.User' />
+	<inherits name='com.google.gwt.inject.Inject' />
+	<inherits name='com.google.gwt.resources.Resources' />
+	<inherits name='com.google.gwt.json.JSON' />
+	<inherits name='com.google.gwt.activity.Activity' />
+	<inherits name='com.google.gwt.place.Place' />
+	<inherits name='com.google.gwt.user.theme.clean.Clean' />
+	<inherits name='com.google.gwt.editor.Editor' />
+	<inherits name='com.google.web.bindery.requestfactory.RequestFactory' />
+	<inherits name='com.gwtplatform.dispatch.Dispatch' />
+	<!-- <inherits name='com.google.gwt.visualization.Visualization' /> -->
 	<inherits name="com.google.gwt.i18n.I18N" />
-
-
-	<!-- We need the JUnit module in the main module, -->
-	<!-- otherwise eclipse complains (Google plugin bug?) -->
-	<!-- <inherits name='com.google.gwt.junit.JUnit' /> -->
+	<inherits name='com.gwtplatform.mvp.Mvp' />
+	<!-- <inherits name='com.gwtplatform.dispatch.Dispatch' /> -->
 
 	<!-- Inherit the default GWT style sheet. You can change -->
 	<!-- the theme of your GWT application by uncommenting -->
@@ -15,11 +21,17 @@
 	<inherits name='com.google.gwt.user.theme.standard.Standard' />
 	<!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
 	<!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/> -->
-
+	<inherits name="com.allen_sauer.gwt.log.gwt-log-DEBUG" />
 	<!-- Other module inherits -->
 
 	<!-- Specify the app entry point class. -->
 	<entry-point class='albert.lacambra.client.Factures' />
+
+	<define-configuration-property name='gin.ginjector'
+		is-multi-valued='false' />
+	<set-configuration-property name='gin.ginjector'
+		value='albert.lacambra.client.injection.ClientGinjector' />
+
 
 	<!-- Specify the paths for translatable code -->
 	<source path='client' />

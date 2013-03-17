@@ -1,4 +1,4 @@
-package albert.lacambra.factures.app.place;
+package albert.lacambra.client.place;
 
 import com.google.inject.BindingAnnotation;
 import java.lang.annotation.Target;

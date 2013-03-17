@@ -17,6 +17,9 @@
 		<jersey-version>1.11</jersey-version>
 		<guice.version>3.0</guice.version>
 		<gae.version>1.7.4</gae.version>
+		<gwtp.version>1.0-RC-2</gwtp.version>
+		<maven.compiler.source>1.6</maven.compiler.source>
+		<maven.compiler.target>1.6</maven.compiler.target>
 	</properties>
 
 	<dependencies>
@@ -45,17 +48,6 @@
 			<classifier>sources</classifier>
 			<scope>compile</scope>
 		</dependency>
-		<!-- <dependency> -->
-		<!-- <groupId>com.sun.jersey</groupId> -->
-		<!-- <artifactId>jersey-server</artifactId> -->
-		<!-- <version>${jersey-version}</version> -->
-		<!-- <exclusions> -->
-		<!-- <exclusion> -->
-		<!-- <artifactId>asm</artifactId> -->
-		<!-- <groupId>asm</groupId> -->
-		<!-- </exclusion> -->
-		<!-- </exclusions> -->
-		<!-- </dependency> -->
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-json</artifactId>
@@ -67,12 +59,6 @@
 			<version>4.8.2</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- <dependency> -->
-		<!-- <groupId>com.sun.jersey</groupId> -->
-		<!-- <artifactId>jersey-client</artifactId> -->
-		<!-- <version>${jersey-version}</version> -->
-		<!-- <scope>test</scope> -->
-		<!-- </dependency> -->
 		<dependency>
 			<groupId>com.google.inject</groupId>
 			<artifactId>guice</artifactId>
@@ -119,16 +105,51 @@
 			<version>2.0.0</version>
 			<classifier />
 		</dependency>
+		<!-- MVP component -->
 		<dependency>
 			<groupId>com.gwtplatform</groupId>
 			<artifactId>gwtp-mvp-client</artifactId>
-			<version>1.0-RC-2</version>
+			<version>${gwtp.version}</version>
+			<scope>provided</scope>
 		</dependency>
+
+		<!-- Dispatch component -->
 		<dependency>
 			<groupId>com.gwtplatform</groupId>
-			<artifactId>gwtp-clients-common</artifactId>
-			<version>1.0-RC-2</version>
+			<artifactId>gwtp-dispatch-client</artifactId>
+			<version>${gwtp.version}</version>
+			<scope>provided</scope> 
+			</dependency> 
+		<dependency>
+			<groupId>com.gwtplatform</groupId>
+			<artifactId>gwtp-dispatch-server-guice</artifactId>
+			<!-- Or, if you use spring: <artifactId>gwtp-dispatch-server-spring</artifactId> -->
+			<!-- For GWTP 0.5.1 and earlier: <artifactId>gwtp-dispatch-server</artifactId> -->
+			<version>${gwtp.version}</version>
 		</dependency>
+
+		<!-- Crawler component -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.gwtplatform</groupId> -->
+<!-- 			<artifactId>gwtp-crawler</artifactId> -->
+<!-- 			<version>${gwtp.version}</version> -->
+<!-- 		</dependency> -->
+
+		<!-- Annotation component -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.gwtplatform</groupId> -->
+<!-- 			<artifactId>gwtp-processors</artifactId> -->
+<!-- 			<version>${gwtp.version}</version> -->
+<!-- 			<scope>provided</scope> -->
+<!-- 		</dependency> -->
+
+		<!-- Tester component -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.gwtplatform</groupId> -->
+<!-- 			<artifactId>gwtp-tester</artifactId> -->
+<!-- 			<version>${gwtp.version}</version> -->
+<!-- 			<scope>test</scope> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>com.googlecode.objectify</groupId>
 			<artifactId>objectify</artifactId>
@@ -165,101 +186,40 @@
 		<plugins>
 
 			<!-- GWT Maven Plugin -->
-			<!-- <plugin> -->
-			<!-- <groupId>org.codehaus.mojo</groupId> -->
-			<!-- <artifactId>gwt-maven-plugin</artifactId> -->
-			<!-- <version>2.5.0</version> -->
-			<!-- <executions> -->
-			<!-- <execution> -->
-			<!-- <goals> -->
-			<!-- <goal>compile</goal> -->
-			<!-- <goal>test</goal> -->
-			<!-- <goal>i18n</goal> -->
-			<!-- <goal>generateAsync</goal> -->
-			<!-- </goals> -->
-			<!-- </execution> -->
-			<!-- </executions> -->
-			<!-- <configuration> -->
-			<!-- <runTarget>factures-gae.html</runTarget> -->
-			<!-- <hostedWebapp>${webappDirectory}</hostedWebapp> -->
-			<!-- <i18nMessagesBundle>albert.lacambra.client.MessagesBtn</i18nMessagesBundle> -->
-			<!-- <excludes> -->
-			<!-- <exclude>albert/lacacambra/server/*</exclude> -->
-			<!-- </excludes> -->
-			<!-- </configuration> -->
-			<!-- </plugin> -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>gwt-maven-plugin</artifactId>
+				<version>2.5.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+<!-- 							<goal>test</goal> -->
+<!-- 							<goal>i18n</goal> -->
+<!-- 							<goal>generateAsync</goal> -->
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<runTarget>factures-gae.html</runTarget>
+					<hostedWebapp>${webappDirectory}</hostedWebapp>
+					<style>DETAILED</style>
+				</configuration>
+			</plugin>
 
 			<!-- Copy static web files before executing gwt:run -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.1.1</version>
-				<!-- <executions> -->
-				<!-- <execution> -->
-				<!-- <phase>compile</phase> -->
-				<!-- <goals> -->
-				<!-- <goal>exploded</goal> -->
-				<!-- </goals> -->
-				<!-- </execution> -->
-				<!-- </executions> -->
 				<configuration>
 					<webappDirectory>${webappDirectory}</webappDirectory>
 				</configuration>
 			</plugin>
-			<!-- <plugin> -->
-			<!-- <groupId>org.apache.maven.plugins</groupId> -->
-			<!-- <artifactId>maven-compiler-plugin</artifactId> -->
-			<!-- <version>2.3.2</version> -->
-			<!-- <configuration> -->
-			<!-- <source>1.6</source> -->
-			<!-- <target>1.6</target> -->
-			<!-- </configuration> -->
-			<!-- </plugin> -->
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
-				<executions>
-					<execution>
-						<id>default-testCompile</id>
-						<phase>test-compile</phase>
-						<goals>
-							<goal>testCompile</goal>
-						</goals>
-						<configuration>
-							<source>1.6</source>
-							<target>1.6</target>
-						</configuration>
-					</execution>
-					<execution>
-						<id>default-compile</id>
-						<phase>compile</phase>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-						<configuration>
-							<source>1.6</source>
-							<target>1.6</target>
-						</configuration>
-					</execution>
-				</executions>
-				<!-- <configuration> -->
-				<!-- <source>1.6</source> -->
-				<!-- <target>1.6</target> -->
-				<!-- </configuration> -->
 			</plugin>
-			<!-- <plugin> -->
-			<!-- <groupId>net.kindleit</groupId> -->
-			<!-- <artifactId>maven-gae-plugin</artifactId> -->
-			<!-- <version>0.9.6</version> -->
-			<!-- <dependencies> -->
-			<!-- <dependency> -->
-			<!-- <groupId>net.kindleit</groupId> -->
-			<!-- <artifactId>gae-runtime</artifactId> -->
-			<!-- <version>${gae.version}</version> -->
-			<!-- <type>pom</type> -->
-			<!-- </dependency> -->
-			<!-- </dependencies> -->
-			<!-- </plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -309,10 +269,4 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-	<!-- <repositories> -->
-	<!-- <repository> -->
-	<!-- <id>jboss</id> -->
-	<!-- <url>http://repository.jboss.org/maven2</url> -->
-	<!-- </repository> -->
-	<!-- </repositories> -->
 </project>
