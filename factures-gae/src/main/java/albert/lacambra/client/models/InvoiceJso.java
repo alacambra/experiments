@@ -25,11 +25,11 @@ public class InvoiceJso extends JavaScriptObject
 	}-*/;
 
 	public final native String getBudgetId() /*-{
-	    return this.category;
+	    return this.budget;
 	}-*/;
 	
 	public final native void setBudgetId(String value) /*-{
-	    this.category = value; 
+	    this.budget = value; 
 	}-*/;
 
 	public final native String getExtra() /*-{

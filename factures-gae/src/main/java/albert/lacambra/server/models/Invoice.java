@@ -1,6 +1,5 @@
 package albert.lacambra.server.models;
 
-import javax.persistence.Transient;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
@@ -9,8 +8,7 @@ import lombok.Data;
 
 import albert.lacambra.shared.models.IInvoice;
 
-//import com.fasterxml.jackson.annotation.JsonIgnore;
-//import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gwt.editor.client.Editor.Ignore;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -24,7 +22,7 @@ public class Invoice implements IInvoice
     @Id private Long id;
     
     @JsonIgnore @Parent Key<Budget> budget;
-    @Transient Long budgetId;
+    @Ignore Long budgetId;
     private String extra;
     private Long date;
     private Integer price;

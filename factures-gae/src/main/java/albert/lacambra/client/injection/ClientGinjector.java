@@ -8,6 +8,8 @@ import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.google.gwt.inject.client.AsyncProvider;
 
 import albert.lacambra.client.presenters.NewInvoicePresenter;
+import albert.lacambra.client.presenters.MainPresenter;
+import albert.lacambra.client.presenters.NewBudgetPresenter;
 
 @GinModules({ ClientModule.class })
 public interface ClientGinjector extends Ginjector {
@@ -17,6 +19,10 @@ public interface ClientGinjector extends Ginjector {
 	PlaceManager getPlaceManager();
 
 	AsyncProvider<NewInvoicePresenter> getNewInvoicePresenter();
+
+	AsyncProvider<MainPresenter> getMainPresenter();
+
+	AsyncProvider<NewBudgetPresenter> getNewBudgetPresenter();
 
 	
 }

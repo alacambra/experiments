@@ -17,6 +17,10 @@ import albert.lacambra.client.place.DefaultPlace;
 import albert.lacambra.client.place.NameTokens;
 import albert.lacambra.client.presenters.NewInvoicePresenter;
 import albert.lacambra.client.presenters.NewInvoiceView;
+import albert.lacambra.client.presenters.MainPresenter;
+import albert.lacambra.client.presenters.MainView;
+import albert.lacambra.client.presenters.NewBudgetPresenter;
+import albert.lacambra.client.presenters.NewBudgetView;
 
 public class ClientModule extends AbstractPresenterModule {
 
@@ -34,6 +38,13 @@ public class ClientModule extends AbstractPresenterModule {
 		bind(IRestClient.class).to(RestClient.class).in(Singleton.class);
 		bind(IRequestBuilder.class).to(RequestBuilder.class).in(Singleton.class);
 		
+
+		bindPresenter(MainPresenter.class, MainPresenter.MyView.class,
+				MainView.class, MainPresenter.MyProxy.class);
+
+		bindPresenter(NewBudgetPresenter.class,
+				NewBudgetPresenter.MyView.class, NewBudgetView.class,
+				NewBudgetPresenter.MyProxy.class);
 	}
 	
 	@Provides

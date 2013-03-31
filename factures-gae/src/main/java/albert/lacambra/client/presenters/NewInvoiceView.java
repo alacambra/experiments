@@ -42,10 +42,6 @@ public class NewInvoiceView extends ViewImpl implements
 
 
 	@UiField Button button;
-	@UiField RadioButton whoAlbert;
-	@UiField RadioButton whoRuth;
-	@UiField RadioButton whoBoth;
-	@UiField RadioButton whoUnknown;
 	@UiField TextBox price;
 	@UiField TextBox day;
 	@UiField TextBox month;
@@ -69,7 +65,6 @@ public class NewInvoiceView extends ViewImpl implements
 
 	@Override
 	public void restartFields() {
-		whoBoth.setValue(true);
 		price.setValue("");
 		price.setFocus(true);
 		day.setValue(DAY);
@@ -169,26 +164,6 @@ public class NewInvoiceView extends ViewImpl implements
 	}
 
 	@Override
-	public RadioButton getWhoAlbert() {
-		return whoAlbert;
-	}
-
-	@Override
-	public RadioButton getWhoRuth() {
-		return whoRuth;
-	}
-
-	@Override
-	public RadioButton getWhoBoth() {
-		return whoBoth;
-	}
-
-	@Override
-	public RadioButton getWhoUnknown() {
-		return whoUnknown;
-	}
-
-	@Override
 	public TextBox getPrice() {
 		return price;
 	}
@@ -225,22 +200,6 @@ public class NewInvoiceView extends ViewImpl implements
 
 	public void setButton(Button button) {
 		this.button = button;
-	}
-
-	public void setWhoAlbert(RadioButton whoAlbert) {
-		this.whoAlbert = whoAlbert;
-	}
-
-	public void setWhoRuth(RadioButton whoRuth) {
-		this.whoRuth = whoRuth;
-	}
-
-	public void setWhoBoth(RadioButton whoBoth) {
-		this.whoBoth = whoBoth;
-	}
-
-	public void setWhoUnknown(RadioButton whoUnknown) {
-		this.whoUnknown = whoUnknown;
 	}
 
 	public void setPrice(TextBox price) {

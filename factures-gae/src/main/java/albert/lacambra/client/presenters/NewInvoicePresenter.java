@@ -1,6 +1,5 @@
 package albert.lacambra.client.presenters;
 
-import java.util.Date;
 import java.util.List;
 
 import com.allen_sauer.gwt.log.client.Log;
@@ -16,6 +15,7 @@ import albert.lacambra.client.restservices.utils.AsyncCallback;
 import albert.lacambra.client.restservices.utils.ResponseException;
 
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
+import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -32,10 +32,6 @@ Presenter<NewInvoicePresenter.MyView, NewInvoicePresenter.MyProxy> {
 
 	public interface MyView extends View {
 		public Button getButton();
-		public RadioButton getWhoAlbert();
-		public RadioButton getWhoRuth();
-		public RadioButton getWhoBoth();
-		public RadioButton getWhoUnknown();
 		public TextBox getPrice();
 		public TextBox getDay();
 		public TextBox getMonth();
@@ -102,12 +98,12 @@ Presenter<NewInvoicePresenter.MyView, NewInvoicePresenter.MyProxy> {
 	
 	private Long getDate()
 	{
-		String y = getView().getYear().getValue().matches("^[0-9]{4}$") ? getView().getYear().getValue() : "0000";
+		String y = getView().getYear().getValue().matches("^[0-9]{4}$") ? getView().getYear().getValue() : "1970";
 		
-		String m = getView().getMonth().getValue().matches("^[0-1]{0,1}[0-9]{1}$") ? getView().getMonth().getValue() : "00";
+		String m = getView().getMonth().getValue().matches("^[0-1]{0,1}[0-9]{1}$") ? getView().getMonth().getValue() : "01";
 		m = m.length() < 2 ? 0 + m : m;
 		
-		String d = getView().getDay().getValue().matches("^[0-3]{0,1}[0-9]{1}$") ? getView().getDay().getValue() : "00";
+		String d = getView().getDay().getValue().matches("^[0-3]{0,1}[0-9]{1}$") ? getView().getDay().getValue() : "01";
 		d = d.length() < 2 ? 0 + d : d;
 		
 		String date = d + "-" + m + "-" + y;
@@ -117,7 +113,7 @@ Presenter<NewInvoicePresenter.MyView, NewInvoicePresenter.MyProxy> {
 	
 	@Override
 	protected void revealInParent() {
-		RevealRootContentEvent.fire(this, this);
+		RevealContentEvent.fire(this, MainPresenter.TYPE_MainContent, this);
 	}
 
 	@Override

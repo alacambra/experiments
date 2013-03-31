@@ -13,13 +13,6 @@
 	<g:HTMLPanel>
 		<g:Label ui:field="infoLabel"></g:Label>
 		<g:HTMLPanel height='500px'>
-			Who:
-			<br />
-			<g:RadioButton name="who" ui:field="whoAlbert">Albert</g:RadioButton>
-			<g:RadioButton name="who" ui:field="whoRuth">Ruth</g:RadioButton>
-			<g:RadioButton name="who" ui:field="whoBoth">Both</g:RadioButton>
-			<g:RadioButton name="who" ui:field="whoUnknown">Unknown</g:RadioButton>
-			<br />
 			price:
 			<br />
 			<g:TextBox ui:field="price"></g:TextBox>

@@ -1,7 +1,10 @@
 package albert.lacambra.server.filters;
 
 import java.io.IOException;
+import java.util.logging.Logger;
+
 import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,7 +16,16 @@ import com.google.appengine.api.users.UserServiceFactory;
 import com.google.inject.Singleton;
 
 @Singleton
-public class AuthFilter extends AbstractFilter{
+public class AuthFilter extends AbstractFilter
+{
+	
+	private Logger log;
+	
+	@Override
+	public void init(FilterConfig cfg) throws ServletException {
+		super.init(cfg);
+		log = Logger.getLogger(this.getClass().getName());
+	}
 
 	@Override
 	public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -31,19 +43,11 @@ public class AuthFilter extends AbstractFilter{
 			
 		} 
 		else {
-//
-//			Key<Person> key = Person.key(user.getEmail());
-//			Person p = ofy().load().key(key).getValue();
-//			
-//			if ( p == null ) {
-//				p = new Person(user.getEmail(), user.getNickname());
-//				key = ofy().save().entity(p).now();
-//			}
-//			
-//			request.setAttribute("key", key);
-			chain.doFilter(request, response);
+			try {
+				chain.doFilter(request, response);
+			} catch (Throwable e) {
+				log.severe("error: " + e.getMessage());
+			} 
 		}
-		
 	}
-
 }
