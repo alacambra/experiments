@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher;
 
-import albert.lacambra.server.TestResource;
 import albert.lacambra.server.auth.Bracelet;
 
 import com.google.inject.Guice;
@@ -25,7 +24,6 @@ public class GuiceServletConfig extends GuiceServletContextListener {
 			protected void configureServlets() {
 
 				bind(Bracelet.class).in(RequestScoped.class);
-				bind(TestResource.class);
 
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("resteasy.guice.modules", GuiceModule.class.getName());

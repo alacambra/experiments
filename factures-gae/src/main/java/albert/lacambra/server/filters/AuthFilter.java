@@ -5,6 +5,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.Response.Status;
 
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
@@ -24,6 +25,7 @@ public class AuthFilter extends AbstractFilter{
 		if ( user == null ) {
 			
 			String url = userService.createLoginURL("/factures-gae.html");
+			response.setStatus(Status.UNAUTHORIZED.getStatusCode());
 			response.getWriter().print(url);
 			
 			

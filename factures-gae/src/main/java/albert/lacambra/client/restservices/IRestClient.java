@@ -1,8 +1,11 @@
 package albert.lacambra.client.restservices;
 
+import albert.lacambra.client.restservices.utils.AsyncCallback;
+import albert.lacambra.client.restservices.utils.AsyncCallbackNoReturnValue;
+
 import com.google.gwt.json.client.JSONValue;
 
-interface IRestClient 
+public interface IRestClient 
 {
 	public interface EndPointProvider{
 		public String getEndPoint();
@@ -23,7 +26,7 @@ interface IRestClient
 	 */
 	public abstract void get(
 			final String resourceApiName, 
-			final Integer id,
+			final Long id,
 			final AsyncCallback<JSONValue> callback
 			);
 	
@@ -66,7 +69,7 @@ interface IRestClient
 	public abstract void put(
 			final String resourceApiName,
 			final JSONValue payload,
-			final AsyncCallback<Integer> callback
+			final AsyncCallback<Long> callback
 			);
 	
 //	/**

@@ -1,4 +1,4 @@
-package albert.lacambra.client.restservices;
+package albert.lacambra.client.restservices.utils;
 
 public class Credentials {
 	

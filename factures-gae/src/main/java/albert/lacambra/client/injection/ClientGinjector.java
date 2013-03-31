@@ -7,7 +7,7 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.google.gwt.inject.client.AsyncProvider;
 
-import albert.lacambra.client.injection.TestPresenter;
+import albert.lacambra.client.presenters.NewInvoicePresenter;
 
 @GinModules({ ClientModule.class })
 public interface ClientGinjector extends Ginjector {
@@ -16,7 +16,7 @@ public interface ClientGinjector extends Ginjector {
 
 	PlaceManager getPlaceManager();
 
-	AsyncProvider<TestPresenter> getTestPresenter();
+	AsyncProvider<NewInvoicePresenter> getNewInvoicePresenter();
 
 	
 }

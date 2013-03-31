@@ -118,8 +118,8 @@
 			<groupId>com.gwtplatform</groupId>
 			<artifactId>gwtp-dispatch-client</artifactId>
 			<version>${gwtp.version}</version>
-			<scope>provided</scope> 
-			</dependency> 
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>com.gwtplatform</groupId>
 			<artifactId>gwtp-dispatch-server-guice</artifactId>
@@ -127,29 +127,35 @@
 			<!-- For GWTP 0.5.1 and earlier: <artifactId>gwtp-dispatch-server</artifactId> -->
 			<version>${gwtp.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+
 
 		<!-- Crawler component -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>com.gwtplatform</groupId> -->
-<!-- 			<artifactId>gwtp-crawler</artifactId> -->
-<!-- 			<version>${gwtp.version}</version> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>com.gwtplatform</groupId> -->
+		<!-- <artifactId>gwtp-crawler</artifactId> -->
+		<!-- <version>${gwtp.version}</version> -->
+		<!-- </dependency> -->
 
 		<!-- Annotation component -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>com.gwtplatform</groupId> -->
-<!-- 			<artifactId>gwtp-processors</artifactId> -->
-<!-- 			<version>${gwtp.version}</version> -->
-<!-- 			<scope>provided</scope> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>com.gwtplatform</groupId> -->
+		<!-- <artifactId>gwtp-processors</artifactId> -->
+		<!-- <version>${gwtp.version}</version> -->
+		<!-- <scope>provided</scope> -->
+		<!-- </dependency> -->
 
 		<!-- Tester component -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>com.gwtplatform</groupId> -->
-<!-- 			<artifactId>gwtp-tester</artifactId> -->
-<!-- 			<version>${gwtp.version}</version> -->
-<!-- 			<scope>test</scope> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>com.gwtplatform</groupId> -->
+		<!-- <artifactId>gwtp-tester</artifactId> -->
+		<!-- <version>${gwtp.version}</version> -->
+		<!-- <scope>test</scope> -->
+		<!-- </dependency> -->
 		<dependency>
 			<groupId>com.googlecode.objectify</groupId>
 			<artifactId>objectify</artifactId>
@@ -194,9 +200,9 @@
 					<execution>
 						<goals>
 							<goal>compile</goal>
-<!-- 							<goal>test</goal> -->
-<!-- 							<goal>i18n</goal> -->
-<!-- 							<goal>generateAsync</goal> -->
+							<!-- <goal>test</goal> -->
+							<!-- <goal>i18n</goal> -->
+							<!-- <goal>generateAsync</goal> -->
 						</goals>
 					</execution>
 				</executions>

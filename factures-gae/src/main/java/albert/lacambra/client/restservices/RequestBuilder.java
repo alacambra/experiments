@@ -1,13 +1,15 @@
 package albert.lacambra.client.restservices;
 
 
+import albert.lacambra.client.restservices.utils.Credentials;
+
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.RequestBuilder.Method;
 import com.google.inject.Inject;
 
-class RequestBuilder implements IRequestBuilder {
+public class RequestBuilder implements IRequestBuilder {
 	
 	private com.google.gwt.http.client.RequestBuilder requestBuilder;
 	private Credentials credentials;

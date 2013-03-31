@@ -1,11 +1,13 @@
 package albert.lacambra.server.models;
 
+import javax.persistence.Transient;
+
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
+
+import albert.lacambra.shared.models.IInvoice;
 
 //import com.fasterxml.jackson.annotation.JsonIgnore;
 //import com.fasterxml.jackson.annotation.JsonProperty;
@@ -16,12 +18,13 @@ import com.googlecode.objectify.annotation.Parent;
 
 @Entity
 @Data
-public class Invoice {
+public class Invoice implements IInvoice 
+{
 
-    @Id @Getter @Setter private Long id;
+    @Id private Long id;
     
-    @JsonIgnore @Parent Key<Person> owner;
-    private String category;
+    @JsonIgnore @Parent Key<Budget> budget;
+    @Transient Long budgetId;
     private String extra;
     private Long date;
     private Integer price;
@@ -32,19 +35,14 @@ public class Invoice {
 		return Key.create(parent, Invoice.class, id);
 	}
     
-	public Invoice(Key<Person> owner) { 
+	public Invoice(Key<Budget> budget) { 
 		this();
-		this.owner = owner;
+		this.budget = budget;
 	}
 	
-	public Invoice(Long id, Key<Person> owner) {
-		this(owner);
+	public Invoice(Long id, Key<Budget> budget) {
+		this(budget);
 		this.id = id;
-	}
-	
-	@JsonIgnore
-	public Key<Person> getOwner() {
-		return owner;
 	}
 	
 	@Override
@@ -55,7 +53,7 @@ public class Invoice {
 		
 		if ( obj == this ) return true;
 		
-		if ( id == ((Invoice) obj).getId() ) return true;
+		if ( id == ((IInvoice) obj).getId() ) return true;
 		
 		return false;
 	}

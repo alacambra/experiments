@@ -4,6 +4,11 @@ package albert.lacambra.client.restservices;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+
+import albert.lacambra.client.restservices.utils.AsyncCallback;
+import albert.lacambra.client.restservices.utils.AsyncCallbackNoReturnValue;
+import albert.lacambra.client.restservices.utils.ResponseException;
+
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
@@ -12,10 +17,11 @@ import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.user.client.Window;
 
 import com.google.inject.Inject;
 
-class RestClient implements IRestClient{
+public class RestClient implements IRestClient{
 
 	private static final boolean USE_CACHING = false;
 	
@@ -27,7 +33,6 @@ class RestClient implements IRestClient{
 	@Inject
 	public RestClient(
 			final IRequestBuilder requestBuilder,
-//			final EventBus eventBus, 
 			final IRestClient.EndPointProvider endPointProvider
 			)
 	{
@@ -59,7 +64,7 @@ class RestClient implements IRestClient{
 	@Override
 	public void get(
 			final String resourceApiName,
-			final Integer id,
+			final Long id,
 			final AsyncCallback<JSONValue> asyncCallback
 			) {
 
@@ -125,8 +130,8 @@ class RestClient implements IRestClient{
 
 					} else if (Response.SC_UNAUTHORIZED == response.getStatusCode()) {
 						
-//						eventBus.fireEvent(new UnauthorizedEvent());
-						asyncCallback.onFailure(new ResponseException(response, request, "Forbiden"));
+						Window.Location.replace(response.getText());
+						
 						
 					} else {
 
@@ -151,7 +156,7 @@ class RestClient implements IRestClient{
 
 	@Override
 	public void get(final String resourceApiName,final AsyncCallback<JSONValue> callback) {
-		this.get(resourceApiName, -1, callback);
+		this.get(resourceApiName, (long) -1, callback);
 	}
 
 	@Override
@@ -223,7 +228,7 @@ class RestClient implements IRestClient{
 	}
 
 	@Override
-	public void put(final String resourceApiName, final JSONValue payload, final AsyncCallback<Integer> callback) {
+	public void put(final String resourceApiName, final JSONValue payload, final AsyncCallback<Long> callback) {
 			
 		requestBuilder.build(RequestBuilder.PUT, serviceEndPoint + resourceApiName + "/");
 		requestBuilder.setHeader("Content-Type", "application/json");
@@ -252,7 +257,7 @@ class RestClient implements IRestClient{
 
 						try {
 							
-							Integer insertedId = Integer.parseInt(response.getHeader("X-InsertedId"));
+							Long insertedId = Long.parseLong(response.getHeader("X-InsertedId"));
 							Log.info("Response received (" + num + "):" + response.getHeadersAsString());
 							callback.onSuccess(insertedId);
 

@@ -11,8 +11,8 @@ import org.codehaus.jackson.map.JsonMappingException;
 
 import com.googlecode.objectify.Key;
 import static albert.lacambra.server.ofy.OfyService.ofy;
+import albert.lacambra.server.models.Budget;
 import albert.lacambra.server.models.Invoice;
-
 public class InvoiceService extends BasicService implements IInvoiceService {
 
 
@@ -39,7 +39,8 @@ public class InvoiceService extends BasicService implements IInvoiceService {
 	@Override
 	public Response saveInvoice( Invoice invoice ) {
 		
-		invoice.setOwner(bracelet.getMeKey());
+		Key<Budget> key = Budget.key(bracelet.getMeKey(), invoice.getBudgetId());
+		invoice.setBudget(key);
 		long id = ofy().save().entity(invoice).now().getId();
 		
 		return Response.status(Status.CREATED).header("x-insertedid", String.valueOf(id)).build();

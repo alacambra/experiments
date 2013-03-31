@@ -1,6 +1,5 @@
 package albert.lacambra.server.guice;
 
-import albert.lacambra.server.TestResource;
 import albert.lacambra.server.auth.Bracelet;
 
 import com.google.inject.AbstractModule;
@@ -12,7 +11,6 @@ public class GuiceModule extends AbstractModule {
 		  protected void configure() {
 
 		    bind(Bracelet.class).in(RequestScoped.class);
-		    bind(TestResource.class);
 
 		}
 }

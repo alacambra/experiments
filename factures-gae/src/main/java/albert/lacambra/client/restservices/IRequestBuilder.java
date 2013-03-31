@@ -5,7 +5,7 @@ import com.google.gwt.http.client.RequestBuilder.Method;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 
-interface IRequestBuilder {
+public interface IRequestBuilder {
 
 	/**
 	 * Returns the callback previously set by

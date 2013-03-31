@@ -59,10 +59,10 @@ public class InvoiceResourceTest {
 
 	@Test 
 	public void getInvoice_A$() throws Exception {
-		Invoice i = new Invoice(new Long(1), Person.key("test@example.com"));
-		ofy().save().entity(i).now();
-		
-		InvoiceService target = new InvoiceService();
+//		Invoice i = new Invoice(new Long(1), Person.key("test@example.com"));
+//		ofy().save().entity(i).now();
+//		
+//		InvoiceService target = new InvoiceService();
 		
 //		Invoice actual = target.getInvoice((long) 1);
 ////		Invoice expected = i;
