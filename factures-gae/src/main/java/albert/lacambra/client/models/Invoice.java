@@ -25,12 +25,12 @@ public class Invoice implements IsJso<Invoice>, IInvoice
 	
 	public Invoice()
 	{
-		jso = InvoiceJso.buildInvoce();
+		jso = InvoiceJso.build();
 	}
 	
 	public Invoice(String json)
 	{
-		jso = InvoiceJso.buildInvoce(json);
+		jso = InvoiceJso.build(json);
 	}
 
 	public String serialize() {
@@ -76,7 +76,7 @@ public class Invoice implements IsJso<Invoice>, IInvoice
 
 	@Override
 	public Invoice buildJso(String json) {
-		jso = InvoiceJso.buildInvoce(json);
+		jso = InvoiceJso.build(json);
 		return new Invoice(jso);
 	}
 

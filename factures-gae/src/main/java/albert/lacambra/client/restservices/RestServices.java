@@ -8,6 +8,7 @@ import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONValue;
 import com.google.inject.Inject;
 
+import albert.lacambra.client.models.Budget;
 import albert.lacambra.client.models.Invoice;
 import albert.lacambra.client.models.IsJso;
 import albert.lacambra.client.restservices.utils.AsyncCallback;
@@ -38,6 +39,10 @@ public class RestServices {
 	public void getAllInvoices(AsyncCallback<List<Invoice>> callback) {
 		client.get(ResourceLocator.invoiceBase, new CollectionSimpleCallback<Invoice>(callback, new Invoice()));
 
+	}
+	
+	public void addBudget(Budget b, AsyncCallback<Long> callback) {
+		client.put(ResourceLocator.budgetBase,b.serializeToJsonValue(), callback);
 	}
 
 	private class SimpleCallback<T extends IsJso<T>> implements AsyncCallback<JSONValue> {

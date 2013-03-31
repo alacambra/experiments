@@ -6,9 +6,10 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.PUT;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -16,12 +17,10 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 
 import albert.lacambra.server.models.Budget;
-
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.cmd.Query;
 
-
-public class BudgetService extends BasicService {
+public class BudgetService extends BasicService implements IBudgetService {
 
 	public Response getBudget(Long id) {
 		Key<Budget> key = Budget.key(bracelet.getMeKey(), id);
@@ -69,5 +68,50 @@ public class BudgetService extends BasicService {
 			return Response.ok().entity(m.writeValueAsString(l)).build();
 		}
 	}
-	
+
+	@Override
+	public Response saveBudget(Budget budget) {
+
+		budget.setOwner(bracelet.getMeKey());
+		
+		long id = 0;
+		
+		try{
+			id = ofy().save().entity(budget).now().getId();
+		} catch (Throwable e ) {
+			log.severe(e.getMessage());
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity("Error parsing dates").build();
+		}
+		
+		return Response.status(Status.CREATED).header("x-insertedid", String.valueOf(id)).build();
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

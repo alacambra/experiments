@@ -48,11 +48,11 @@ public class InvoiceJso extends JavaScriptObject
 	    this.date = value;
 	}-*/;
 
-	public static final native InvoiceJso buildInvoce(String json) /*-{
+	public static final native InvoiceJso build(String json) /*-{
 	    return eval('(' + json + ')');
 	}-*/;
 
-	public static final native InvoiceJso buildInvoce() /*-{
+	public static final native InvoiceJso build() /*-{
 	    return {};
 	}-*/;
 

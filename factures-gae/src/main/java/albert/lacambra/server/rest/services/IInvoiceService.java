@@ -15,8 +15,9 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 
 import albert.lacambra.server.models.Invoice;
+import albert.lacambra.shared.ResourceLocator;
 
-@Path("/invoice")
+@Path(ResourceLocator.invoiceBase)
 public interface IInvoiceService {
 
 	@GET

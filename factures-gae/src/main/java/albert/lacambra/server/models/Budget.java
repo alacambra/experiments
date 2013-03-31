@@ -5,9 +5,11 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 import lombok.Data;
 
 import com.googlecode.objectify.Key;
+import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Parent;
 
+@Entity
 @Data
 public class Budget {
 
@@ -22,4 +24,5 @@ public class Budget {
 	private Long end;
 	private Integer assignation;
 	
+	public Budget() {}
 }
