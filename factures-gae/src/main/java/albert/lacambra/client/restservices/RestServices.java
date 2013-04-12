@@ -44,6 +44,10 @@ public class RestServices {
 	public void addBudget(Budget b, AsyncCallback<Long> callback) {
 		client.put(ResourceLocator.budgetBase,b.serializeToJsonValue(), callback);
 	}
+	
+	public void getBudgets(String year, AsyncCallback<List<Budget>> callback) {
+		client.get(ResourceLocator.budgetBase, new CollectionSimpleCallback<Budget>(callback, new Budget()));
+	}
 
 	private class SimpleCallback<T extends IsJso<T>> implements AsyncCallback<JSONValue> {
 
@@ -106,7 +110,8 @@ public class RestServices {
 			}
 			
 			for ( int i= 0; i < array.size(); i++  ) {
-				invoices.add(instance.buildJso(array.get(i).isString().stringValue()));
+				String b = array.get(i).toString();
+				invoices.add(instance.buildJso(b));
 			}
 			
 			

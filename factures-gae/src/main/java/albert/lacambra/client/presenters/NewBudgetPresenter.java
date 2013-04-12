@@ -1,8 +1,6 @@
 package albert.lacambra.client.presenters;
 
 
-import org.junit.experimental.categories.Categories.IncludeCategory;
-
 import com.allen_sauer.gwt.log.client.Log;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
@@ -32,19 +30,12 @@ public class NewBudgetPresenter extends Presenter<NewBudgetPresenter.MyView, New
 	public interface MyView extends View {
 
 		HasText getName();
-
 		HasText getAssignation();
-
 		HasText getYear();
-
 		void setName(String name);
-
 		void setAssignation(String assignation);
-
 		void setYear(String year);
-
 		HasClickHandlers getSubmit();
-
 		void restartFields();
 	}
 
@@ -66,8 +57,8 @@ public class NewBudgetPresenter extends Presenter<NewBudgetPresenter.MyView, New
 
 	@Override
 	protected void onBind() {
-		super.onBind();
 
+		super.onBind();
 		registerHandler(getView().getSubmit().addClickHandler(new ClickHandler() {
 
 			@Override
@@ -77,6 +68,7 @@ public class NewBudgetPresenter extends Presenter<NewBudgetPresenter.MyView, New
 				assignDates(budget);
 				budget.setAssignation(Integer.valueOf(getView().getAssignation().getText()) * 100);
 				budget.setName(getView().getName().getText());
+				
 				services.addBudget(budget, new AsyncCallback<Long>() {
 					
 					@Override

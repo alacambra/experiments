@@ -45,12 +45,8 @@ public class Invoice implements IsJso<Invoice>, IInvoice
 		return jso.getPrice();
 	}
 
-	public String getCategory() {
-		return jso.getBudgetId();
-	}
-
-	public void setCategory(String text) {
-		jso.setBudgetId(text);
+	public void setBudgetId(String bgId) {
+		jso.setBudgetId(bgId);
 		
 	}
 

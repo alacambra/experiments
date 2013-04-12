@@ -36,7 +36,7 @@ public class BudgetService extends BasicService implements IBudgetService {
 		return r;
 	}
 	
-	public Response getBudgetsOfYear(String year) throws JsonGenerationException, JsonMappingException, IOException {
+	public Response getBudgetsForYear(String year) throws JsonGenerationException, JsonMappingException, IOException {
 		Query<Budget> query = ofy().load().type(Budget.class).ancestor(bracelet.getMeKey());
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");

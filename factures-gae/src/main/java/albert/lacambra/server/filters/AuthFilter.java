@@ -8,6 +8,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response.Status;
 
 import com.google.appengine.api.users.User;
@@ -41,12 +42,12 @@ public class AuthFilter extends AbstractFilter
 			response.getWriter().print(url);
 			
 			
-		} 
-		else {
+		} else {
 			try {
 				chain.doFilter(request, response);
 			} catch (Throwable e) {
 				log.severe("error: " + e.getMessage());
+				throw new WebApplicationException(e);
 			} 
 		}
 	}

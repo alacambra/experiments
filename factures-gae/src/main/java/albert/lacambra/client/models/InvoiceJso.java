@@ -20,16 +20,16 @@ public class InvoiceJso extends JavaScriptObject
 	    return this.price;
 	}-*/;
 
-	public final native void setPrice(Integer value) /*-{
+	public final native void setPrice(int value) /*-{
 	    this.price = value; 
 	}-*/;
 
 	public final native String getBudgetId() /*-{
-	    return this.budget;
+	    return this.budgetId;
 	}-*/;
 	
 	public final native void setBudgetId(String value) /*-{
-	    this.budget = value; 
+	    this.budgetId = value; 
 	}-*/;
 
 	public final native String getExtra() /*-{

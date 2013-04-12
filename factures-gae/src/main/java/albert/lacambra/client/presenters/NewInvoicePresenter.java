@@ -8,6 +8,7 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 
+import albert.lacambra.client.models.Budget;
 import albert.lacambra.client.models.Invoice;
 import albert.lacambra.client.place.NameTokens;
 import albert.lacambra.client.restservices.RestServices;
@@ -23,12 +24,10 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.TextBox;
-import com.gwtplatform.mvp.client.proxy.RevealRootContentEvent;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class NewInvoicePresenter extends
-Presenter<NewInvoicePresenter.MyView, NewInvoicePresenter.MyProxy> {
+public class NewInvoicePresenter extends Presenter<NewInvoicePresenter.MyView, NewInvoicePresenter.MyProxy> {
 
 	public interface MyView extends View {
 		public Button getButton();
@@ -36,10 +35,12 @@ Presenter<NewInvoicePresenter.MyView, NewInvoicePresenter.MyProxy> {
 		public TextBox getDay();
 		public TextBox getMonth();
 		public TextBox getYear();
-		public TextBox getCategory();
+		public VerticalPanel getBudgetsPanel();
 		public TextBox getExtra();
 		public Label getInfoLabel();
 		void restartFields();
+		void addPossibleBudget(String id, String name);
+		String getSelectedBudgetId();
 	}
 
 	@ProxyCodeSplit
@@ -59,22 +60,11 @@ Presenter<NewInvoicePresenter.MyView, NewInvoicePresenter.MyProxy> {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				restServices.getAllInvoices(new AsyncCallback<List<Invoice>>() {
-					
-					@Override
-					public void onSuccess(List<Invoice> result) {
-						Log.info("results received " +result.size());
-					}
-					
-					@Override
-					public void onFailure(ResponseException caught) {
-						Log.error("",caught);
-					}
-				});
 				Invoice invoice = new Invoice();
-				invoice.setCategory(getView().getCategory().getText());
+				invoice.setBudgetId(getView().getSelectedBudgetId());
 				invoice.setDate(getDate());
 				invoice.setExtra(getView().getExtra().getText());
+				invoice.setPrice(Integer.parseInt(getView().getPrice().getText()));
 				addInvoice(invoice);
 			}
 		});
@@ -96,8 +86,7 @@ Presenter<NewInvoicePresenter.MyView, NewInvoicePresenter.MyProxy> {
 		});
 	}
 	
-	private Long getDate()
-	{
+	private Long getDate() {
 		String y = getView().getYear().getValue().matches("^[0-9]{4}$") ? getView().getYear().getValue() : "1970";
 		
 		String m = getView().getMonth().getValue().matches("^[0-1]{0,1}[0-9]{1}$") ? getView().getMonth().getValue() : "01";
@@ -106,8 +95,9 @@ Presenter<NewInvoicePresenter.MyView, NewInvoicePresenter.MyProxy> {
 		String d = getView().getDay().getValue().matches("^[0-3]{0,1}[0-9]{1}$") ? getView().getDay().getValue() : "01";
 		d = d.length() < 2 ? 0 + d : d;
 		
-		String date = d + "-" + m + "-" + y;
-		DateTimeFormat format = DateTimeFormat.getFormat("dd-MM-yyyy");
+		String date = d + "-" + m + "-" + y + " 10:00:00.0";
+		DateTimeFormat format = DateTimeFormat.getFormat("dd-MM-yyyy HH:mm:ss.S");
+		Log.debug(date + ":" + format.parse(date).getTime());
 		return format.parse(date).getTime();
 	}
 	
@@ -119,5 +109,79 @@ Presenter<NewInvoicePresenter.MyView, NewInvoicePresenter.MyProxy> {
 	@Override
 	protected void onBind() {
 		super.onBind();
+		
+		loadBudgets(getView().getYear().getValue());
+		
 	}
+	
+	private void loadBudgets(String year) {
+		
+		if ( year != null ) {
+			restServices.getBudgets(year, new AsyncCallback<List<Budget>>() {
+				
+				@Override
+				public void onSuccess(List<Budget> result) {
+					for (Budget budget : result) {
+						getView().addPossibleBudget(String.valueOf(budget.getId()), budget.getName());
+					}
+				}
+
+				@Override
+				public void onFailure(ResponseException caught) {
+					Log.error("", caught);
+				}
+			});
+		}
+	}
+		
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -25,4 +25,12 @@ public class Budget {
 	private Integer assignation;
 	
 	public Budget() {}
+	
+	public void setId(String id) {
+		this.id = Long.parseLong(id);
+	}
+	
+	public String getId() {
+		return String.valueOf(id);
+	}
 }

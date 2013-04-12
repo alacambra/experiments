@@ -25,11 +25,11 @@
 			/
 			<g:TextBox maxLength="4" visibleLength="4" ui:field="year">yyyy</g:TextBox>
 			<br />
-			category:
+			Budget:
 			<br />
-			<g:TextBox ui:field="category"></g:TextBox>
+			<g:VerticalPanel ui:field="budgetsPanel"></g:VerticalPanel>
 			<br />
-			extra:
+			More information:
 			<br />
 			<g:TextBox ui:field="extra"></g:TextBox>
 			<br />
