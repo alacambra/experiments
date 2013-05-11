@@ -70,18 +70,20 @@ public class NewInvoicePresenter extends Presenter<NewInvoicePresenter.MyView, N
 		});
 	}
 	
-	public void addInvoice(Invoice invoice) {
+	public void addInvoice(final Invoice invoice) {
 		restServices.addInvoice(invoice, new AsyncCallback<Long>() {
 			
 			@Override
 			public void onSuccess(Long result) {
 				Log.info("invoice added with id " + result );
-				
+				getView().getInfoLabel().setText("invoice \"" + invoice.getExtra() +"\" added with id " + result );
+				getView().restartFields();
 			}
 			
 			@Override
 			public void onFailure(ResponseException caught) {
 				Log.error("",caught);
+				getView().getInfoLabel().setText("error adding invoice:" +  caught.getMessage());
 			}
 		});
 	}
