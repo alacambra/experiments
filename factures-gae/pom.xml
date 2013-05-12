@@ -20,6 +20,7 @@
 		<gwtp.version>1.0-RC-2</gwtp.version>
 		<maven.compiler.source>1.6</maven.compiler.source>
 		<maven.compiler.target>1.6</maven.compiler.target>
+		<appEngineSdk>/home/albert/workspace-gwt/appengine-java-sdk-1.7.4/</appEngineSdk>
 	</properties>
 
 	<dependencies>
@@ -195,9 +196,6 @@
 					<execution>
 						<goals>
 							<goal>compile</goal>
-							<!-- <goal>test</goal> -->
-							<!-- <goal>i18n</goal> -->
-							<!-- <goal>generateAsync</goal> -->
 						</goals>
 					</execution>
 				</executions>
@@ -205,6 +203,9 @@
 					<runTarget>factures-gae.html</runTarget>
 					<hostedWebapp>${webappDirectory}</hostedWebapp>
 					<style>DETAILED</style>
+					<module>albert.lacambra.factures</module>
+					<server>com.google.appengine.tools.development.gwt.AppEngineLauncher</server>
+					<appEngineHome>${appEngineSdk}</appEngineHome>
 				</configuration>
 			</plugin>
 

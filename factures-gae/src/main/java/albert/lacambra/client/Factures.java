@@ -19,8 +19,6 @@ public class Factures implements EntryPoint {
 
 	@Override
 	public void onModuleLoad() {
-		Log.warn("We are in!");
-		RootPanel.get().add(new Label("Label abcdef...."));
 		DelayedBindRegistry.bind(ginjector);
 		ginjector.getPlaceManager().revealCurrentPlace();
 	}

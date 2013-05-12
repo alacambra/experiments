@@ -54,6 +54,12 @@ public class InvoiceService extends BasicService implements IInvoiceService {
 		if ( l == null ) {
 			return Response.status(Status.NO_CONTENT).build();
 		} else {
+			
+//			for( Invoice i : l ) {
+//				i.setPrice(i.getPrice() * 100);
+//				ofy().save().entity(i).now();
+//			}
+			
 			return Response.ok().entity(m.writeValueAsString(l)).build();
 		}
 	}
