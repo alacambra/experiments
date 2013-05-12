@@ -26,6 +26,7 @@ import albert.lacambra.client.restservices.utils.ResponseException;
 public class NewBudgetPresenter extends Presenter<NewBudgetPresenter.MyView, NewBudgetPresenter.MyProxy> {
 
 	@Inject RestServices services;
+	private NewInvoicePresenter newInvoicePresenter;
 	
 	public interface MyView extends View {
 
@@ -46,8 +47,10 @@ public class NewBudgetPresenter extends Presenter<NewBudgetPresenter.MyView, New
 
 	@Inject
 	public NewBudgetPresenter(final EventBus eventBus, final MyView view,
-			final MyProxy proxy) {
+			final MyProxy proxy, NewInvoicePresenter newInvoicePresenter) {
 		super(eventBus, view, proxy);
+		
+		this.newInvoicePresenter = newInvoicePresenter;  
 	}
 
 	@Override
@@ -64,7 +67,7 @@ public class NewBudgetPresenter extends Presenter<NewBudgetPresenter.MyView, New
 			@Override
 			public void onClick(ClickEvent event) {
 
-				Budget budget = new Budget();
+				final Budget budget = new Budget();
 				assignDates(budget);
 				budget.setAssignation(Integer.valueOf(getView().getAssignation().getText()) * 100);
 				budget.setName(getView().getName().getText());
@@ -74,6 +77,8 @@ public class NewBudgetPresenter extends Presenter<NewBudgetPresenter.MyView, New
 					@Override
 					public void onSuccess(Long result) {
 						Log.info("budget added with id " + result);
+						budget.setId(result);
+						newInvoicePresenter.addBugetIntoList(budget);
 					}
 					
 					@Override

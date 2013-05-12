@@ -88,6 +88,10 @@ public class NewInvoicePresenter extends Presenter<NewInvoicePresenter.MyView, N
 		});
 	}
 	
+	public void addBugetIntoList(Budget budget) {
+		getView().addPossibleBudget(String.valueOf(budget.getId()), budget.getName());
+	}
+	
 	private Long getDate() {
 		String y = getView().getYear().getValue().matches("^[0-9]{4}$") ? getView().getYear().getValue() : "1970";
 		
