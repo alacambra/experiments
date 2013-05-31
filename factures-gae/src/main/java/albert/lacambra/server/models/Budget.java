@@ -7,6 +7,7 @@ import lombok.Data;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Parent;
 
 @Entity
@@ -20,7 +21,9 @@ public class Budget {
 	@Id private Long id;
 	@JsonIgnore @Parent Key<Person> owner;
 	private String name;
+	@Index
 	private Long start;
+	@Index
 	private Long end;
 	private Integer assignation;
 	

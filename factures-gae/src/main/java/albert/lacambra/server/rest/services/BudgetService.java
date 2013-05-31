@@ -60,6 +60,7 @@ public class BudgetService extends BasicService implements IBudgetService {
 	}
 	
 	public Response getAllBudgets() throws JsonGenerationException, JsonMappingException, IOException {
+		
 		List<Budget> l = ofy().load().type(Budget.class).ancestor(bracelet.getMeKey()).list();
 
 		if ( l == null ) {
