@@ -17,6 +17,8 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 
 import albert.lacambra.server.models.Budget;
+import albert.lacambra.server.models.Invoice;
+
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.cmd.Query;
 
@@ -37,6 +39,7 @@ public class BudgetService extends BasicService implements IBudgetService {
 	}
 	
 	public Response getBudgetsForYear(String year) throws JsonGenerationException, JsonMappingException, IOException {
+		
 		Query<Budget> query = ofy().load().type(Budget.class).ancestor(bracelet.getMeKey());
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
@@ -45,7 +48,27 @@ public class BudgetService extends BasicService implements IBudgetService {
 		
 		List<Budget> l = new ArrayList<Budget>();
 		try {
-			l = query.filter("start >=", dateFormat.parse(ini).getTime()).filter("end <=", dateFormat.parse(end).getTime()).list();
+			l = query.filter("start >=", dateFormat.parse(ini).getTime()).list();//.filter("end <=", dateFormat.parse(end).getTime()).list();
+			ArrayList<Budget> bs = new ArrayList<Budget>();
+			bs.addAll(l);
+			for( Budget b : bs) {
+				if ( b.getEnd() > dateFormat.parse(end).getTime() ) {
+					l.remove(b);
+				} else {
+					Query<Invoice> q = ofy().load().type(Invoice.class).ancestor(b);
+					List<Invoice> invoices = new ArrayList<Invoice>();
+					invoices.addAll(q.list());
+					int total = 0;
+					for ( Invoice i : invoices ) {
+						total += i.getPrice(); 
+					}
+					
+					b.setUsed(total);
+				}
+			}
+			
+			
+			
 		} catch (ParseException e) {
 			log.severe("Error parsing dates");
 			return Response.status(Status.INTERNAL_SERVER_ERROR).entity("Error parsing dates").build();

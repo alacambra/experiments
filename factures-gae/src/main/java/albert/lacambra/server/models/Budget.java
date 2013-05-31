@@ -1,5 +1,7 @@
 package albert.lacambra.server.models;
 
+import javax.persistence.Transient;
+
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import lombok.Data;
@@ -26,6 +28,7 @@ public class Budget {
 	@Index
 	private Long end;
 	private Integer assignation;
+	@Transient private int used;
 	
 	public Budget() {}
 	
