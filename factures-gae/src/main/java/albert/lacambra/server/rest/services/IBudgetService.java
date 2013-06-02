@@ -23,7 +23,7 @@ public interface IBudgetService {
 	@GET
 	@Path("{id:[0-9]+}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getBudget(Long id);
+	public Response getBudget(@PathParam("id") Long id);
 	
 	@GET
 	@Path("year/{year:[0-9]{4}}")
@@ -37,6 +37,10 @@ public interface IBudgetService {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response saveBudget(Budget budget);
+
+	@GET
+	@Path("update")
+	Response update();
 }
 
 

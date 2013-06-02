@@ -1,7 +1,5 @@
 package albert.lacambra.server.models;
 
-import javax.persistence.Transient;
-
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import lombok.Data;
@@ -9,6 +7,7 @@ import lombok.Data;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Ignore;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Parent;
 
@@ -28,7 +27,7 @@ public class Budget {
 	@Index
 	private Long end;
 	private Integer assignation;
-	@Transient private int used;
+	@Ignore private int used;
 	
 	public Budget() {}
 	

@@ -5,4 +5,7 @@
         <property name="start" direction="asc" />
         <property name="end" direction="asc" />
     </datastore-index>
+    <datastore-index kind="Budget" ancestor="true" source="manual">
+        <property name="start" direction="asc"/>
+    </datastore-index>
 </datastore-indexes>

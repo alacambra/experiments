@@ -8,8 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.PUT;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -37,43 +35,51 @@ public class BudgetService extends BasicService implements IBudgetService {
 		}
 		return r;
 	}
-	
+
 	public Response getBudgetsForYear(String year) throws JsonGenerationException, JsonMappingException, IOException {
-		
+
 		Query<Budget> query = ofy().load().type(Budget.class).ancestor(bracelet.getMeKey());
-		
+
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 		String ini = year + "-01-01 00:00:00.0";
 		String end = String.valueOf(Integer.parseInt(year) + 1) + "-01-01 00:00:00.0";
-		
+
 		List<Budget> l = new ArrayList<Budget>();
+
 		try {
+
 			l = query.filter("start >=", dateFormat.parse(ini).getTime()).list();//.filter("end <=", dateFormat.parse(end).getTime()).list();
 			ArrayList<Budget> bs = new ArrayList<Budget>();
 			bs.addAll(l);
 			for( Budget b : bs) {
+
 				if ( b.getEnd() > dateFormat.parse(end).getTime() ) {
+
 					l.remove(b);
+
 				} else {
+
 					Query<Invoice> q = ofy().load().type(Invoice.class).ancestor(b);
 					List<Invoice> invoices = new ArrayList<Invoice>();
 					invoices.addAll(q.list());
+
 					int total = 0;
+
 					for ( Invoice i : invoices ) {
 						total += i.getPrice(); 
 					}
-					
+
 					b.setUsed(total);
 				}
 			}
-			
-			
-			
+
+
+
 		} catch (ParseException e) {
 			log.severe("Error parsing dates");
 			return Response.status(Status.INTERNAL_SERVER_ERROR).entity("Error parsing dates").build();
 		}
-		
+
 
 		if ( l == null ) {
 			return Response.status(Status.NO_CONTENT).build();
@@ -81,9 +87,45 @@ public class BudgetService extends BasicService implements IBudgetService {
 			return Response.ok().entity(m.writeValueAsString(l)).build();
 		}
 	}
-	
-	public Response getAllBudgets() throws JsonGenerationException, JsonMappingException, IOException {
+
+	@Override
+	public Response update() {
 		
+		List<Budget> l = ofy().load().type(Budget.class).ancestor(bracelet.getMeKey()).list();
+		
+  		for ( Budget oldBudget : l ) {
+			
+			Budget newBudget = new Budget();
+			newBudget.setOwner(bracelet.getMeKey());
+			newBudget.setAssignation(oldBudget.getAssignation());
+			newBudget.setEnd(oldBudget.getEnd());
+			newBudget.setStart(oldBudget.getStart());
+			newBudget.setName(oldBudget.getName());
+			long id = ofy().save().entity(newBudget).now().getId();
+			newBudget.setId(String.valueOf(id));
+			
+			Query<Invoice> q = ofy().load().type(Invoice.class).ancestor(oldBudget);
+			List<Invoice> invoices = new ArrayList<Invoice>();
+			invoices.addAll(q.list());
+
+ 			for ( Invoice oldInvoice : invoices ) {
+				Key<Budget> bKey = Budget.key(bracelet.getMeKey(), Long.parseLong(newBudget.getId()));
+				Invoice newInvoice = new Invoice(bKey);
+				newInvoice.setBudgetId(id);
+				newInvoice.setDate(oldInvoice.getDate());
+				newInvoice.setExtra(oldInvoice.getExtra());
+				newInvoice.setPrice(oldInvoice.getPrice());
+				ofy().save().entity(newInvoice).now().getId();
+			}
+ 			ofy().delete().entities(invoices);
+			ofy().delete().entities(oldBudget);
+		}
+  		
+  		return Response.status(Status.NO_CONTENT).build();
+	}
+
+	public Response getAllBudgets() throws JsonGenerationException, JsonMappingException, IOException {
+
 		List<Budget> l = ofy().load().type(Budget.class).ancestor(bracelet.getMeKey()).list();
 
 		if ( l == null ) {
@@ -97,16 +139,16 @@ public class BudgetService extends BasicService implements IBudgetService {
 	public Response saveBudget(Budget budget) {
 
 		budget.setOwner(bracelet.getMeKey());
-		
+
 		long id = 0;
-		
+
 		try{
 			id = ofy().save().entity(budget).now().getId();
 		} catch (Throwable e ) {
 			log.severe(e.getMessage());
 			return Response.status(Status.INTERNAL_SERVER_ERROR).entity("Error parsing dates").build();
 		}
-		
+
 		return Response.status(Status.CREATED).header("x-insertedid", String.valueOf(id)).build();
 	}
 }
