@@ -10,6 +10,7 @@
 	<inherits name='com.google.gwt.editor.Editor' />
 	<inherits name='com.google.web.bindery.requestfactory.RequestFactory' />
 	<inherits name='com.gwtplatform.dispatch.Dispatch' />
+	<inherits name="com.gwtplatform.dispatch.DispatchRest" />
 	<!-- <inherits name='com.google.gwt.visualization.Visualization' /> -->
 	<inherits name="com.google.gwt.i18n.I18N" />
 	<inherits name='com.gwtplatform.mvp.Mvp' />
@@ -32,6 +33,8 @@
 	<set-configuration-property name='gin.ginjector'
 		value='albert.lacambra.client.injection.ClientGinjector' />
 
+	<set-configuration-property name="gin.ginjector.modules"
+		value="com.gwtplatform.carstore.client.gin.SharedModule" />
 
 	<!-- Specify the paths for translatable code -->
 	<source path='client' />

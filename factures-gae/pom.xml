@@ -17,7 +17,7 @@
 		<jersey-version>1.11</jersey-version>
 		<guice.version>3.0</guice.version>
 		<gae.version>1.7.4</gae.version>
-		<gwtp.version>1.0-RC-2</gwtp.version>
+		<gwtp.version>1.0</gwtp.version>
 		<maven.compiler.source>1.6</maven.compiler.source>
 		<maven.compiler.target>1.6</maven.compiler.target>
 		<appEngineSdk>/home/albert/workspace-gwt/appengine-java-sdk-1.7.4/</appEngineSdk>
@@ -31,17 +31,41 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>0.11.6</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
 			<version>${gwtVersion}</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.allen-sauer.gwt.log</groupId>
+			<artifactId>gwt-log</artifactId>
+			<version>3.1.8</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt.inject</groupId>
+			<artifactId>gin</artifactId>
+			<version>(2.0.0,]</version>
+			<classifier />
+		</dependency>
+		<!-- MVP component -->
+		<dependency>
+			<groupId>com.gwtplatform</groupId>
+			<artifactId>gwtp-mvp-client</artifactId>
+			<version>${gwtp.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.gwtplatform</groupId>
+			<artifactId>gwtp-dispatch-rest</artifactId>
+			<version>${gwtp.version}</version>
+			<scope>provided</scope>
+		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.gwtplatform</groupId> -->
+<!-- 			<artifactId>gwtp-dispatch-server-guice</artifactId> -->
+<!-- 			<version>${gwtp.version}</version> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
@@ -49,11 +73,11 @@
 			<classifier>sources</classifier>
 			<scope>compile</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-json</artifactId>
-			<version>${jersey-version}</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.sun.jersey</groupId> -->
+<!-- 			<artifactId>jersey-json</artifactId> -->
+<!-- 			<version>${jersey-version}</version> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -94,42 +118,6 @@
 			<version>${gae.version}</version>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.allen-sauer.gwt.log</groupId>
-			<artifactId>gwt-log</artifactId>
-			<version>3.1.8</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.google.gwt.inject</groupId>
-			<artifactId>gin</artifactId>
-			<version>2.0.0</version>
-			<classifier />
-		</dependency>
-		<!-- MVP component -->
-		<dependency>
-			<groupId>com.gwtplatform</groupId>
-			<artifactId>gwtp-mvp-client</artifactId>
-			<version>${gwtp.version}</version>
-			<scope>provided</scope>
-		</dependency>
-
-		<!-- Dispatch component -->
-		<dependency>
-			<groupId>com.gwtplatform</groupId>
-			<artifactId>gwtp-dispatch-client</artifactId>
-			<version>${gwtp.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.gwtplatform</groupId>
-			<artifactId>gwtp-dispatch-server-guice</artifactId>
-			<!-- Or, if you use spring: <artifactId>gwtp-dispatch-server-spring</artifactId> -->
-			<!-- For GWTP 0.5.1 and earlier: <artifactId>gwtp-dispatch-server</artifactId> -->
-			<version>${gwtp.version}</version>
-		</dependency>
-
-
 		<!-- Crawler component -->
 		<!-- <dependency> -->
 		<!-- <groupId>com.gwtplatform</groupId> -->
@@ -271,4 +259,12 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+	<repositories>
+		<repository>
+			<id>sonatype.snapshots</id>
+			<name>Sonatype snapshot repository</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
 </project>

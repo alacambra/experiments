@@ -40,4 +40,8 @@ public class Bracelet
 	public void login(Key<Person> who) {
 		this.meKey = who;
 	}
+	
+	public Key<Person> getMeKey() {
+		return meKey;
+	}
 }

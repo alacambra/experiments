@@ -4,8 +4,6 @@ package albert.lacambra.server.models;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import lombok.Data;
-
-
 import albert.lacambra.shared.models.IInvoice;
 
 import com.google.gwt.editor.client.Editor.Ignore;
@@ -16,7 +14,6 @@ import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Parent;
 
 @Entity
-@Data
 public class Invoice implements IInvoice 
 {
 
@@ -58,6 +55,57 @@ public class Invoice implements IInvoice
 		
 		return false;
 	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public Key<Budget> getBudget() {
+		return budget;
+	}
+
+	public Long getBudgetId() {
+		return budgetId;
+	}
+
+	public String getExtra() {
+		return extra;
+	}
+
+	public Long getDate() {
+		return date;
+	}
+
+	public Integer getPrice() {
+		return price;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setBudget(Key<Budget> budget) {
+		this.budget = budget;
+	}
+
+	public void setBudgetId(Long budgetId) {
+		this.budgetId = budgetId;
+	}
+
+	public void setExtra(String extra) {
+		this.extra = extra;
+	}
+
+	public void setDate(Long date) {
+		this.date = date;
+	}
+
+	public void setPrice(Integer price) {
+		this.price = price;
+	}
+	
+	
+
 }
 
 
