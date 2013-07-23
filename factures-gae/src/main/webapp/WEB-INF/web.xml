@@ -34,9 +34,9 @@
 		<url-pattern>/rest/*</url-pattern>
 	</filter-mapping>
 
-	<!-- <listener> -->
-	<!-- <listener-class>albert.lacambra.server.guice.GuiceServletConfig</listener-class> -->
-	<!-- </listener> -->
+<!-- 	<listener> -->
+<!-- 		<listener-class>albert.lacambra.server.guice.GuiceServletConfig</listener-class> -->
+<!-- 	</listener> -->
 	<listener>
 		<listener-class>
 			org.jboss.resteasy.plugins.guice.GuiceResteasyBootstrapServletContextListener
@@ -53,6 +53,21 @@
 		<servlet-name>resteasy-servlet</servlet-name>
 		<url-pattern>/rest/*</url-pattern>
 	</servlet-mapping>
+
+	<!-- <servlet> -->
+	<!-- <servlet-name>RestletServlet</servlet-name> -->
+	<!-- <servlet-class>org.restlet.ext.servlet.ServerServlet</servlet-class> -->
+	<!-- <init-param> -->
+	<!-- <param-name>org.restlet.application</param-name> -->
+	<!-- <param-value>firstSteps.FirstStepsApplication </param-value> -->
+	<!-- </init-param> -->
+	<!-- </servlet> -->
+
+	<!-- <servlet-mapping> -->
+	<!-- <servlet-name>RestletServlet</servlet-name> -->
+	<!-- <url-pattern>/*</url-pattern> -->
+	<!-- </servlet-mapping> -->
+
 
 	<!-- Default page to serve -->
 	<welcome-file-list>
