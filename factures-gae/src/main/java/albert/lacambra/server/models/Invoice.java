@@ -3,7 +3,6 @@ package albert.lacambra.server.models;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
-import lombok.Data;
 import albert.lacambra.shared.models.IInvoice;
 
 import com.google.gwt.editor.client.Editor.Ignore;

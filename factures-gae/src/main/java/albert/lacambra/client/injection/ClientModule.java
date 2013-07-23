@@ -3,13 +3,15 @@ package albert.lacambra.client.injection;
 
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
-import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
+//import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
+
 
 import albert.lacambra.client.restservices.IRequestBuilder;
 import albert.lacambra.client.restservices.IRestClient;
 import albert.lacambra.client.restservices.RequestBuilder;
 import albert.lacambra.client.restservices.RestClient;
 
+import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 import com.gwtplatform.mvp.client.gin.DefaultModule;
 
 import albert.lacambra.client.place.ClientPlaceManager;

@@ -6,6 +6,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -29,8 +30,7 @@ public class MainView extends ViewImpl implements MainPresenter.MyView {
 	}
 	
 	@Override
-	public void setInSlot(Object slot, Widget content) {
-		
+	public void setInSlot(Object slot, IsWidget content) {
 		if ( slot == MainPresenter.TYPE_MainContent) {
 			insertOrRemove(contentPanel, slot, content);
 		} else {
@@ -38,7 +38,7 @@ public class MainView extends ViewImpl implements MainPresenter.MyView {
 		}
 	}
 	
-	private void insertOrRemove(Panel panel, Object slot, Widget content) {
+	private void insertOrRemove(Panel panel, Object slot, IsWidget content) {
 		panel.clear();
 		if ( content != null ) {
 			panel.add(content);

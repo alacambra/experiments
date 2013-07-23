@@ -3,9 +3,6 @@
 
 package albert.lacambra.server.auth;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
 import albert.lacambra.server.models.Person;
 
 import com.google.inject.servlet.RequestScoped;
@@ -17,13 +14,11 @@ import com.googlecode.objectify.Key;
  * It works in concert with the BraceletFilter to establish an identity.
  */
 @RequestScoped
-@NoArgsConstructor
 public class Bracelet
 {
 	/**
 	 * If we are logged in, this will be present.
 	 */
-	@Getter
 	Key<Person> meKey;
 
 

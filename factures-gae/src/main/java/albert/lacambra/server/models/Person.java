@@ -1,13 +1,10 @@
 package albert.lacambra.server.models;
 
-import lombok.Getter;
-
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 
 @Entity
-@Getter
 public class Person {
 
 	public static Key<Person> key(String id) {
@@ -26,6 +23,10 @@ public class Person {
 	public Person(String email, String name) {
 		this(email);
 		this.name = name;
+	}
+	
+	public String getName() {
+		return name;
 	}
 }
 
