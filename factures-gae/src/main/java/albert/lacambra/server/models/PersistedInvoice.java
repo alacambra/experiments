@@ -40,6 +40,9 @@ public class PersistedInvoice{
 	public PersistedInvoice(Key<Budget> budget, DTOInvoice dtoInvoice) { 
 		this();
 		this.budget = budget;
+		extra = dtoInvoice.getExtra();
+		date = dtoInvoice.getDate();
+		price = dtoInvoice.getPrice();
 	}
 	
 	public PersistedInvoice(Long id, Key<Budget> budget) {
