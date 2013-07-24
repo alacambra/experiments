@@ -66,9 +66,14 @@ public class NewInvoicePresenter extends Presenter<NewInvoicePresenter.MyView, N
 
 			@Override
 			public void onClick(ClickEvent event) {
+				
+				String bid = getView().getSelectedBudgetId();
+				
+				if  (  bid ==  null ) bid="1";
+				
 				DTOInvoice invoice = 
 					new DTOInvoice()
-					.setBudgetId(Long.parseLong(getView().getSelectedBudgetId()))
+					.setBudgetId(Long.parseLong(bid))
 					.setDate(getDate())
 					.setExtra(getView().getExtra().getText())
 					.setPrice(Integer.parseInt(getView().getPrice().getText()));
