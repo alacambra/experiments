@@ -21,7 +21,7 @@
 		<gwt.version>2.5.1</gwt.version>
 		<maven.compiler.source>1.6</maven.compiler.source>
 		<maven.compiler.target>1.6</maven.compiler.target>
-		<appEngineSdk>/home/albert/workspace-gwt/appengine-java-sdk-1.7.4/</appEngineSdk>
+		<appEngineSdk>/home/albert/workspace-gwt/appengine-java-sdk-1.8.2/</appEngineSdk>
 	</properties>
 
 	<dependencies>
@@ -39,6 +39,11 @@
 			<artifactId>gwt-user</artifactId>
 			<version>${gwt.version}</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-servlet</artifactId>
+			<version>${gwt.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.allen-sauer.gwt.log</groupId>
@@ -140,6 +145,12 @@
 			<artifactId>appengine-api-1.0-sdk</artifactId>
 			<version>${gae.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
 		<!-- Crawler component -->
 		<!-- <dependency> -->
 		<!-- <groupId>com.gwtplatform</groupId> -->
@@ -215,6 +226,7 @@
 				<version>${gwt.version}</version>
 				<executions>
 					<execution>
+						<phase>install</phase>
 						<goals>
 							<goal>compile</goal>
 						</goals>
@@ -254,7 +266,7 @@
 			<plugin>
 				<groupId>com.google.appengine</groupId>
 				<artifactId>appengine-maven-plugin</artifactId>
-				<version>1.7.4</version>
+				<version>${gae.version}</version>
 			</plugin>
 		</plugins>
 		<pluginManagement>

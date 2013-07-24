@@ -3,6 +3,7 @@ package albert.lacambra.server.models;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import albert.lacambra.client.models.DTOInvoice;
 import albert.lacambra.shared.models.IInvoice;
 
 import com.google.gwt.editor.client.Editor.Ignore;
@@ -13,38 +14,45 @@ import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Parent;
 
 @Entity
-public class Invoice implements IInvoice 
-{
+public class PersistedInvoice{
 
     @Id private Long id;
     
     @JsonIgnore @Parent Key<Budget> budget;
-    @Ignore Long budgetId;
+//    @Ignore Long budgetId;
     private String extra;
     @Index
     private Long date;
     @Index
     private Integer price;
 	
-    protected Invoice() { }
+    protected PersistedInvoice() { }
     
-    public static Key<Invoice> key(Key<Person> parent, Long id) {
-		return Key.create(parent, Invoice.class, id);
+    public static Key<PersistedInvoice> key(Key<Person> parent, Long id) {
+		return Key.create(parent, PersistedInvoice.class, id);
 	}
     
-	public Invoice(Key<Budget> budget) { 
+	public PersistedInvoice(Key<Budget> budget) { 
 		this();
 		this.budget = budget;
 	}
 	
-	public Invoice(Long id, Key<Budget> budget) {
+	public PersistedInvoice(Key<Budget> budget, DTOInvoice dtoInvoice) { 
+		this();
+		this.budget = budget;
+		extra = dtoInvoice.getExtra();
+		date = dtoInvoice.getDate();
+		price = dtoInvoice.getPrice();
+	}
+	
+	public PersistedInvoice(Long id, Key<Budget> budget) {
 		this(budget);
 		this.id = id;
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
-		if ( !(obj instanceof Invoice) ) {
+		if ( !(obj instanceof PersistedInvoice) ) {
 			return false;
 		}
 		
@@ -63,9 +71,9 @@ public class Invoice implements IInvoice
 		return budget;
 	}
 
-	public Long getBudgetId() {
-		return budgetId;
-	}
+//	public Long getBudgetId() {
+//		return budgetId;
+//	}
 
 	public String getExtra() {
 		return extra;
@@ -87,9 +95,9 @@ public class Invoice implements IInvoice
 		this.budget = budget;
 	}
 
-	public void setBudgetId(Long budgetId) {
-		this.budgetId = budgetId;
-	}
+//	public void setBudgetId(Long budgetId) {
+//		this.budgetId = budgetId;
+//	}
 
 	public void setExtra(String extra) {
 		this.extra = extra;
@@ -103,9 +111,46 @@ public class Invoice implements IInvoice
 		this.price = price;
 	}
 	
-	
+	public DTOInvoice getDTOInvoice() {
+		
+		return new DTOInvoice()
+			.setBudgetId(budget.getId())
+			.setDate(date)
+			.setExtra(extra)
+			.setId(id)
+			.setPrice(price);
+		
+	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
