@@ -3,7 +3,6 @@ package albert.lacambra.client.restservices;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONValue;
 import com.google.inject.Inject;
@@ -11,6 +10,7 @@ import com.google.inject.Inject;
 import albert.lacambra.client.models.Budget;
 import albert.lacambra.client.models.Invoice;
 import albert.lacambra.client.models.IsJso;
+import albert.lacambra.client.models.IsJsonSerializable;
 import albert.lacambra.client.restservices.utils.AsyncCallback;
 import albert.lacambra.client.restservices.utils.ResponseException;
 import albert.lacambra.shared.ResourceLocator;
@@ -32,7 +32,7 @@ public class RestServices {
 
 	}
 	
-	public void addInvoice(Invoice i, AsyncCallback<Long> callback) {
+	public void addInvoice(IsJsonSerializable i, AsyncCallback<Long> callback) {
 		client.put(ResourceLocator.invoiceBase,i.serializeToJsonValue(), callback);
 	}
 	
@@ -49,7 +49,7 @@ public class RestServices {
 		client.get(ResourceLocator.budgetBase, new CollectionSimpleCallback<Budget>(callback, new Budget()));
 	}
 
-	private class SimpleCallback<T extends IsJso<T>> implements AsyncCallback<JSONValue> {
+	private class SimpleCallback<T extends IsJsonSerializable> implements AsyncCallback<JSONValue> {
 
 		private AsyncCallback<T> callback;
 		private T instance;
@@ -72,13 +72,13 @@ public class RestServices {
 		@Override
 		public void onSuccess(JSONValue result) {
 
-			T res = instance.buildJso(result.isString().stringValue());
-			callback.onSuccess(res);
+			instance.loadFromJson(result);
+			callback.onSuccess(instance);
 
 		}
 	}
 	
-	private class CollectionSimpleCallback<T extends IsJso<T>> implements AsyncCallback<JSONValue> {
+	private class CollectionSimpleCallback<T extends IsJsonSerializable> implements AsyncCallback<JSONValue> {
 
 		private AsyncCallback<List<T>> callback;
 		private T instance;
@@ -110,8 +110,8 @@ public class RestServices {
 			}
 			
 			for ( int i= 0; i < array.size(); i++  ) {
-				String b = array.get(i).toString();
-				invoices.add(instance.buildJso(b));
+				instance.loadFromJson(array.get(i));
+				invoices.add(instance);
 			}
 			
 			

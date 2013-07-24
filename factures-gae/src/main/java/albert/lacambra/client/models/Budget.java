@@ -3,7 +3,7 @@ package albert.lacambra.client.models;
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.json.client.JSONValue;
 
-public class Budget implements IsJso<Budget>{
+public class Budget implements IsJso<Budget>, IsJsonSerializable{
 
 	private Long id;
 	private BudgetJso jso;
@@ -65,6 +65,12 @@ public class Budget implements IsJso<Budget>{
 	
 	public JSONValue serializeToJsonValue() {
 		return jso.serializeToJsonValue();
+	}
+
+	@Override
+	public void loadFromJson(JSONValue jsonValue) {
+		// TODO Auto-generated method stub
+		
 	}
 }
 

@@ -10,7 +10,9 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 
 import com.googlecode.objectify.Key;
+
 import static albert.lacambra.server.ofy.OfyService.ofy;
+import albert.lacambra.client.models.DTOInvoice;
 import albert.lacambra.server.models.Budget;
 import albert.lacambra.server.models.PersistedInvoice;
 public class InvoiceService extends BasicService implements IInvoiceService {
@@ -37,11 +39,11 @@ public class InvoiceService extends BasicService implements IInvoiceService {
 	}
 
 	@Override
-	public Response saveInvoice( PersistedInvoice invoice ) {
+	public Response saveInvoice( DTOInvoice invoice ) {
 		
-		Key<Budget> key = Budget.key(bracelet.getMeKey(), invoice.getBudget().getId());
-		invoice.setBudget(key);
-		long id = ofy().save().entity(invoice).now().getId();
+		Key<Budget> key = Budget.key(bracelet.getMeKey(), invoice.getBudgetId());
+		PersistedInvoice persistedInvoice = new PersistedInvoice(key, invoice);
+		long id = ofy().save().entity(persistedInvoice).now().getId();
 		
 		return Response.status(Status.CREATED).header("x-insertedid", String.valueOf(id)).build();
 	}

@@ -1,7 +1,5 @@
 package albert.lacambra.client.presenters;
 
-import java.util.List;
-
 import com.allen_sauer.gwt.log.client.Log;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
@@ -14,27 +12,23 @@ import albert.lacambra.client.models.Invoice;
 import albert.lacambra.client.place.NameTokens;
 import albert.lacambra.client.restservices.RestServices;
 import albert.lacambra.client.restservices.utils.ResponseException;
-import albert.lacambra.client.rpc.InvoiceService;
-import albert.lacambra.client.rpc.InvoiceServiceAsync;
 
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import albert.lacambra.client.restservices.utils.AsyncCallback;
+
 public class NewInvoicePresenter extends Presenter<NewInvoicePresenter.MyView, NewInvoicePresenter.MyProxy> {
 
-	private InvoiceServiceAsync service = GWT.create(InvoiceService.class);
-	
 	public interface MyView extends View {
 		public Button getButton();
 		public TextBox getPrice();
@@ -71,8 +65,8 @@ public class NewInvoicePresenter extends Presenter<NewInvoicePresenter.MyView, N
 				
 				if  (  bid ==  null ) bid="1";
 				
-				DTOInvoice invoice = 
-					new DTOInvoice()
+				Invoice invoice = 
+					(Invoice) new Invoice()
 					.setBudgetId(Long.parseLong(bid))
 					.setDate(getDate())
 					.setExtra(getView().getExtra().getText())
@@ -83,9 +77,9 @@ public class NewInvoicePresenter extends Presenter<NewInvoicePresenter.MyView, N
 		});
 	}
 
-	public void addInvoice(final DTOInvoice invoice) {
+	public void addInvoice(final Invoice invoice) {
 		
-		service.addInvoice(invoice, new AsyncCallback<Long>() {
+		restServices.addInvoice(invoice, new AsyncCallback<Long>() {
 
 			@Override
 			public void onSuccess(Long result) {
@@ -98,11 +92,12 @@ public class NewInvoicePresenter extends Presenter<NewInvoicePresenter.MyView, N
 			}
 
 			@Override
-			public void onFailure(Throwable caught) {
+			public void onFailure( ResponseException caught) {
 				Log.error("",caught);
 				getView().getInfoLabel().setText("error adding invoice:" +  caught.getMessage());
 			}
 		});
+
 		
 //		restServices.addInvoice(invoice, new AsyncCallback<Long>() {
 //

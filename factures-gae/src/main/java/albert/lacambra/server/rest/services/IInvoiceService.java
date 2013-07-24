@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 
+import albert.lacambra.client.models.DTOInvoice;
 import albert.lacambra.server.models.PersistedInvoice;
 import albert.lacambra.shared.ResourceLocator;
 
@@ -31,6 +32,6 @@ public interface IInvoiceService {
 	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response saveInvoice(PersistedInvoice invoice);
+	public Response saveInvoice(DTOInvoice invoice);
 	
 }

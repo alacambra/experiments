@@ -28,14 +28,6 @@ public class Budget {
 	
 	public Budget() {}
 	
-	public void setId(String id) {
-		this.id = Long.parseLong(id);
-	}
-	
-	public String getId() {
-		return String.valueOf(id);
-	}
-
 	public Key<Person> getOwner() {
 		return owner;
 	}
@@ -88,5 +80,7 @@ public class Budget {
 		this.used = used;
 	}
 	
-	
+	public Long getId() {
+		return id;
+	}
 }

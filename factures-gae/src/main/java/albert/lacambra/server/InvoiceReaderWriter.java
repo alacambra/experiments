@@ -16,28 +16,28 @@ import javax.ws.rs.ext.Provider;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
-import albert.lacambra.server.models.PersistedInvoice;
+import albert.lacambra.client.models.DTOInvoice;
 
 @Provider
 @Produces({MediaType.APPLICATION_JSON, "*/*"})
-public class InvoiceReaderWriter implements MessageBodyWriter<PersistedInvoice>, MessageBodyReader<PersistedInvoice>{
+public class InvoiceReaderWriter implements MessageBodyWriter<DTOInvoice>, MessageBodyReader<DTOInvoice>{
 
 	@Override
 	public boolean isWriteable(Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType) {
 		
-		return type.isAssignableFrom(PersistedInvoice.class);
+		return type.isAssignableFrom(DTOInvoice.class);
 	}
 
 	@Override
-	public long getSize(PersistedInvoice t, Class<?> type, Type genericType,
+	public long getSize(DTOInvoice t, Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType) {
 		
 		return -1;
 	}
 
 	@Override
-	public void writeTo(PersistedInvoice t, Class<?> type, Type genericType,
+	public void writeTo(DTOInvoice t, Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType,
 			MultivaluedMap<String, Object> httpHeaders,
 			OutputStream entityStream) throws IOException,
@@ -50,18 +50,18 @@ public class InvoiceReaderWriter implements MessageBodyWriter<PersistedInvoice>,
 	@Override
 	public boolean isReadable(Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType) {
-		return type.isAssignableFrom(PersistedInvoice.class);
+		return type.isAssignableFrom(DTOInvoice.class);
 	}
 
 	@Override
-	public PersistedInvoice readFrom(Class<PersistedInvoice> type, Type genericType,
+	public DTOInvoice readFrom(Class<DTOInvoice> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType,
 			MultivaluedMap<String, String> httpHeaders, InputStream entityStream)
 			throws IOException, WebApplicationException {
 		
 		ObjectMapper m = new ObjectMapper();
 		
-		return m.readValue(entityStream, PersistedInvoice.class);
+		return m.readValue(entityStream, DTOInvoice.class);
 	}
 }
 

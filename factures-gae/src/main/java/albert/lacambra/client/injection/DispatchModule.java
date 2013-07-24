@@ -1,7 +1,6 @@
 package albert.lacambra.client.injection;
 
 //import com.google.gwt.inject.client.AbstractGinModule;
-import com.gwtplatform.dispatch.client.gin.RestDispatchAsyncModule;
 
 public class DispatchModule {
 //	extends AbstractGinModule {

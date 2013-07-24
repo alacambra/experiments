@@ -102,14 +102,14 @@ public class BudgetService extends BasicService implements IBudgetService {
 			newBudget.setStart(oldBudget.getStart());
 			newBudget.setName(oldBudget.getName());
 			long id = ofy().save().entity(newBudget).now().getId();
-			newBudget.setId(String.valueOf(id));
+			newBudget.setId(id);
 			
 			Query<PersistedInvoice> q = ofy().load().type(PersistedInvoice.class).ancestor(oldBudget);
 			List<PersistedInvoice> invoices = new ArrayList<PersistedInvoice>();
 			invoices.addAll(q.list());
 
  			for ( PersistedInvoice oldInvoice : invoices ) {
-				Key<Budget> bKey = Budget.key(bracelet.getMeKey(), Long.parseLong(newBudget.getId()));
+				Key<Budget> bKey = Budget.key(bracelet.getMeKey(), newBudget.getId());
 				PersistedInvoice newInvoice = new PersistedInvoice(bKey);
 //				newInvoice.setBudgetId(id);
 				newInvoice.setDate(oldInvoice.getDate());

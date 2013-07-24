@@ -1,15 +1,12 @@
 package albert.lacambra.client.models;
 
-import java.io.Serializable;
+public class DTOInvoice {
 
-@SuppressWarnings("serial")
-public class DTOInvoice implements Serializable{
-
-	private Long date;
-	private String extra;
-	private Integer price;
-	private Long id;
-	private Long budgetId;
+	protected Long date;
+	protected String extra;
+	protected Integer price;
+	protected Long id;
+	protected Long budgetId;
 	
 	public DTOInvoice() {
 		
@@ -59,6 +56,51 @@ public class DTOInvoice implements Serializable{
 		this.id = id;
 		return this;
 	}
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

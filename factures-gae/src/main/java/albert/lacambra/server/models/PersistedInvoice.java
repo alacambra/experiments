@@ -4,9 +4,7 @@ package albert.lacambra.server.models;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import albert.lacambra.client.models.DTOInvoice;
-import albert.lacambra.shared.models.IInvoice;
 
-import com.google.gwt.editor.client.Editor.Ignore;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -58,7 +56,7 @@ public class PersistedInvoice{
 		
 		if ( obj == this ) return true;
 		
-		if ( id == ((IInvoice) obj).getId() ) return true;
+		if ( id == ((PersistedInvoice) obj).getId() ) return true;
 		
 		return false;
 	}
