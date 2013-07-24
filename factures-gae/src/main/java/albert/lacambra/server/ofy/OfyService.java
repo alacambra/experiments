@@ -4,7 +4,7 @@
 package albert.lacambra.server.ofy;
 
 import albert.lacambra.server.models.Budget;
-import albert.lacambra.server.models.Invoice;
+import albert.lacambra.server.models.PersistedInvoice;
 import albert.lacambra.server.models.Person;
 
 import com.googlecode.objectify.Objectify;
@@ -20,7 +20,7 @@ import com.googlecode.objectify.ObjectifyService;
 public class OfyService
 {
 	static {
-		factory().register(Invoice.class);
+		factory().register(PersistedInvoice.class);
 		factory().register(Budget.class);
 		factory().register(Person.class);
 	}

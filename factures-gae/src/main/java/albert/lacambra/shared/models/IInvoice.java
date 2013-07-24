@@ -2,25 +2,25 @@ package albert.lacambra.shared.models;
 
 public interface IInvoice {
 
-	public abstract Long getDate();
+	Long getDate();
 
-	public abstract String getExtra();
+	String getExtra();
 
-	public abstract Integer getPrice();
+	Integer getPrice();
 
-	public abstract void setDate(Long date);
+	void setDate(Long date);
 
-	public abstract void setExtra(String extra);
+	void setExtra(String extra);
 
-	public abstract void setPrice(Integer price);
+	void setPrice(Integer price);
 
-	public abstract Long getId();
+	Long getId();
 
-	public abstract void setId(Long id);
+	void setId(Long id);
 	
-	public abstract Long getBudgetId();
+	Long getBudgetId();
 	
-	public abstract void setBudgetId(Long id);
+	void setBudgetId(Long id);
 	
 	
 

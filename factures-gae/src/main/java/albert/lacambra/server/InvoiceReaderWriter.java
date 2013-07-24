@@ -16,28 +16,28 @@ import javax.ws.rs.ext.Provider;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
-import albert.lacambra.server.models.Invoice;
+import albert.lacambra.server.models.PersistedInvoice;
 
 @Provider
 @Produces({MediaType.APPLICATION_JSON, "*/*"})
-public class InvoiceReaderWriter implements MessageBodyWriter<Invoice>, MessageBodyReader<Invoice>{
+public class InvoiceReaderWriter implements MessageBodyWriter<PersistedInvoice>, MessageBodyReader<PersistedInvoice>{
 
 	@Override
 	public boolean isWriteable(Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType) {
 		
-		return type.isAssignableFrom(Invoice.class);
+		return type.isAssignableFrom(PersistedInvoice.class);
 	}
 
 	@Override
-	public long getSize(Invoice t, Class<?> type, Type genericType,
+	public long getSize(PersistedInvoice t, Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType) {
 		
 		return -1;
 	}
 
 	@Override
-	public void writeTo(Invoice t, Class<?> type, Type genericType,
+	public void writeTo(PersistedInvoice t, Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType,
 			MultivaluedMap<String, Object> httpHeaders,
 			OutputStream entityStream) throws IOException,
@@ -50,18 +50,18 @@ public class InvoiceReaderWriter implements MessageBodyWriter<Invoice>, MessageB
 	@Override
 	public boolean isReadable(Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType) {
-		return type.isAssignableFrom(Invoice.class);
+		return type.isAssignableFrom(PersistedInvoice.class);
 	}
 
 	@Override
-	public Invoice readFrom(Class<Invoice> type, Type genericType,
+	public PersistedInvoice readFrom(Class<PersistedInvoice> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType,
 			MultivaluedMap<String, String> httpHeaders, InputStream entityStream)
 			throws IOException, WebApplicationException {
 		
 		ObjectMapper m = new ObjectMapper();
 		
-		return m.readValue(entityStream, Invoice.class);
+		return m.readValue(entityStream, PersistedInvoice.class);
 	}
 }
 

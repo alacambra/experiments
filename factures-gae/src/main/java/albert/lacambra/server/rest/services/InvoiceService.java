@@ -12,7 +12,7 @@ import org.codehaus.jackson.map.JsonMappingException;
 import com.googlecode.objectify.Key;
 import static albert.lacambra.server.ofy.OfyService.ofy;
 import albert.lacambra.server.models.Budget;
-import albert.lacambra.server.models.Invoice;
+import albert.lacambra.server.models.PersistedInvoice;
 public class InvoiceService extends BasicService implements IInvoiceService {
 
 
@@ -23,8 +23,8 @@ public class InvoiceService extends BasicService implements IInvoiceService {
 	@Override
 	public Response getInvoice( Long id ) {
 
-		Key<Invoice> key = Invoice.key(bracelet.getMeKey(), id);
-		Invoice i = ofy().load().key(key).getValue();
+		Key<PersistedInvoice> key = PersistedInvoice.key(bracelet.getMeKey(), id);
+		PersistedInvoice i = ofy().load().key(key).getValue();
 
 		Response  r = null;
 
@@ -37,9 +37,9 @@ public class InvoiceService extends BasicService implements IInvoiceService {
 	}
 
 	@Override
-	public Response saveInvoice( Invoice invoice ) {
+	public Response saveInvoice( PersistedInvoice invoice ) {
 		
-		Key<Budget> key = Budget.key(bracelet.getMeKey(), invoice.getBudgetId());
+		Key<Budget> key = Budget.key(bracelet.getMeKey(), invoice.getBudget().getId());
 		invoice.setBudget(key);
 		long id = ofy().save().entity(invoice).now().getId();
 		
@@ -49,7 +49,7 @@ public class InvoiceService extends BasicService implements IInvoiceService {
 
 	@Override
 	public Response getInvoices() throws JsonGenerationException, JsonMappingException, IOException {
-		List<Invoice> l = ofy().load().type(Invoice.class).ancestor(bracelet.getMeKey()).list();
+		List<PersistedInvoice> l = ofy().load().type(PersistedInvoice.class).ancestor(bracelet.getMeKey()).list();
 
 		if ( l == null ) {
 			return Response.status(Status.NO_CONTENT).build();

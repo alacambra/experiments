@@ -17,7 +17,7 @@ import javax.ws.rs.ext.Provider;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import albert.lacambra.server.models.Budget;
-import albert.lacambra.server.models.Invoice;
+import albert.lacambra.server.models.PersistedInvoice;
 
 @Provider
 @Produces({MediaType.APPLICATION_JSON, "*/*"})
@@ -51,7 +51,7 @@ public class BudgetReaderWriter implements MessageBodyWriter<Budget>, MessageBod
 	@Override
 	public boolean isReadable(Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType) {
-		return type.isAssignableFrom(Invoice.class);
+		return type.isAssignableFrom(PersistedInvoice.class);
 	}
 
 	@Override

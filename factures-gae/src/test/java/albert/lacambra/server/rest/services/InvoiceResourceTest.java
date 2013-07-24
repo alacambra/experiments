@@ -17,7 +17,7 @@ import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyFactory;
 
-import albert.lacambra.server.models.Invoice;
+import albert.lacambra.server.models.PersistedInvoice;
 import albert.lacambra.server.models.Person;
 
 
@@ -35,7 +35,7 @@ public class InvoiceResourceTest {
 	            return super.begin();
 	        }
 	    };
-	    fact.register(Invoice.class);
+	    fact.register(PersistedInvoice.class);
 	}
 	
 	@Test 

@@ -15,7 +15,7 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 
 import albert.lacambra.server.models.Budget;
-import albert.lacambra.server.models.Invoice;
+import albert.lacambra.server.models.PersistedInvoice;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.cmd.Query;
@@ -59,13 +59,13 @@ public class BudgetService extends BasicService implements IBudgetService {
 
 				} else {
 
-					Query<Invoice> q = ofy().load().type(Invoice.class).ancestor(b);
-					List<Invoice> invoices = new ArrayList<Invoice>();
+					Query<PersistedInvoice> q = ofy().load().type(PersistedInvoice.class).ancestor(b);
+					List<PersistedInvoice> invoices = new ArrayList<PersistedInvoice>();
 					invoices.addAll(q.list());
 
 					int total = 0;
 
-					for ( Invoice i : invoices ) {
+					for ( PersistedInvoice i : invoices ) {
 						total += i.getPrice(); 
 					}
 
@@ -104,14 +104,14 @@ public class BudgetService extends BasicService implements IBudgetService {
 			long id = ofy().save().entity(newBudget).now().getId();
 			newBudget.setId(String.valueOf(id));
 			
-			Query<Invoice> q = ofy().load().type(Invoice.class).ancestor(oldBudget);
-			List<Invoice> invoices = new ArrayList<Invoice>();
+			Query<PersistedInvoice> q = ofy().load().type(PersistedInvoice.class).ancestor(oldBudget);
+			List<PersistedInvoice> invoices = new ArrayList<PersistedInvoice>();
 			invoices.addAll(q.list());
 
- 			for ( Invoice oldInvoice : invoices ) {
+ 			for ( PersistedInvoice oldInvoice : invoices ) {
 				Key<Budget> bKey = Budget.key(bracelet.getMeKey(), Long.parseLong(newBudget.getId()));
-				Invoice newInvoice = new Invoice(bKey);
-				newInvoice.setBudgetId(id);
+				PersistedInvoice newInvoice = new PersistedInvoice(bKey);
+//				newInvoice.setBudgetId(id);
 				newInvoice.setDate(oldInvoice.getDate());
 				newInvoice.setExtra(oldInvoice.getExtra());
 				newInvoice.setPrice(oldInvoice.getPrice());
