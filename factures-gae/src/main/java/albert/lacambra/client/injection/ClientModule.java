@@ -51,37 +51,11 @@ public class ClientModule extends AbstractPresenterModule {
 	
 	@Provides
 	public IRestClient.EndPointProvider getEndPoint() {
-		//		if( GWT.isProdMode() ) {
 		return new IRestClient.EndPointProvider() {
 
 			@Override
 			public String getEndPoint() {
-
-//				String host = Window.Location.getHostName();
 				return "/rest/";
-//				if (host.equals("http://local.poolingpeople.org/")) {
-//
-//					return Window.Location.getHostName() + "/rest/";
-//
-//				} else if(GWT.getHostPageBaseURL().matches(".*apitester-clientdev.*")) {
-//
-//					return "http://" + Window.Location.getHostName() + "/ppapi_clientdev/rest/";
-//
-//				} else if(GWT.getHostPageBaseURL().matches(".*apitester-apidev.*")) {
-//
-//					if(GWT.isProdMode()) {
-//						return "http://" + Window.Location.getHostName() + "/ppapi_apidev/rest/";
-//					} else {
-//						return "http://" + Window.Location.getHostName() + "/rest/";
-//					}
-//
-//				} else if(GWT.getHostPageBaseURL().matches(".*apitester-test.*")) {
-//
-//					return "http://" + Window.Location.getHostName() + "/ppapi_test/rest/";
-//
-//				} else {
-//					return "http://" + Window.Location.getHostName() + "/rest/";
-//				}
 			}
 		};
 	}
