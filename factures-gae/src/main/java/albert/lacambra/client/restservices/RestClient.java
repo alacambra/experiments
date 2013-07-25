@@ -130,6 +130,7 @@ public class RestClient implements IRestClient{
 
 					} else if (Response.SC_UNAUTHORIZED == response.getStatusCode()) {
 						
+						Log.info("SC_UNAUTHORIZED received. Redirecting to " + response.getText());
 						Window.Location.replace(response.getText());
 						
 						
