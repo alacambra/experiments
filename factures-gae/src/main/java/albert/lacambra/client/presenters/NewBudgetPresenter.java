@@ -26,6 +26,7 @@ import albert.lacambra.client.restservices.utils.ResponseException;
 public class NewBudgetPresenter extends Presenter<NewBudgetPresenter.MyView, NewBudgetPresenter.MyProxy> {
 
 	@Inject RestServices services;
+	@Inject  ResumePresenter resumePresenter;
 	private NewInvoicePresenter newInvoicePresenter;
 	
 	public interface MyView extends View {
@@ -56,6 +57,7 @@ public class NewBudgetPresenter extends Presenter<NewBudgetPresenter.MyView, New
 	@Override
 	protected void revealInParent() {
 		RevealContentEvent.fire(this, MainPresenter.TYPE_MainContent, this);
+		setInSlot(null, resumePresenter);
 	}
 
 	@Override

@@ -9,7 +9,9 @@ import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasText;
+import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -40,6 +42,11 @@ public class NewBudgetView extends ViewImpl implements NewBudgetPresenter.MyView
 		DateTimeFormat dateTimeFormat = DateTimeFormat.getFormat(PredefinedFormat.YEAR);
 		year.setValue(dateTimeFormat.format(d));
 		name.setValue("");
+	}
+	
+	@Override
+	public void setInSlot(Object slot, IsWidget content) {
+		this.tmpPanel.add(content);
 	}
 	
 	@Override
@@ -81,6 +88,7 @@ public class NewBudgetView extends ViewImpl implements NewBudgetPresenter.MyView
 	@UiField TextBox assignation;
 	@UiField TextBox year;
 	@UiField Button submit;
+	@UiField VerticalPanel tmpPanel;
 }
 
 

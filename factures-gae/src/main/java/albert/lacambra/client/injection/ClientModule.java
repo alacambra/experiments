@@ -6,10 +6,12 @@ import com.google.inject.Singleton;
 //import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
 
+
 import albert.lacambra.client.restservices.IRequestBuilder;
 import albert.lacambra.client.restservices.IRestClient;
 import albert.lacambra.client.restservices.RequestBuilder;
 import albert.lacambra.client.restservices.RestClient;
+import albert.lacambra.client.restservices.RestServices;
 
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 import com.gwtplatform.mvp.client.gin.DefaultModule;
@@ -23,6 +25,8 @@ import albert.lacambra.client.presenters.MainPresenter;
 import albert.lacambra.client.presenters.MainView;
 import albert.lacambra.client.presenters.NewBudgetPresenter;
 import albert.lacambra.client.presenters.NewBudgetView;
+import albert.lacambra.client.presenters.ResumePresenter;
+import albert.lacambra.client.presenters.ResumeView;
 
 public class ClientModule extends AbstractPresenterModule {
 
@@ -37,6 +41,7 @@ public class ClientModule extends AbstractPresenterModule {
 		bindConstant().annotatedWith(DefaultPlace.class).to(
 				NameTokens.newinvoice);
 		
+		bind(RestServices.class).in(Singleton.class);
 		bind(IRestClient.class).to(RestClient.class).in(Singleton.class);
 		bind(IRequestBuilder.class).to(RequestBuilder.class).in(Singleton.class);
 		
@@ -47,6 +52,10 @@ public class ClientModule extends AbstractPresenterModule {
 		bindPresenter(NewBudgetPresenter.class,
 				NewBudgetPresenter.MyView.class, NewBudgetView.class,
 				NewBudgetPresenter.MyProxy.class);
+
+		bindSingletonPresenterWidget(ResumePresenter.class,
+				ResumePresenter.MyView.class, ResumeView.class);
+
 	}
 	
 	@Provides

@@ -3,6 +3,8 @@ package albert.lacambra.client.restservices;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Singleton;
+
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONValue;
 import com.google.inject.Inject;
@@ -14,6 +16,7 @@ import albert.lacambra.client.restservices.utils.AsyncCallback;
 import albert.lacambra.client.restservices.utils.ResponseException;
 import albert.lacambra.shared.ResourceLocator;
 
+@Singleton
 public class RestServices {
 
 	private final IRestClient client;

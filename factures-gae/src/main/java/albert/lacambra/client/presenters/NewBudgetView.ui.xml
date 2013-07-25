@@ -20,6 +20,7 @@
 		<br />
 		<g:Button ui:field="submit" text="submit" />
 
+		<g:VerticalPanel ui:field="tmpPanel"></g:VerticalPanel>
 	</g:HTMLPanel>
 </ui:UiBinder>
 

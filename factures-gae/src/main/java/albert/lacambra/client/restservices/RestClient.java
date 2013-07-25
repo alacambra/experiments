@@ -23,7 +23,7 @@ import com.google.web.bindery.event.shared.EventBus;
 
 public class RestClient implements IRestClient{
 
-	private static final boolean USE_CACHING = true;
+	private static final boolean USE_CACHING = false;
 	
 	private final String serviceEndPoint;
 	private final HashSet<Integer> validCodes;
@@ -59,7 +59,6 @@ public class RestClient implements IRestClient{
 				removeBuffer();
 			}
 		});
-		
 		
 	}
 	
