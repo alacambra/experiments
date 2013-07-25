@@ -18,22 +18,25 @@ import com.google.gwt.http.client.Response;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.Window;
-
 import com.google.inject.Inject;
+import com.google.web.bindery.event.shared.EventBus;
 
 public class RestClient implements IRestClient{
 
-	private static final boolean USE_CACHING = false;
+	private static final boolean USE_CACHING = true;
 	
 	private final String serviceEndPoint;
 	private final HashSet<Integer> validCodes;
 	private final IRequestBuilder requestBuilder;
 	private final HashMap<String, JSONValue> buffer = new HashMap<String, JSONValue>();
 
+	private EventBus eventBus;
+
 	@Inject
 	public RestClient(
 			final IRequestBuilder requestBuilder,
-			final IRestClient.EndPointProvider endPointProvider
+			final IRestClient.EndPointProvider endPointProvider,
+			final EventBus eventBus
 			)
 	{
 		
@@ -46,8 +49,17 @@ public class RestClient implements IRestClient{
 		this.validCodes.add(Response.SC_NOT_MODIFIED);
 		this.validCodes.add(Response.SC_CREATED);
 		this.validCodes.add(Response.SC_NO_CONTENT);
-//		this.eventBus = eventBus;
 		this.requestBuilder = requestBuilder;
+		this.eventBus = eventBus; 
+		
+		this.eventBus.addHandler(ResourceUpdatedEvent.TYPE, new ResourceUpdatedEvent.ResourceUpdatedHandler() {
+			
+			@Override
+			public void onResourceUpdated(ResourceUpdatedEvent event) {
+				removeBuffer();
+			}
+		});
+		
 		
 	}
 	
