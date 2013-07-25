@@ -3,7 +3,7 @@
 
 package albert.lacambra.server.ofy;
 
-import albert.lacambra.server.models.Budget;
+import albert.lacambra.server.models.PersistedBudget;
 import albert.lacambra.server.models.PersistedInvoice;
 import albert.lacambra.server.models.Person;
 
@@ -21,7 +21,7 @@ public class OfyService
 {
 	static {
 		factory().register(PersistedInvoice.class);
-		factory().register(Budget.class);
+		factory().register(PersistedBudget.class);
 		factory().register(Person.class);
 	}
 

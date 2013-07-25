@@ -22,7 +22,7 @@ public class Invoice extends DTOInvoice implements IsJsonSerializable
 	}
 
 	@Override
-	public void loadFromJson(JSONValue jsonValue) {
+	public IsJsonSerializable loadFromJson(JSONValue jsonValue) {
 		
 		JSONObject v = jsonValue.isObject();
 		date = Long.parseLong(v.get("date").isNumber().toString());
@@ -31,6 +31,7 @@ public class Invoice extends DTOInvoice implements IsJsonSerializable
 		budgetId = Long.parseLong(v.get("budgetId").isNumber().toString());
 		extra = v.get("extra").isString().toString();
 		
+		return this;
 	}
 
 }

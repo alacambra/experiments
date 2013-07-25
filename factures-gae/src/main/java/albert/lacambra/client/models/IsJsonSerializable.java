@@ -5,6 +5,6 @@ import com.google.gwt.json.client.JSONValue;
 public interface IsJsonSerializable {
 
 	JSONValue serializeToJsonValue();
-	void loadFromJson(JSONValue jsonValue);
+	IsJsonSerializable loadFromJson(JSONValue jsonValue);
 	
 }

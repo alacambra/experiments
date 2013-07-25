@@ -13,7 +13,7 @@ import com.googlecode.objectify.Key;
 
 import static albert.lacambra.server.ofy.OfyService.ofy;
 import albert.lacambra.client.models.DTOInvoice;
-import albert.lacambra.server.models.Budget;
+import albert.lacambra.server.models.PersistedBudget;
 import albert.lacambra.server.models.PersistedInvoice;
 public class InvoiceService extends BasicService implements IInvoiceService {
 
@@ -41,7 +41,7 @@ public class InvoiceService extends BasicService implements IInvoiceService {
 	@Override
 	public Response saveInvoice( DTOInvoice invoice ) {
 		
-		Key<Budget> key = Budget.key(bracelet.getMeKey(), invoice.getBudgetId());
+		Key<PersistedBudget> key = PersistedBudget.key(bracelet.getMeKey(), invoice.getBudgetId());
 		PersistedInvoice persistedInvoice = new PersistedInvoice(key, invoice);
 		long id = ofy().save().entity(persistedInvoice).now().getId();
 		

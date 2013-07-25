@@ -11,13 +11,12 @@ import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Parent;
 
-@Entity
+@Entity(name="Invoice")
 public class PersistedInvoice{
 
     @Id private Long id;
     
-    @JsonIgnore @Parent Key<Budget> budget;
-//    @Ignore Long budgetId;
+    @JsonIgnore @Parent Key<PersistedBudget> budget;
     private String extra;
     @Index
     private Long date;
@@ -30,12 +29,12 @@ public class PersistedInvoice{
 		return Key.create(parent, PersistedInvoice.class, id);
 	}
     
-	public PersistedInvoice(Key<Budget> budget) { 
+	public PersistedInvoice(Key<PersistedBudget> budget) { 
 		this();
 		this.budget = budget;
 	}
 	
-	public PersistedInvoice(Key<Budget> budget, DTOInvoice dtoInvoice) { 
+	public PersistedInvoice(Key<PersistedBudget> budget, DTOInvoice dtoInvoice) { 
 		this();
 		this.budget = budget;
 		extra = dtoInvoice.getExtra();
@@ -43,7 +42,7 @@ public class PersistedInvoice{
 		price = dtoInvoice.getPrice();
 	}
 	
-	public PersistedInvoice(Long id, Key<Budget> budget) {
+	public PersistedInvoice(Long id, Key<PersistedBudget> budget) {
 		this(budget);
 		this.id = id;
 	}
@@ -65,13 +64,9 @@ public class PersistedInvoice{
 		return id;
 	}
 
-	public Key<Budget> getBudget() {
+	public Key<PersistedBudget> getBudget() {
 		return budget;
 	}
-
-//	public Long getBudgetId() {
-//		return budgetId;
-//	}
 
 	public String getExtra() {
 		return extra;
@@ -89,13 +84,9 @@ public class PersistedInvoice{
 		this.id = id;
 	}
 
-	public void setBudget(Key<Budget> budget) {
+	public void setBudget(Key<PersistedBudget> budget) {
 		this.budget = budget;
 	}
-
-//	public void setBudgetId(Long budgetId) {
-//		this.budgetId = budgetId;
-//	}
 
 	public void setExtra(String extra) {
 		this.extra = extra;

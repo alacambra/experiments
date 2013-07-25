@@ -1,5 +1,7 @@
 package albert.lacambra.client.presenters;
 
+import java.util.List;
+
 import com.allen_sauer.gwt.log.client.Log;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
@@ -7,7 +9,6 @@ import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 
 import albert.lacambra.client.models.Budget;
-import albert.lacambra.client.models.DTOInvoice;
 import albert.lacambra.client.models.Invoice;
 import albert.lacambra.client.place.NameTokens;
 import albert.lacambra.client.restservices.RestServices;
@@ -97,23 +98,6 @@ public class NewInvoicePresenter extends Presenter<NewInvoicePresenter.MyView, N
 				getView().getInfoLabel().setText("error adding invoice:" +  caught.getMessage());
 			}
 		});
-
-		
-//		restServices.addInvoice(invoice, new AsyncCallback<Long>() {
-//
-//			@Override
-//			public void onSuccess(Long result) {
-//				Log.info("invoice added with id " + result );
-//				getView().getInfoLabel().setText("invoice \"" + invoice.getExtra() +"\" added with id " + result );
-//				getView().restartFields();
-//			}
-//
-//			@Override
-//			public void onFailure(ResponseException caught) {
-//				Log.error("",caught);
-//				getView().getInfoLabel().setText("error adding invoice:" +  caught.getMessage());
-//			}
-//		});
 	}
 
 	public void addBugetIntoList(Budget budget) {
@@ -152,20 +136,21 @@ public class NewInvoicePresenter extends Presenter<NewInvoicePresenter.MyView, N
 
 		if ( year != null ) {
 			
-//			restServices.getBudgets(year, new AsyncCallback<List<Budget>>() {
-//
-//				@Override
-//				public void onSuccess(List<Budget> result) {
-//					for (Budget budget : result) {
-//						getView().addPossibleBudget(String.valueOf(budget.getId()), budget.getName());
-//					}
-//				}
-//
-//				@Override
-//				public void onFailure(ResponseException caught) {
-//					Log.error("", caught);
-//				}
-//			});
+			restServices.getBudgets(year, new AsyncCallback<List<Budget>>() {
+
+				@Override
+				public void onSuccess(List<Budget> result) {
+					for (Budget budget : result) {
+						Log.info(budget.getName());
+						getView().addPossibleBudget(String.valueOf(budget.getId()), budget.getName());
+					}
+				}
+
+				@Override
+				public void onFailure(ResponseException caught) {
+					Log.error("", caught);
+				}
+			});
 		}
 	}
 

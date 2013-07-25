@@ -9,7 +9,6 @@ import com.google.inject.Inject;
 
 import albert.lacambra.client.models.Budget;
 import albert.lacambra.client.models.Invoice;
-import albert.lacambra.client.models.IsJso;
 import albert.lacambra.client.models.IsJsonSerializable;
 import albert.lacambra.client.restservices.utils.AsyncCallback;
 import albert.lacambra.client.restservices.utils.ResponseException;
@@ -37,7 +36,15 @@ public class RestServices {
 	}
 	
 	public void getAllInvoices(AsyncCallback<List<Invoice>> callback) {
-		client.get(ResourceLocator.invoiceBase, new CollectionSimpleCallback<Invoice>(callback, new Invoice()));
+		client.get(ResourceLocator.invoiceBase, 
+				new CollectionSimpleCallback<Invoice>(callback, 
+						new InstanceGenerator<Invoice>() {
+
+							@Override
+							public Invoice getInstance() {
+								return new Invoice();
+							}
+		}));
 
 	}
 	
@@ -46,7 +53,15 @@ public class RestServices {
 	}
 	
 	public void getBudgets(String year, AsyncCallback<List<Budget>> callback) {
-		client.get(ResourceLocator.budgetBase, new CollectionSimpleCallback<Budget>(callback, new Budget()));
+		client.get(ResourceLocator.budgetBase, 
+				new CollectionSimpleCallback<Budget>(callback, 
+						new InstanceGenerator<Budget>() {
+
+							@Override
+							public Budget getInstance() {
+								return new Budget();
+							}
+						}));
 	}
 
 	private class SimpleCallback<T extends IsJsonSerializable> implements AsyncCallback<JSONValue> {
@@ -81,15 +96,15 @@ public class RestServices {
 	private class CollectionSimpleCallback<T extends IsJsonSerializable> implements AsyncCallback<JSONValue> {
 
 		private AsyncCallback<List<T>> callback;
-		private T instance;
+		private InstanceGenerator<T> instanceGenerator;
 
-		public CollectionSimpleCallback( AsyncCallback<List<T>> callback, T instance) {
+		public CollectionSimpleCallback( AsyncCallback<List<T>> callback, InstanceGenerator<T> instanceGenerator) {
 
-			if (callback == null || instance == null)
+			if (callback == null || instanceGenerator == null)
 				throw new IllegalArgumentException("Callback cannot be null");
 
 			this.callback = callback;
-			this.instance = instance;
+			this.instanceGenerator = instanceGenerator;
 		}
 
 		@Override
@@ -110,7 +125,8 @@ public class RestServices {
 			}
 			
 			for ( int i= 0; i < array.size(); i++  ) {
-				instance.loadFromJson(array.get(i));
+				@SuppressWarnings("unchecked")
+				T instance = (T) instanceGenerator.getInstance().loadFromJson(array.get(i));
 				invoices.add(instance);
 			}
 			
@@ -119,5 +135,25 @@ public class RestServices {
 
 		}
 	}
+	
+	private interface InstanceGenerator<T extends IsJsonSerializable>{
+		T getInstance();
+	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

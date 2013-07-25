@@ -8,13 +8,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 
-import albert.lacambra.server.models.Budget;
+import albert.lacambra.client.models.DTOBudget;
+import albert.lacambra.server.models.PersistedBudget;
 import albert.lacambra.server.models.PersistedInvoice;
 
 import com.googlecode.objectify.Key;
@@ -22,36 +24,37 @@ import com.googlecode.objectify.cmd.Query;
 
 public class BudgetService extends BasicService implements IBudgetService {
 
-	public Response getBudget(Long id) {
-		Key<Budget> key = Budget.key(bracelet.getMeKey(), id);
-		Budget bg = ofy().load().key(key).getValue();
+	public DTOBudget getBudget(Long id) {
 
-		Response  r = null;
+		Key<PersistedBudget> key = PersistedBudget.key(bracelet.getMeKey(), id);
+		PersistedBudget bg = ofy().load().key(key).getValue();
 
 		if ( bg == null ){
-			r = Response.status(Response.Status.NOT_FOUND).entity("{\"msg\":\"not found\"}").build();
-		} else {
-			r = Response.ok(bg).build();
-		}
-		return r;
+			throw new WebApplicationException(
+					Response.status(Response.Status.NOT_FOUND)
+					.entity("{\"msg\":\"not found\"}")
+					.build());
+		} 
+
+		return bg.getDTOBudget();
 	}
 
-	public Response getBudgetsForYear(String year) throws JsonGenerationException, JsonMappingException, IOException {
+	public List<DTOBudget> getBudgetsForYear(String year) throws JsonGenerationException, JsonMappingException, IOException {
 
-		Query<Budget> query = ofy().load().type(Budget.class).ancestor(bracelet.getMeKey());
+		Query<PersistedBudget> query = ofy().load().type(PersistedBudget.class).ancestor(bracelet.getMeKey());
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 		String ini = year + "-01-01 00:00:00.0";
 		String end = String.valueOf(Integer.parseInt(year) + 1) + "-01-01 00:00:00.0";
 
-		List<Budget> l = new ArrayList<Budget>();
+		List<PersistedBudget> l = new ArrayList<PersistedBudget>();
 
 		try {
 
 			l = query.filter("start >=", dateFormat.parse(ini).getTime()).list();//.filter("end <=", dateFormat.parse(end).getTime()).list();
-			ArrayList<Budget> bs = new ArrayList<Budget>();
+			ArrayList<PersistedBudget> bs = new ArrayList<PersistedBudget>();
 			bs.addAll(l);
-			for( Budget b : bs) {
+			for( PersistedBudget b : bs) {
 
 				if ( b.getEnd() > dateFormat.parse(end).getTime() ) {
 
@@ -77,25 +80,30 @@ public class BudgetService extends BasicService implements IBudgetService {
 
 		} catch (ParseException e) {
 			log.severe("Error parsing dates");
-			return Response.status(Status.INTERNAL_SERVER_ERROR).entity("Error parsing dates").build();
+			throw new WebApplicationException(Response.status(Status.INTERNAL_SERVER_ERROR).entity("Error parsing dates").build());
 		}
-
 
 		if ( l == null ) {
-			return Response.status(Status.NO_CONTENT).build();
-		} else {
-			return Response.ok().entity(m.writeValueAsString(l)).build();
+			throw new WebApplicationException(Response.status(Status.NO_CONTENT).build());
+		} 
+
+		ArrayList<DTOBudget> budgets = new ArrayList<DTOBudget>();
+
+		for ( PersistedBudget pb : l) {
+			budgets.add(pb.getDTOBudget());
 		}
+		
+		return budgets;
 	}
 
 	@Override
 	public Response update() {
-		
-		List<Budget> l = ofy().load().type(Budget.class).ancestor(bracelet.getMeKey()).list();
-		
-  		for ( Budget oldBudget : l ) {
-			
-			Budget newBudget = new Budget();
+
+		List<PersistedBudget> l = ofy().load().type(PersistedBudget.class).ancestor(bracelet.getMeKey()).list();
+
+		for ( PersistedBudget oldBudget : l ) {
+
+			PersistedBudget newBudget = new PersistedBudget();
 			newBudget.setOwner(bracelet.getMeKey());
 			newBudget.setAssignation(oldBudget.getAssignation());
 			newBudget.setEnd(oldBudget.getEnd());
@@ -103,47 +111,53 @@ public class BudgetService extends BasicService implements IBudgetService {
 			newBudget.setName(oldBudget.getName());
 			long id = ofy().save().entity(newBudget).now().getId();
 			newBudget.setId(id);
-			
+
 			Query<PersistedInvoice> q = ofy().load().type(PersistedInvoice.class).ancestor(oldBudget);
 			List<PersistedInvoice> invoices = new ArrayList<PersistedInvoice>();
 			invoices.addAll(q.list());
 
- 			for ( PersistedInvoice oldInvoice : invoices ) {
-				Key<Budget> bKey = Budget.key(bracelet.getMeKey(), newBudget.getId());
+			for ( PersistedInvoice oldInvoice : invoices ) {
+				Key<PersistedBudget> bKey = PersistedBudget.key(bracelet.getMeKey(), newBudget.getId());
 				PersistedInvoice newInvoice = new PersistedInvoice(bKey);
-//				newInvoice.setBudgetId(id);
 				newInvoice.setDate(oldInvoice.getDate());
 				newInvoice.setExtra(oldInvoice.getExtra());
 				newInvoice.setPrice(oldInvoice.getPrice());
 				ofy().save().entity(newInvoice).now().getId();
 			}
- 			ofy().delete().entities(invoices);
+			
+			ofy().delete().entities(invoices);
 			ofy().delete().entities(oldBudget);
 		}
-  		
-  		return Response.status(Status.NO_CONTENT).build();
+
+		return Response.status(Status.NO_CONTENT).build();
 	}
 
-	public Response getAllBudgets() throws JsonGenerationException, JsonMappingException, IOException {
+	public List<DTOBudget> getAllBudgets() throws JsonGenerationException, JsonMappingException, IOException {
 
-		List<Budget> l = ofy().load().type(Budget.class).ancestor(bracelet.getMeKey()).list();
+		List<PersistedBudget> l = ofy().load().type(PersistedBudget.class).ancestor(bracelet.getMeKey()).list();
 
 		if ( l == null ) {
-			return Response.status(Status.NO_CONTENT).build();
-		} else {
-			return Response.ok().entity(m.writeValueAsString(l)).build();
+			throw new WebApplicationException(Response.status(Status.NO_CONTENT).build());
+		} 
+
+		ArrayList<DTOBudget> budgets = new ArrayList<DTOBudget>();
+
+		for ( PersistedBudget pb : l) {
+			budgets.add(pb.getDTOBudget());
 		}
+
+		return budgets;
 	}
 
 	@Override
-	public Response saveBudget(Budget budget) {
+	public Response saveBudget(DTOBudget dto) {
 
-		budget.setOwner(bracelet.getMeKey());
+		PersistedBudget pb = new PersistedBudget(dto).setOwner(bracelet.getMeKey());
 
 		long id = 0;
 
 		try{
-			id = ofy().save().entity(budget).now().getId();
+			id = ofy().save().entity(pb).now().getId();
 		} catch (Throwable e ) {
 			log.severe(e.getMessage());
 			return Response.status(Status.INTERNAL_SERVER_ERROR).entity("Error parsing dates").build();

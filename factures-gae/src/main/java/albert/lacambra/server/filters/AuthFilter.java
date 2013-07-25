@@ -1,6 +1,7 @@
 package albert.lacambra.server.filters;
 
 import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.FilterChain;
@@ -45,7 +46,7 @@ public class AuthFilter extends AbstractFilter
 			try {
 				chain.doFilter(request, response);
 			} catch (Throwable e) {
-				log.severe("error: " + e.getMessage());
+				log.log(Level.SEVERE, "error: " + e.getMessage(), e);
 				throw new RuntimeException(e);
 //				throw new WebApplicationException(e);
 			} 
