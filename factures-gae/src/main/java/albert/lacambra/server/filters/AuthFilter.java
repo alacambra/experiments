@@ -44,6 +44,9 @@ public class AuthFilter extends AbstractFilter
 			
 			
 		} else {
+			
+			log.info("Auth user is " + user.getEmail());
+			
 			try {
 				chain.doFilter(request, response);
 			} catch (Throwable e) {

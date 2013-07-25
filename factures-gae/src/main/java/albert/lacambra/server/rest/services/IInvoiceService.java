@@ -1,6 +1,7 @@
 package albert.lacambra.server.rest.services;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -24,11 +25,11 @@ public interface IInvoiceService {
 	@GET
 	@Path("{id:[0-9]+}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getInvoice(@PathParam("id") Long id);
+	public DTOInvoice getInvoice(@PathParam("id") Long id);
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getInvoices() throws JsonGenerationException, JsonMappingException, IOException;
+	public List<DTOInvoice> getInvoices() throws JsonGenerationException, JsonMappingException, IOException;
 	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)

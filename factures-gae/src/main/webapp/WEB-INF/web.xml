@@ -25,7 +25,16 @@
 			org.jboss.resteasy.plugins.guice.GuiceResteasyBootstrapServletContextListener
 		</listener-class>
 	</listener>
-
+	<servlet>
+		<servlet-name>resteasy-servlet</servlet-name>
+		<servlet-class>
+			org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>resteasy-servlet</servlet-name>
+		<url-pattern>/rest/*</url-pattern>
+	</servlet-mapping>
 	<!-- Default page to serve -->
 	<welcome-file-list>
 		<welcome-file>factures-gae.html</welcome-file>

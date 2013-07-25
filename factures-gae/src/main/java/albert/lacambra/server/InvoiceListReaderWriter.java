@@ -18,13 +18,13 @@ import javax.ws.rs.ext.Provider;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
-import albert.lacambra.client.models.DTOBudget;
+import albert.lacambra.client.models.DTOInvoice;
 import albert.lacambra.server.models.PersistedInvoice;
 
 @Provider
 @Produces({MediaType.APPLICATION_JSON, "*/*"})
-public class BudgetListReaderWriter 
-implements MessageBodyWriter<List<DTOBudget>>, MessageBodyReader<List<DTOBudget>>{
+public class InvoiceListReaderWriter 
+implements MessageBodyWriter<List<DTOInvoice>>, MessageBodyReader<List<DTOInvoice>>{
 
 	@Override
 	public boolean isWriteable(Class<?> type, Type genericType,
@@ -40,7 +40,7 @@ implements MessageBodyWriter<List<DTOBudget>>, MessageBodyReader<List<DTOBudget>
 	      Type[] actualTypeArgs = (parameterizedType.getActualTypeArguments());
 	      
 	      isWritable = (actualTypeArgs.length == 1 &&
-	    		  actualTypeArgs[0].equals(DTOBudget.class));
+	    		  actualTypeArgs[0].equals(DTOInvoice.class));
 	      
 	    } else {
 	      isWritable = false;
@@ -50,14 +50,14 @@ implements MessageBodyWriter<List<DTOBudget>>, MessageBodyReader<List<DTOBudget>
 	}
 
 	@Override
-	public long getSize(List<DTOBudget> t, Class<?> type, Type genericType,
+	public long getSize(List<DTOInvoice> t, Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType) {
 		
 		return -1;
 	}
 
 	@Override
-	public void writeTo(List<DTOBudget> t, Class<?> type, Type genericType,
+	public void writeTo(List<DTOInvoice> t, Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType,
 			MultivaluedMap<String, Object> httpHeaders,
 			OutputStream entityStream) throws IOException,
@@ -74,7 +74,7 @@ implements MessageBodyWriter<List<DTOBudget>>, MessageBodyReader<List<DTOBudget>
 	}
 
 	@Override
-	public List<DTOBudget> readFrom(Class<List<DTOBudget>> type, Type genericType,
+	public List<DTOInvoice> readFrom(Class<List<DTOInvoice>> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType,
 			MultivaluedMap<String, String> httpHeaders, InputStream entityStream)
 			throws IOException, WebApplicationException {

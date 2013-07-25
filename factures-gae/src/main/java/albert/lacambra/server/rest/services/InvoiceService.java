@@ -1,8 +1,10 @@
 package albert.lacambra.server.rest.services;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -23,19 +25,19 @@ public class InvoiceService extends BasicService implements IInvoiceService {
 	}
 
 	@Override
-	public Response getInvoice( Long id ) {
+	public DTOInvoice getInvoice( Long id ) {
 
 		Key<PersistedInvoice> key = PersistedInvoice.key(bracelet.getMeKey(), id);
 		PersistedInvoice i = ofy().load().key(key).getValue();
 
-		Response  r = null;
-
 		if ( i == null ){
-			r = Response.status(Response.Status.NOT_FOUND).entity("{\"msg\":\"not found\"}").build();
-		} else {
-			r = Response.ok(i).build();
-		}
-		return r;
+			throw new WebApplicationException(
+					Response.status(Response.Status.NOT_FOUND)
+					.entity("{\"msg\":\"not found\"}")
+					.build());
+		} else 
+			
+		return i.getDTOInvoice();
 	}
 
 	@Override
@@ -50,14 +52,29 @@ public class InvoiceService extends BasicService implements IInvoiceService {
 
 
 	@Override
-	public Response getInvoices() throws JsonGenerationException, JsonMappingException, IOException {
-		List<PersistedInvoice> l = ofy().load().type(PersistedInvoice.class).ancestor(bracelet.getMeKey()).list();
+	public List<DTOInvoice> getInvoices() throws JsonGenerationException, JsonMappingException, IOException {
+		
+		List<PersistedInvoice> l = 
+				ofy()
+				.load()
+				.type(PersistedInvoice.class)
+				.ancestor(bracelet.getMeKey())
+				.list();
 
 		if ( l == null ) {
-			return Response.status(Status.NO_CONTENT).build();
-		} else {
-			return Response.ok().entity(m.writeValueAsString(l)).build();
+			throw new WebApplicationException(
+					Response.status(Status.NO_CONTENT).build());
+		} 
+		
+		List<DTOInvoice> invoices = new ArrayList<DTOInvoice>();
+		
+		for ( PersistedInvoice i : l) {
+			
+			invoices.add(i.getDTOInvoice());
+			
 		}
+		
+		return invoices;
 	}
 }
 
