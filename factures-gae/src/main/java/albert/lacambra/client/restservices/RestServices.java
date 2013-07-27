@@ -16,7 +16,6 @@ import albert.lacambra.client.restservices.utils.AsyncCallback;
 import albert.lacambra.client.restservices.utils.ResponseException;
 import albert.lacambra.shared.ResourceLocator;
 
-@Singleton
 public class RestServices {
 
 	private final IRestClient client;

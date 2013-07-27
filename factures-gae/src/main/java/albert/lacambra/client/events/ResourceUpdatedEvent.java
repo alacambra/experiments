@@ -1,4 +1,4 @@
-package albert.lacambra.client.restservices;
+package albert.lacambra.client.events;
 
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.EventHandler;

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import albert.lacambra.client.events.ResourceUpdatedEvent;
 import albert.lacambra.client.restservices.utils.AsyncCallback;
 import albert.lacambra.client.restservices.utils.AsyncCallbackNoReturnValue;
 import albert.lacambra.client.restservices.utils.ResponseException;

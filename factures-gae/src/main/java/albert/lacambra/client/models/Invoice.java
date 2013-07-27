@@ -4,9 +4,19 @@ import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.view.client.ProvidesKey;
 
 public class Invoice extends DTOInvoice implements IsJsonSerializable
 {
+	
+	private Budget budget;
+	
+	public static final ProvidesKey<Invoice> KEY_PROVIDER = new ProvidesKey<Invoice>() {
+		public Object getKey(Invoice item) {
+			return item == null ? null : item.getId();
+		}
+	};
+	
 	@Override
 	public JSONValue serializeToJsonValue() {
 		
@@ -33,5 +43,13 @@ public class Invoice extends DTOInvoice implements IsJsonSerializable
 		
 		return this;
 	}
-
+	
+	public Budget getBudget() {
+		return budget;
+	}
+	
+	public void setBudget(Budget budget) {
+		this.budget = budget;
+	}
+	
 }

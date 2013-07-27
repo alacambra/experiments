@@ -8,6 +8,7 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 
+import albert.lacambra.client.events.InvoiceAddedEvent;
 import albert.lacambra.client.models.Budget;
 import albert.lacambra.client.models.Invoice;
 import albert.lacambra.client.place.NameTokens;
@@ -66,6 +67,7 @@ public class NewInvoicePresenter extends Presenter<NewInvoicePresenter.MyView, N
 				
 				if  (  bid ==  null ) bid="1";
 				
+				try {
 				Invoice invoice = 
 					(Invoice) new Invoice()
 					.setBudgetId(Long.parseLong(bid))
@@ -74,6 +76,10 @@ public class NewInvoicePresenter extends Presenter<NewInvoicePresenter.MyView, N
 					.setPrice(Integer.parseInt(getView().getPrice().getText()));
 				
 				addInvoice(invoice);
+				
+				} catch ( Exception e) {
+					Log.error("", e);
+				}
 			}
 		});
 	}
@@ -90,6 +96,8 @@ public class NewInvoicePresenter extends Presenter<NewInvoicePresenter.MyView, N
 					.setText("invoice \"" + invoice.getExtra() +"\" added with id " + result );
 				
 				getView().restartFields();
+				
+				getEventBus().fireEvent(new InvoiceAddedEvent(invoice));
 			}
 
 			@Override

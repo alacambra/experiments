@@ -7,8 +7,10 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 
+import albert.lacambra.client.events.BudgetAddedEvent;
 import albert.lacambra.client.models.Budget;
 import albert.lacambra.client.place.NameTokens;
+
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -18,6 +20,7 @@ import com.google.gwt.user.client.ui.HasText;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
+
 import albert.lacambra.client.presenters.MainPresenter;
 import albert.lacambra.client.restservices.RestServices;
 import albert.lacambra.client.restservices.utils.AsyncCallback;
@@ -81,6 +84,7 @@ public class NewBudgetPresenter extends Presenter<NewBudgetPresenter.MyView, New
 						Log.info("budget added with id " + result);
 						budget.setId(result);
 						newInvoicePresenter.addBugetIntoList(budget);
+						getEventBus().fireEvent(new BudgetAddedEvent(budget));
 					}
 					
 					@Override

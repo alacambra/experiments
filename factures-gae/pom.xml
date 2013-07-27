@@ -11,9 +11,8 @@
 	<name>GWT Maven Archetype</name>
 
 	<properties>
-		<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
+		<!-- <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory> -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<!-- <jersey-version>1.11</jersey-version> -->
 		<resteasy.version>3.0.2.Final</resteasy.version>
 		<guice.version>3.0</guice.version>
 		<gae.version>1.8.2</gae.version>
@@ -28,12 +27,6 @@
 
 		<!-- Client side dependencies -->
 
-		<!-- <dependency> -->
-		<!-- <groupId>com.google.gwt</groupId> -->
-		<!-- <artifactId>gwt-servlet</artifactId> -->
-		<!-- <version>${gwt.version}</version> -->
-		<!-- <scope>runtime</scope> -->
-		<!-- </dependency> -->
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
@@ -67,12 +60,6 @@
 			<artifactId>gwtp-dispatch-rest</artifactId>
 			<version>${gwtp.version}</version>
 			<scope>provided</scope>
-			<!-- <exclusions> -->
-			<!-- <exclusion> -->
-			<!-- <artifactId>jsr311-api</artifactId> -->
-			<!-- <groupId>javax.ws.rs</groupId> -->
-			<!-- </exclusion> -->
-			<!-- </exclusions> -->
 		</dependency>
 		<dependency>
 			<groupId>com.gwtplatform</groupId>
@@ -80,11 +67,6 @@
 			<version>${gwtp.version}</version>
 			<scope>provided</scope>
 		</dependency>
-		<!-- <dependency> -->
-		<!-- <groupId>com.gwtplatform</groupId> -->
-		<!-- <artifactId>gwtp-dispatch-server-guice</artifactId> -->
-		<!-- <version>${gwtp.version}</version> -->
-		<!-- </dependency> -->
 
 
 		<!-- Server side dependencies -->
@@ -96,11 +78,6 @@
 			<classifier>sources</classifier>
 			<scope>compile</scope>
 		</dependency>
-		<!-- <dependency> -->
-		<!-- <groupId>com.sun.jersey</groupId> -->
-		<!-- <artifactId>jersey-json</artifactId> -->
-		<!-- <version>${jersey-version}</version> -->
-		<!-- </dependency> -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
@@ -151,28 +128,6 @@
 			<version>2.5</version>
 			<scope>provided</scope>
 		</dependency>
-		<!-- Crawler component -->
-		<!-- <dependency> -->
-		<!-- <groupId>com.gwtplatform</groupId> -->
-		<!-- <artifactId>gwtp-crawler</artifactId> -->
-		<!-- <version>${gwtp.version}</version> -->
-		<!-- </dependency> -->
-
-		<!-- Annotation component -->
-		<!-- <dependency> -->
-		<!-- <groupId>com.gwtplatform</groupId> -->
-		<!-- <artifactId>gwtp-processors</artifactId> -->
-		<!-- <version>${gwtp.version}</version> -->
-		<!-- <scope>provided</scope> -->
-		<!-- </dependency> -->
-
-		<!-- Tester component -->
-		<!-- <dependency> -->
-		<!-- <groupId>com.gwtplatform</groupId> -->
-		<!-- <artifactId>gwtp-tester</artifactId> -->
-		<!-- <version>${gwtp.version}</version> -->
-		<!-- <scope>test</scope> -->
-		<!-- </dependency> -->
 		<dependency>
 			<groupId>com.googlecode.objectify</groupId>
 			<artifactId>objectify</artifactId>
@@ -184,12 +139,6 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<!-- <dependency> -->
-		<!-- <groupId>org.slf4j</groupId> -->
-		<!-- <artifactId>slf4j-api</artifactId> -->
-		<!-- <version>1.5.8</version> -->
-		<!-- </dependency> -->
-
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-jaxrs</artifactId>
@@ -216,7 +165,7 @@
 
 	<build>
 		<!-- Generate compiled stuff in the folder used for developing mode -->
-		<outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory>
+		<!-- <outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory> -->
 		<plugins>
 
 			<!-- GWT Maven Plugin -->
@@ -234,11 +183,12 @@
 				</executions>
 				<configuration>
 					<runTarget>factures-gae.html</runTarget>
-					<hostedWebapp>${webappDirectory}</hostedWebapp>
+					<!-- <hostedWebapp>${webappDirectory}</hostedWebapp> -->
 					<style>DETAILED</style>
 					<module>albert.lacambra.factures</module>
 					<server>com.google.appengine.tools.development.gwt.AppEngineLauncher</server>
 					<appEngineHome>${appEngineSdk}</appEngineHome>
+					<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
 				</configuration>
 			</plugin>
 
@@ -248,7 +198,7 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.1.1</version>
 				<configuration>
-					<webappDirectory>${webappDirectory}</webappDirectory>
+					<!-- <webappDirectory>${webappDirectory}</webappDirectory> -->
 				</configuration>
 			</plugin>
 			<plugin>
@@ -269,10 +219,10 @@
 				<version>${gae.version}</version>
 				<executions>
 					<execution>
-						<phase>install</phase>
-						<goals>
-							<goal>update</goal>
-						</goals>
+<!-- 						<phase>install</phase> -->
+<!-- 						<goals> -->
+<!-- 							<goal>update</goal> -->
+<!-- 						</goals> -->
 					</execution>
 				</executions>
 			</plugin>

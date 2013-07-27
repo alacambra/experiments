@@ -24,8 +24,8 @@
 
 <!-- 	<define-configuration-property name='gin.ginjector' -->
 <!-- 		is-multi-valued='false' /> -->
-	<extend-configuration-property name='gin.ginjector.extensions'
-		value='albert.lacambra.client.injection.MyClientGinjector' />
+<!-- 	<extend-configuration-property name='gin.ginjector.extensions' -->
+<!-- 		value='albert.lacambra.client.injection.MyClientGinjector' /> -->
 	
 	<set-configuration-property name="gin.ginjector.modules"
 		value="albert.lacambra.client.injection.ClientModule" />
@@ -33,5 +33,7 @@
 
 	<source path='client' />
 	<source path='shared' />
+	
+	 <set-property name="log_DivLogger" value="DISABLED" />
 
 </module>

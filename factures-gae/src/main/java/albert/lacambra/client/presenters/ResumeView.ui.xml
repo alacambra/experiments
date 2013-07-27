@@ -5,11 +5,22 @@
 	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
 	ui:generateLocales='default'>
 
-	<g:HTMLPanel>
+	<ui:style>
+		.containersFrame {
+			margin: 7px;
+		}
+		
+		.mainFrame {
+			border: solid 1px black;
+		}
+		
+	</ui:style>
+
+	<g:HTMLPanel styleName="{style.mainFrame}">
 		<g:HorizontalPanel>
-			<g:VerticalPanel ui:field="budgetsNamePanel">
+			<g:VerticalPanel styleName="{style.containersFrame}" ui:field="budgetsNamePanel">
 			</g:VerticalPanel>
-			<g:VerticalPanel ui:field="quantitiesPanel">
+			<g:VerticalPanel styleName="{style.containersFrame}" ui:field="quantitiesPanel">
 			</g:VerticalPanel>
 		</g:HorizontalPanel>
 		<g:Button ui:field="refreshBtn" text="load"></g:Button>

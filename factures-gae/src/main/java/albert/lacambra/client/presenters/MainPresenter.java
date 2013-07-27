@@ -1,7 +1,17 @@
 package albert.lacambra.client.presenters;
 
-import albert.lacambra.client.place.NameTokens;
+import java.util.List;
 
+import albert.lacambra.client.models.Budget;
+import albert.lacambra.client.models.Invoice;
+import albert.lacambra.client.place.NameTokens;
+import albert.lacambra.client.presenters.utils.BudgetProvider;
+import albert.lacambra.client.presenters.utils.InvoiceProvider;
+import albert.lacambra.client.restservices.RestServices;
+import albert.lacambra.client.restservices.utils.AsyncCallback;
+import albert.lacambra.client.restservices.utils.ResponseException;
+
+import com.allen_sauer.gwt.log.client.Log;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ContentSlot;
@@ -15,16 +25,16 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.GwtEvent.Type;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.RootLayoutPanel;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.gwtplatform.mvp.client.proxy.RevealRootContentEvent;
 
 public class MainPresenter extends Presenter<MainPresenter.MyView, MainPresenter.MyProxy> {
 
 	@Inject PlaceManager placeManager;
+	@Inject BudgetProvider budgetProvider;
+	@Inject InvoiceProvider invoiceProvider;
+	
+	private RestServices restServices;
 
 	@ContentSlot 
 	public static final Type<RevealContentHandler<?>> TYPE_MainContent = new Type<RevealContentHandler<?>>();
@@ -44,8 +54,10 @@ public class MainPresenter extends Presenter<MainPresenter.MyView, MainPresenter
 
 	@Inject
 	public MainPresenter(final EventBus eventBus, final MyView view,
-			final MyProxy proxy) {
+			final MyProxy proxy, RestServices restServices) {
 		super(eventBus, view, proxy);
+		
+		this.restServices = restServices;
 	}
 
 	@Override
@@ -62,7 +74,7 @@ public class MainPresenter extends Presenter<MainPresenter.MyView, MainPresenter
 			@Override
 			public void onClick(ClickEvent event) {
 
-				PlaceRequest placeRequest = new PlaceRequest(NameTokens.newbudget);
+				PlaceRequest placeRequest = new PlaceRequest.Builder().nameToken(NameTokens.newbudget).build();
 				placeManager.revealPlace(placeRequest);
 
 			}
@@ -73,11 +85,43 @@ public class MainPresenter extends Presenter<MainPresenter.MyView, MainPresenter
 			@Override
 			public void onClick(ClickEvent event) {
 
-				PlaceRequest placeRequest = new PlaceRequest(NameTokens.newinvoice);
+				PlaceRequest placeRequest = new PlaceRequest.Builder().nameToken(NameTokens.newinvoice).build();
 				placeManager.revealPlace(placeRequest);
 
 			}
 		}));
+		
+		restServices.getAllInvoices(new AsyncCallback<List<Invoice>>() {
+			
+			@Override
+			public void onSuccess(List<Invoice> result) {
+				invoiceProvider.configure(result, getEventBus());
+				
+				restServices.getBudgets("2013", new AsyncCallback<List<Budget>>() {
+					
+					@Override
+					public void onSuccess(List<Budget> result) {
+						budgetProvider.configure(result, getEventBus());
+						
+						for ( Invoice i: invoiceProvider.get()) {
+							i.setBudget(budgetProvider.getBudgets().get(i.getBudgetId()));
+						}
+						
+					}
+					
+					@Override
+					public void onFailure(ResponseException caught) {
+						Log.error("", caught);
+					}
+				});
+				
+			}
+			
+			@Override
+			public void onFailure(ResponseException caught) {
+				Log.error("", caught);				
+			}
+		});
 
 	}
 }

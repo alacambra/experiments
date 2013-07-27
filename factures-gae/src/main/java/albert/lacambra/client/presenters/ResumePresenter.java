@@ -100,7 +100,14 @@ public class ResumePresenter extends PresenterWidget<ResumePresenter.MyView> {
 		
 		for ( Entry<Long, Integer> bg : totals.entrySet() ) {
 			
-			String value = String.valueOf(bg.getValue() / 100); 
+			int used = bg.getValue() / 100;
+			int assignation = names.get(bg.getKey()).getAssignation() / 100;
+			
+			String value = 
+					used + "€" 
+					+ " over " 
+					+ assignation + "€ " 
+					+ "(" + used * 100 /assignation + "%)";  
 			
 			getView().addBudget(names.get(bg.getKey()).getName(), value);
 			
