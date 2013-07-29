@@ -27,8 +27,11 @@
 <!-- 	<extend-configuration-property name='gin.ginjector.extensions' -->
 <!-- 		value='albert.lacambra.client.injection.MyClientGinjector' /> -->
 	
-	<set-configuration-property name="gin.ginjector.modules"
+	<extend-configuration-property name="gin.ginjector.modules"
 		value="albert.lacambra.client.injection.ClientModule" />
+	
+<!-- 	<extend-configuration-property name="gin.ginjector.modules" -->
+<!-- 		value="albert.lacambra.client.restservices.RestModule " /> -->
 
 
 	<source path='client' />

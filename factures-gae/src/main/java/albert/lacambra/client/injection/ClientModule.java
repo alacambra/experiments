@@ -4,8 +4,10 @@ package albert.lacambra.client.injection;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 
+import albert.lacambra.client.restservices.BudgetProvider;
 import albert.lacambra.client.restservices.IRequestBuilder;
 import albert.lacambra.client.restservices.IRestClient;
+import albert.lacambra.client.restservices.InvoiceProvider;
 import albert.lacambra.client.restservices.RequestBuilder;
 import albert.lacambra.client.restservices.RestClient;
 import albert.lacambra.client.restservices.RestServices;
@@ -24,10 +26,8 @@ import albert.lacambra.client.presenters.NewBudgetPresenter;
 import albert.lacambra.client.presenters.NewBudgetView;
 import albert.lacambra.client.presenters.ResumePresenter;
 import albert.lacambra.client.presenters.ResumeView;
-import albert.lacambra.client.presenters.utils.BudgetProvider;
-import albert.lacambra.client.presenters.utils.InvoiceProvider;
-import albert.lacambra.client.injection.InvoiceListPresenter;
-import albert.lacambra.client.injection.InvoiceListView;
+import albert.lacambra.client.presenters.InvoiceListPresenter;
+import albert.lacambra.client.presenters.InvoiceListView;
 
 public class ClientModule extends AbstractPresenterModule {
 
@@ -42,7 +42,6 @@ public class ClientModule extends AbstractPresenterModule {
 		bindConstant().annotatedWith(DefaultPlace.class).to(
 				NameTokens.newinvoice);
 		
-		bind(RestServices.class).in(Singleton.class);
 		bind(IRestClient.class).to(RestClient.class).in(Singleton.class);
 		bind(IRequestBuilder.class).to(RequestBuilder.class).in(Singleton.class);
 		
@@ -58,12 +57,15 @@ public class ClientModule extends AbstractPresenterModule {
 				ResumePresenter.MyView.class, ResumeView.class);
 
 
+
 		bindPresenter(InvoiceListPresenter.class,
 				InvoiceListPresenter.MyView.class, InvoiceListView.class,
 				InvoiceListPresenter.MyProxy.class);
 		
-		bind(BudgetProvider.class).in(Singleton.class);
 		bind(InvoiceProvider.class).in(Singleton.class);
+		bind(BudgetProvider.class).in(Singleton.class);
+		bind(RestServices.class).in(Singleton.class);
+		
 	}
 	
 	@Provides
@@ -77,3 +79,4 @@ public class ClientModule extends AbstractPresenterModule {
 		};
 	}
 }
+

@@ -1,30 +1,38 @@
-package albert.lacambra.client.presenters.utils;
+package albert.lacambra.client.restservices;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 import com.allen_sauer.gwt.log.client.Log;
+import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 
 import albert.lacambra.client.events.InvoiceAddedEvent;
 import albert.lacambra.client.events.InvoiceDeletedEvent;
 import albert.lacambra.client.models.Invoice;
+import albert.lacambra.client.models.IsJsonSerializable;
+import albert.lacambra.client.restservices.utils.AsyncCallback;
 
 public class InvoiceProvider implements CollectionProvider<Invoice> {
 
 	HashMap<Long, Invoice> invoices = new HashMap<Long, Invoice>();
 	private EventBus eventBus;
+	@Inject RestServices restServices;
 	
-	public InvoiceProvider() {}
+	@Inject
+	public InvoiceProvider(EventBus eventBus) {
+		this.eventBus = eventBus;
+		
+	}
 	
 	@Override
-	public void configure(Collection<Invoice> invoices, EventBus eventBus) {
+	public void configure(Collection<Invoice> invoices) {
 
 		for ( Invoice i : invoices) {
 			this.invoices.put(i.getId(), i);
 		}
 
-		this.eventBus = eventBus;
 		loadHandlers();
 
 	}
@@ -51,6 +59,14 @@ public class InvoiceProvider implements CollectionProvider<Invoice> {
 			}
 		});
 	}
+	
+	public void addInvoice(IsJsonSerializable i, AsyncCallback<Long> callback) {
+		restServices.addInvoice(i, callback);
+	}
+	
+	public void getAllInvoices(AsyncCallback<List<Invoice>> callback) {
+		restServices.getAllInvoices(callback);
+	}
 
 	@Override
 	public Invoice get(Long id) {
@@ -65,3 +81,55 @@ public class InvoiceProvider implements CollectionProvider<Invoice> {
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,4 +1,4 @@
-package albert.lacambra.client.presenters.utils;
+package albert.lacambra.client.restservices;
 
 import java.util.Collection;
 
@@ -8,5 +8,5 @@ public interface CollectionProvider<T> {
 
 	T get(Long id);
 	Collection<T> get();
-	void configure(Collection<T> collection, EventBus eventBus);
+	void configure(Collection<T> collection);
 }

@@ -219,10 +219,10 @@
 				<version>${gae.version}</version>
 				<executions>
 					<execution>
-<!-- 						<phase>install</phase> -->
-<!-- 						<goals> -->
-<!-- 							<goal>update</goal> -->
-<!-- 						</goals> -->
+						<phase>install</phase>
+						<goals>
+							<goal>update</goal>
+						</goals>
 					</execution>
 				</executions>
 			</plugin>

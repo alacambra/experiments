@@ -2,12 +2,12 @@ package albert.lacambra.client.presenters;
 
 import java.util.List;
 
+import albert.lacambra.client.events.InvoicesLoadedEvent;
 import albert.lacambra.client.models.Budget;
 import albert.lacambra.client.models.Invoice;
 import albert.lacambra.client.place.NameTokens;
-import albert.lacambra.client.presenters.utils.BudgetProvider;
-import albert.lacambra.client.presenters.utils.InvoiceProvider;
-import albert.lacambra.client.restservices.RestServices;
+import albert.lacambra.client.restservices.BudgetProvider;
+import albert.lacambra.client.restservices.InvoiceProvider;
 import albert.lacambra.client.restservices.utils.AsyncCallback;
 import albert.lacambra.client.restservices.utils.ResponseException;
 
@@ -31,10 +31,8 @@ import com.gwtplatform.mvp.client.proxy.RevealRootContentEvent;
 public class MainPresenter extends Presenter<MainPresenter.MyView, MainPresenter.MyProxy> {
 
 	@Inject PlaceManager placeManager;
-	@Inject BudgetProvider budgetProvider;
-	@Inject InvoiceProvider invoiceProvider;
-	
-	private RestServices restServices;
+	BudgetProvider budgetProvider;
+	InvoiceProvider invoiceProvider;
 
 	@ContentSlot 
 	public static final Type<RevealContentHandler<?>> TYPE_MainContent = new Type<RevealContentHandler<?>>();
@@ -54,10 +52,14 @@ public class MainPresenter extends Presenter<MainPresenter.MyView, MainPresenter
 
 	@Inject
 	public MainPresenter(final EventBus eventBus, final MyView view,
-			final MyProxy proxy, RestServices restServices) {
+			final MyProxy proxy,
+			BudgetProvider budgetProvider,
+			InvoiceProvider invoiceProvider) {
 		super(eventBus, view, proxy);
 		
-		this.restServices = restServices;
+		this.invoiceProvider = invoiceProvider;
+		this.budgetProvider = budgetProvider;
+
 	}
 
 	@Override
@@ -90,36 +92,38 @@ public class MainPresenter extends Presenter<MainPresenter.MyView, MainPresenter
 
 			}
 		}));
-		
-		restServices.getAllInvoices(new AsyncCallback<List<Invoice>>() {
-			
+
+		invoiceProvider.getAllInvoices(new AsyncCallback<List<Invoice>>() {
+
 			@Override
 			public void onSuccess(List<Invoice> result) {
-				invoiceProvider.configure(result, getEventBus());
-				
-				restServices.getBudgets("2013", new AsyncCallback<List<Budget>>() {
-					
+				invoiceProvider.configure(result);
+
+				budgetProvider.getBudgets("2013", new AsyncCallback<List<Budget>>() {
+
 					@Override
 					public void onSuccess(List<Budget> result) {
-						budgetProvider.configure(result, getEventBus());
-						
+						budgetProvider.configure(result);
+
 						for ( Invoice i: invoiceProvider.get()) {
 							i.setBudget(budgetProvider.getBudgets().get(i.getBudgetId()));
 						}
-						
+
+						getEventBus().fireEvent(new InvoicesLoadedEvent());
+
 					}
-					
+
 					@Override
 					public void onFailure(ResponseException caught) {
-						Log.error("", caught);
+						Log.error(caught.getRequest().toString(), caught);
 					}
 				});
-				
+
 			}
-			
+
 			@Override
 			public void onFailure(ResponseException caught) {
-				Log.error("", caught);				
+				Log.error(caught.getRequest().toString(), caught);
 			}
 		});
 

@@ -6,7 +6,8 @@ import java.util.Map.Entry;
 
 import albert.lacambra.client.models.Budget;
 import albert.lacambra.client.models.Invoice;
-import albert.lacambra.client.restservices.RestServices;
+import albert.lacambra.client.restservices.BudgetProvider;
+import albert.lacambra.client.restservices.InvoiceProvider;
 import albert.lacambra.client.restservices.utils.AsyncCallback;
 import albert.lacambra.client.restservices.utils.ResponseException;
 
@@ -21,8 +22,8 @@ import com.google.gwt.user.client.ui.Button;
 
 public class ResumePresenter extends PresenterWidget<ResumePresenter.MyView> {
 
-	@Inject RestServices services;
-	
+	@Inject BudgetProvider budgetProvider;
+	@Inject InvoiceProvider invoiceProvider;
 	
 	public interface MyView extends View {
 
@@ -45,11 +46,11 @@ public class ResumePresenter extends PresenterWidget<ResumePresenter.MyView> {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				services.getBudgets("2013", new AsyncCallback<List<Budget>>() {
+				budgetProvider.getBudgets("2013", new AsyncCallback<List<Budget>>() {
 					
 					@Override
 					public void onSuccess(final List<Budget> budgets) {
-						services.getAllInvoices(new AsyncCallback<List<Invoice>>() {
+						invoiceProvider.getAllInvoices(new AsyncCallback<List<Invoice>>() {
 							
 							@Override
 							public void onSuccess(List<Invoice> invoices) {

@@ -4,8 +4,8 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import albert.lacambra.client.injection.InvoiceListPresenter;
 import albert.lacambra.client.models.Invoice;
+import albert.lacambra.client.presenters.InvoiceListPresenter;
 
 import com.google.gwt.cell.client.ClickableTextCell;
 import com.google.gwt.cell.client.EditTextCell;
@@ -63,7 +63,7 @@ public class InvoiceCellList extends CellTable<Invoice>{
 			@Override
 			public String getValue(Invoice object) {
 				object.getBudgetId();
-				return "some bg";
+				return object.getBudget().getName();
 			}
 		};
 

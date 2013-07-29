@@ -22,14 +22,15 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 import albert.lacambra.client.presenters.MainPresenter;
-import albert.lacambra.client.restservices.RestServices;
+import albert.lacambra.client.restservices.BudgetProvider;
 import albert.lacambra.client.restservices.utils.AsyncCallback;
 import albert.lacambra.client.restservices.utils.ResponseException;
 
 public class NewBudgetPresenter extends Presenter<NewBudgetPresenter.MyView, NewBudgetPresenter.MyProxy> {
 
-	@Inject RestServices services;
+//	@Inject RestServices services;
 	@Inject  ResumePresenter resumePresenter;
+	@Inject BudgetProvider budgetProvider;
 	private NewInvoicePresenter newInvoicePresenter;
 	
 	public interface MyView extends View {
@@ -77,7 +78,7 @@ public class NewBudgetPresenter extends Presenter<NewBudgetPresenter.MyView, New
 				budget.setAssignation(Integer.valueOf(getView().getAssignation().getText()) * 100);
 				budget.setName(getView().getName().getText());
 				
-				services.addBudget(budget, new AsyncCallback<Long>() {
+				budgetProvider.addBudget(budget, new AsyncCallback<Long>() {
 					
 					@Override
 					public void onSuccess(Long result) {

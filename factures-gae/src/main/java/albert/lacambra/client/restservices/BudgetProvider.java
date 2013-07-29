@@ -1,30 +1,36 @@
-package albert.lacambra.client.presenters.utils;
+package albert.lacambra.client.restservices;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 import com.allen_sauer.gwt.log.client.Log;
+import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 
 import albert.lacambra.client.events.BudgetAddedEvent;
 import albert.lacambra.client.events.BudgetDeletedEvent;
 import albert.lacambra.client.models.Budget;
+import albert.lacambra.client.restservices.utils.AsyncCallback;
 
 public class BudgetProvider implements CollectionProvider<Budget> {
 
 	HashMap<Long, Budget> budgets = new HashMap<Long, Budget>();
 	private EventBus eventBus;
+	@Inject RestServices restServices;
 
-	public BudgetProvider() {}
+	@Inject
+	public BudgetProvider(EventBus eventBus) {
+		this.eventBus = eventBus;
+	}
 
 	@Override
-	public void configure(Collection<Budget> budgets, EventBus eventBus) {
+	public void configure(Collection<Budget> budgets) {
 
 		for ( Budget i : budgets) {
 			this.budgets.put(i.getId(), i);
 		}
 
-		this.eventBus = eventBus;
 		loadHandlers();
 
 	}
@@ -52,6 +58,14 @@ public class BudgetProvider implements CollectionProvider<Budget> {
 
 			}
 		});
+	}
+	
+	public void getBudgets(String year, AsyncCallback<List<Budget>> callback) {
+		restServices.getBudgets(year, callback);
+	}
+	
+	public void addBudget(Budget b, AsyncCallback<Long> callback) {
+		restServices.addBudget(b, callback);
 	}
 
 	@Override

@@ -12,7 +12,8 @@ import albert.lacambra.client.events.InvoiceAddedEvent;
 import albert.lacambra.client.models.Budget;
 import albert.lacambra.client.models.Invoice;
 import albert.lacambra.client.place.NameTokens;
-import albert.lacambra.client.restservices.RestServices;
+import albert.lacambra.client.restservices.BudgetProvider;
+import albert.lacambra.client.restservices.InvoiceProvider;
 import albert.lacambra.client.restservices.utils.ResponseException;
 
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
@@ -30,6 +31,9 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import albert.lacambra.client.restservices.utils.AsyncCallback;
 
 public class NewInvoicePresenter extends Presenter<NewInvoicePresenter.MyView, NewInvoicePresenter.MyProxy> {
+
+	@Inject BudgetProvider budgetProvider;
+	@Inject InvoiceProvider invoiceProvider;
 
 	public interface MyView extends View {
 		public Button getButton();
@@ -50,53 +54,56 @@ public class NewInvoicePresenter extends Presenter<NewInvoicePresenter.MyView, N
 	public interface MyProxy extends ProxyPlace<NewInvoicePresenter> {
 	}
 
-	private RestServices restServices;
 
 	@Inject
 	public NewInvoicePresenter(final EventBus eventBus, final MyView view,
-			final MyProxy proxy, final RestServices restServices) {
-
+			final MyProxy proxy,
+			BudgetProvider budgetProvider, 
+			InvoiceProvider invoiceProvider){
+		
 		super(eventBus, view, proxy);
-		this.restServices = restServices;
 		getView().getButton().addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				
+
 				String bid = getView().getSelectedBudgetId();
-				
+
 				if  (  bid ==  null ) bid="1";
-				
+
 				try {
-				Invoice invoice = 
-					(Invoice) new Invoice()
+					Invoice invoice = 
+							(Invoice) new Invoice()
 					.setBudgetId(Long.parseLong(bid))
 					.setDate(getDate())
 					.setExtra(getView().getExtra().getText())
 					.setPrice(Integer.parseInt(getView().getPrice().getText()));
-				
-				addInvoice(invoice);
-				
+
+					addInvoice(invoice);
+
 				} catch ( Exception e) {
 					Log.error("", e);
 				}
 			}
 		});
+		
+		this.invoiceProvider = invoiceProvider;
+		this.budgetProvider = budgetProvider;
 	}
 
 	public void addInvoice(final Invoice invoice) {
-		
-		restServices.addInvoice(invoice, new AsyncCallback<Long>() {
+
+		invoiceProvider.addInvoice(invoice, new AsyncCallback<Long>() {
 
 			@Override
 			public void onSuccess(Long result) {
 				Log.info("invoice added with id " + result );
 				getView()
-					.getInfoLabel()
-					.setText("invoice \"" + invoice.getExtra() +"\" added with id " + result );
-				
+				.getInfoLabel()
+				.setText("invoice \"" + invoice.getExtra() +"\" added with id " + result );
+
 				getView().restartFields();
-				
+
 				getEventBus().fireEvent(new InvoiceAddedEvent(invoice));
 			}
 
@@ -137,14 +144,13 @@ public class NewInvoicePresenter extends Presenter<NewInvoicePresenter.MyView, N
 		super.onBind();
 
 		loadBudgets(getView().getYear().getValue());
-
 	}
 
 	private void loadBudgets(String year) {
 
 		if ( year != null ) {
-			
-			restServices.getBudgets(year, new AsyncCallback<List<Budget>>() {
+
+			budgetProvider.getBudgets(year, new AsyncCallback<List<Budget>>() {
 
 				@Override
 				public void onSuccess(List<Budget> result) {
