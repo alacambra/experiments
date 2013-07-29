@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -27,17 +28,19 @@ public class InvoiceService extends BasicService implements IInvoiceService {
 	@Override
 	public DTOInvoice getInvoice( Long id ) {
 
-		Key<PersistedInvoice> key = PersistedInvoice.key(bracelet.getMeKey(), id);
-		PersistedInvoice i = ofy().load().key(key).getValue();
-
-		if ( i == null ){
-			throw new WebApplicationException(
-					Response.status(Response.Status.NOT_FOUND)
-					.entity("{\"msg\":\"not found\"}")
-					.build());
-		} else 
-			
-		return i.getDTOInvoice();
+//		Key<PersistedInvoice> key = PersistedInvoice.key(bracelet.getMeKey(), id);
+//		PersistedInvoice i = ofy().load().key(key).getValue();
+//
+//		if ( i == null ){
+//			throw new WebApplicationException(
+//					Response.status(Response.Status.NOT_FOUND)
+//					.entity("{\"msg\":\"not found\"}")
+//					.build());
+//		} 
+//			
+//		return i.getDTOInvoice();
+		
+		return null;
 	}
 
 	@Override
@@ -75,6 +78,30 @@ public class InvoiceService extends BasicService implements IInvoiceService {
 		}
 		
 		return invoices;
+	}
+
+	@Override
+	public void deleteInvoice(Long budgetId, Long invoiceId) {
+		Key<PersistedBudget> budgetKey = PersistedBudget.key(bracelet.getMeKey(), budgetId);
+		Key<PersistedInvoice> key = PersistedInvoice.key(budgetKey, invoiceId);
+		ofy().delete().key(key);
+		PersistedInvoice invoice = ofy().load().key(key).getValue();
+		List<PersistedInvoice> l = 
+				ofy()
+				.load()
+				.type(PersistedInvoice.class)
+				.ancestor(bracelet.getMeKey())
+				.list();
+//
+//		if ( invoice == null ){
+//			throw new WebApplicationException(
+//					Response.status(Response.Status.NOT_FOUND).header("Content-Type", MediaType.APPLICATION_JSON)
+//					.entity("{\"msg\":\"resource not found\"}")
+//					.build());
+//		}
+//		
+//		ofy().delete().entity(invoice);
+		
 	}
 }
 

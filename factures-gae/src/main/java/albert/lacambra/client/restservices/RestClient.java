@@ -361,10 +361,10 @@ public class RestClient implements IRestClient{
 	}
 
 	@Override
-	public void delete( final String resourceApiName, final Integer id, final AsyncCallbackNoReturnValue callback) throws Exception {
+	public void delete( final String resourceApiName, final Long id, final AsyncCallbackNoReturnValue callback){
 		
 		if(id == null) {
-			throw new Exception("Id cannot be null");
+			throw new RuntimeException("Id cannot be null");
 		}
 		
 		requestBuilder.build(RequestBuilder.DELETE, serviceEndPoint + resourceApiName + "/" + id);
@@ -458,7 +458,7 @@ public class RestClient implements IRestClient{
 	
 	@Override
 	public void delete( 
-			final String resourceApiName, final AsyncCallbackNoReturnValue callback, final Integer ...ids) 
+			final String resourceApiName, final AsyncCallbackNoReturnValue callback, final Long ...ids) 
 					throws IllegalArgumentException {
 		
 		if(ids == null || ids.length == 0) {

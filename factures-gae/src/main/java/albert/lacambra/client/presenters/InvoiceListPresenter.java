@@ -9,6 +9,7 @@ import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 
 import albert.lacambra.client.events.InvoiceAddedEvent;
+import albert.lacambra.client.events.InvoiceRemovedEvent;
 import albert.lacambra.client.events.InvoicesLoadedEvent;
 import albert.lacambra.client.models.Invoice;
 import albert.lacambra.client.place.NameTokens;
@@ -86,6 +87,19 @@ Presenter<InvoiceListPresenter.MyView, InvoiceListPresenter.MyProxy> {
 				provider.getList().add(event.getInvoice());
 			}
 		});
+		
+		getEventBus().addHandler(InvoiceRemovedEvent.TYPE, new InvoiceRemovedEvent.InvoiceRemovedHandler(){
+
+			@Override
+			public void onInvoiceRemoved(InvoiceRemovedEvent event) {
+				
+				provider.getList().remove(event.getInvoiceId());
+				provider.refresh();
+				
+			}
+			
+		});
+		
 
 		loadInvoicesList();
 

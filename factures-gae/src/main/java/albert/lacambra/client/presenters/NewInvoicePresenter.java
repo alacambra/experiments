@@ -98,13 +98,11 @@ public class NewInvoicePresenter extends Presenter<NewInvoicePresenter.MyView, N
 			@Override
 			public void onSuccess(Long result) {
 				Log.info("invoice added with id " + result );
-				getView()
-				.getInfoLabel()
+				
+				getView().getInfoLabel()
 				.setText("invoice \"" + invoice.getExtra() +"\" added with id " + result );
 
 				getView().restartFields();
-
-				getEventBus().fireEvent(new InvoiceAddedEvent(invoice));
 			}
 
 			@Override

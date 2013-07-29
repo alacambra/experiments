@@ -25,7 +25,6 @@ public class InvoiceListView extends ViewImpl implements
 	@Inject
 	public InvoiceListView(final Binder binder, InvoiceCellList cellList) {
 		widget = binder.createAndBindUi(this);
-//		cellList = new InvoiceCellList();
 		this.cellList = cellList;
 		container.add(cellList);
 		SimplePager pager = new SimplePager();

@@ -13,6 +13,7 @@ import albert.lacambra.client.models.Budget;
 import albert.lacambra.client.models.Invoice;
 import albert.lacambra.client.models.IsJsonSerializable;
 import albert.lacambra.client.restservices.utils.AsyncCallback;
+import albert.lacambra.client.restservices.utils.AsyncCallbackNoReturnValue;
 import albert.lacambra.client.restservices.utils.ResponseException;
 import albert.lacambra.shared.ResourceLocator;
 
@@ -48,6 +49,12 @@ public class RestServices {
 							}
 		}));
 
+	}
+	
+	public void deleteInvoice(Invoice invoice, AsyncCallbackNoReturnValue callback) {
+		
+		client.delete(ResourceLocator.invoiceBase, callback, invoice.getBudgetId(), invoice.getId());
+		
 	}
 	
 	public void addBudget(Budget b, AsyncCallback<Long> callback) {

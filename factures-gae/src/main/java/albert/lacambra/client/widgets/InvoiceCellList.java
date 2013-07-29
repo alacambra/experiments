@@ -9,6 +9,8 @@ import albert.lacambra.client.models.Invoice;
 import albert.lacambra.client.presenters.InvoiceListPresenter;
 import albert.lacambra.client.restservices.BudgetProvider;
 import albert.lacambra.client.restservices.InvoiceProvider;
+import albert.lacambra.client.restservices.utils.AsyncCallbackNoReturnValue;
+import albert.lacambra.client.restservices.utils.ResponseException;
 
 import com.google.gwt.cell.client.ClickableTextCell;
 import com.google.gwt.cell.client.EditTextCell;
@@ -31,20 +33,20 @@ public class InvoiceCellList extends CellTable<Invoice>{
 	
 	private ListHandler<Invoice> sortHandler;
 
-	@Inject InvoiceProvider invoiceProvider;
+	InvoiceProvider invoiceProvider;
 	@Inject BudgetProvider budgetProvider;
-	EventBus eventBus;
 	
 
 	@Inject
-	public InvoiceCellList(EventBus eventBus)
+	public InvoiceCellList(EventBus eventBus, InvoiceProvider invoiceProvider)
 	{
 		super(Invoice.KEY_PROVIDER);
 
-		this.eventBus = eventBus;
-
+		this.invoiceProvider = invoiceProvider;
+		
 		initColumns();
 		loadSortHandlers();
+		loadFieldUpdaters();
 	}
 
 	private void initColumns()
@@ -156,7 +158,7 @@ public class InvoiceCellList extends CellTable<Invoice>{
 		});
 	}
 
-	private void loadFieldUpdaters(final InvoiceListPresenter presenter) {
+	private void loadFieldUpdaters() {
 		date.setFieldUpdater(new FieldUpdater<Invoice, String>() {
 			public void update(int index, Invoice object, String value) {
 				if(!value.equals(object.getDate())) {
@@ -198,7 +200,14 @@ public class InvoiceCellList extends CellTable<Invoice>{
 
 			@Override
 			public void update(int index, Invoice object, String value) {
-				//				presenter.deleteInvoice(object);
+				invoiceProvider.deleteInvoice(object, new AsyncCallbackNoReturnValue() {
+					
+					@Override
+					public void onSuccess() { }
+					
+					@Override
+					public void onFailure(ResponseException caught) { }
+				});
 
 			}
 		});

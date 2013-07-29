@@ -89,7 +89,10 @@ public interface IRestClient
 	 * @param callback Callback used to receive the server Response.
 	 * @throws Exception 
 	 */
-	public abstract <T> void delete(final String resourceApiName, final Integer id, final AsyncCallbackNoReturnValue callback) throws Exception;
+	public abstract <T> void delete(
+			final String resourceApiName,
+			final Long id, 
+			final AsyncCallbackNoReturnValue callback);
 	
 	public abstract void put(String resourceApiName, JSONValue payload, AsyncCallbackNoReturnValue callback);
 
@@ -98,7 +101,7 @@ public interface IRestClient
 	@Deprecated
 	void delete(String resourceApiName, Integer id1, Integer id2, AsyncCallbackNoReturnValue callback);
 
-	void delete(String resourceApiName, AsyncCallbackNoReturnValue callback, Integer ...ids) 
+	void delete(String resourceApiName, AsyncCallbackNoReturnValue callback, Long ...ids) 
 			throws IllegalArgumentException;
 
 }

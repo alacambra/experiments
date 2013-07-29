@@ -25,7 +25,7 @@ public class PersistedInvoice{
 	
     protected PersistedInvoice() { }
     
-    public static Key<PersistedInvoice> key(Key<Person> parent, Long id) {
+    public static Key<PersistedInvoice> key(Key<PersistedBudget> parent, Long id) {
 		return Key.create(parent, PersistedInvoice.class, id);
 	}
     

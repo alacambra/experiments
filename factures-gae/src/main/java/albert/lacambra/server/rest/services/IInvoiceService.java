@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -34,5 +35,9 @@ public interface IInvoiceService {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response saveInvoice(DTOInvoice invoice);
+	
+	@DELETE
+	@Path("/{budgetId:[0-9]+}/{invoiceId:[0-9]+}")
+	public void deleteInvoice(@PathParam("budgetId") Long budgetId, @PathParam("invoiceId") Long invoiceId);
 	
 }
