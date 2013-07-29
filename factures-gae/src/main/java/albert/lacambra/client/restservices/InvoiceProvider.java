@@ -1,5 +1,6 @@
 package albert.lacambra.client.restservices;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -78,6 +79,14 @@ public class InvoiceProvider implements CollectionProvider<Invoice> {
 	@Override
 	public Collection<Invoice> get() {
 		return invoices.values();
+	}
+	
+	public List<Invoice> getInvoicesAsList() {
+		
+		List<Invoice> invoicesList = new ArrayList<Invoice>();
+		invoicesList.addAll(invoices.values());
+		
+		return invoicesList;
 	}
 
 }

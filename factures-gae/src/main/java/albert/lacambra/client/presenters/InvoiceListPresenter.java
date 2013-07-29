@@ -8,6 +8,7 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 
+import albert.lacambra.client.events.InvoiceAddedEvent;
 import albert.lacambra.client.events.InvoicesLoadedEvent;
 import albert.lacambra.client.models.Invoice;
 import albert.lacambra.client.place.NameTokens;
@@ -21,15 +22,18 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 import albert.lacambra.client.presenters.MainPresenter;
 import albert.lacambra.client.restservices.InvoiceProvider;
+import albert.lacambra.client.widgets.InvoiceCellList;
 
 public class InvoiceListPresenter extends
-		Presenter<InvoiceListPresenter.MyView, InvoiceListPresenter.MyProxy> {
+Presenter<InvoiceListPresenter.MyView, InvoiceListPresenter.MyProxy> {
 
 	InvoiceProvider invoiceProvider;
 	ListDataProvider<Invoice> provider;
-	
+
 	public interface MyView extends View {
 		HasData<Invoice> getCellTable();
+
+		InvoiceCellList getCellList();
 	}
 
 	@ProxyCodeSplit
@@ -48,39 +52,51 @@ public class InvoiceListPresenter extends
 	protected void revealInParent() {
 		RevealContentEvent.fire(this, MainPresenter.TYPE_MainContent, this);
 	}
-	
+
 	@Override
 	protected void onReveal() {
 		super.onReveal();
 	}
 
-	
+
 	@Override
 	protected void onReset() {
 		super.onReset();
 	}
-	
+
 	@Override
 	protected void onBind() {
 
 		super.onBind();
 		provider = new ListDataProvider<Invoice>();
 		provider.addDataDisplay(getView().getCellTable());
-		
+
 		getEventBus().addHandler(InvoicesLoadedEvent.TYPE, new InvoicesLoadedEvent.InvoicesLoadedHandler() {
-			
+
 			@Override
 			public void onInvoicesLoaded(InvoicesLoadedEvent event) {
-				List<Invoice> l = new ArrayList<Invoice>();
-				l.addAll(invoiceProvider.get());
-				provider.setList(l);
+				loadInvoicesList();
 			}
 		});
 		
+		getEventBus().addHandler(InvoiceAddedEvent.TYPE, new InvoiceAddedEvent.InvoiceAddedHandler() {
+			
+			@Override
+			public void onInvoiceAdded(InvoiceAddedEvent event) {
+				provider.getList().add(event.getInvoice());
+			}
+		});
+
+		loadInvoicesList();
+
+	}
+
+	private void loadInvoicesList() {
 		List<Invoice> l = new ArrayList<Invoice>();
 		l.addAll(invoiceProvider.get());
 		provider.setList(l);
-		
+		getView().getCellList().getSortHandler().setList(provider.getList());
+		provider.refresh();
 	}
 }
 

@@ -2,10 +2,13 @@ package albert.lacambra.client.widgets;
 
 import java.util.Comparator;
 import java.util.Date;
-import java.util.List;
 
+import albert.lacambra.client.events.InvoiceAddedEvent;
+import albert.lacambra.client.events.InvoicesLoadedEvent;
 import albert.lacambra.client.models.Invoice;
 import albert.lacambra.client.presenters.InvoiceListPresenter;
+import albert.lacambra.client.restservices.BudgetProvider;
+import albert.lacambra.client.restservices.InvoiceProvider;
 
 import com.google.gwt.cell.client.ClickableTextCell;
 import com.google.gwt.cell.client.EditTextCell;
@@ -15,6 +18,8 @@ import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
+import com.google.inject.Inject;
+import com.google.web.bindery.event.shared.EventBus;
 
 public class InvoiceCellList extends CellTable<Invoice>{
 
@@ -23,31 +28,34 @@ public class InvoiceCellList extends CellTable<Invoice>{
 	private Column<Invoice, String> price;
 	private Column<Invoice, String> budget;
 	private Column<Invoice, String> delete;
+	
 	private ListHandler<Invoice> sortHandler;
 
-	public InvoiceCellList()
+	@Inject InvoiceProvider invoiceProvider;
+	@Inject BudgetProvider budgetProvider;
+	EventBus eventBus;
+	
+
+	@Inject
+	public InvoiceCellList(EventBus eventBus)
 	{
 		super(Invoice.KEY_PROVIDER);
-		initColumns();
-	}
 
-	public void build(InvoiceListPresenter presenter,  List<Invoice> ressource) {
-		loadSortHandlers(ressource);
-		loadFieldUpdaters(presenter);
+		this.eventBus = eventBus;
+
+		initColumns();
+		loadSortHandlers();
 	}
 
 	private void initColumns()
 	{
-		this.sortHandler = new ListHandler<Invoice>(null);
-		addColumnSortHandler(sortHandler);
-
 		date = new Column<Invoice, String>(new EditTextCell()) {
 			@Override
 			public String getValue(Invoice object) {
-				
+
 				DateTimeFormat format = DateTimeFormat.getFormat(PredefinedFormat.DATE_FULL);
 				String date = format.format(new Date(object.getDate()));
-				
+
 				return date;
 			}
 		};
@@ -63,7 +71,8 @@ public class InvoiceCellList extends CellTable<Invoice>{
 			@Override
 			public String getValue(Invoice object) {
 				object.getBudgetId();
-				return object.getBudget().getName();
+				return budgetProvider.get(object.getBudgetId()).getName();
+						
 			}
 		};
 
@@ -92,14 +101,27 @@ public class InvoiceCellList extends CellTable<Invoice>{
 		this.addColumn(budget, "budget");
 		this.addColumn(extra, "extra");
 		this.addColumn(delete, "delete");
+		
+		extra.setSortable(true);
+		date.setSortable(true);
+		budget.setSortable(true);
+		price.setSortable(true);
+		
+		this.sortHandler = new ListHandler<Invoice>(null);
+		addColumnSortHandler(sortHandler);
+		
 		this.setPageSize(25);
 		this.setKeyboardPagingPolicy(KeyboardPagingPolicy.CHANGE_PAGE);
-	}
-
-	public void loadSortHandlers(List<Invoice> ressources) {
-
-		sortHandler.setList(ressources);
 		
+	}
+	
+	public ListHandler<Invoice> getSortHandler() {
+		return sortHandler;
+	} 
+
+
+	public void loadSortHandlers() {
+
 		sortHandler.setComparator(date , new Comparator<Invoice>() {
 			@Override
 			public int compare(Invoice o1, Invoice o2) {
@@ -120,9 +142,9 @@ public class InvoiceCellList extends CellTable<Invoice>{
 			@Override
 			public int compare(Invoice o1, Invoice o2) {
 				return 
-						o1.getBudget().getName()
+						budgetProvider.get(o1.getBudgetId()).getName()
 						.compareTo(
-								o2.getBudget().getName());
+								budgetProvider.get(o2.getBudgetId()).getName());
 			}
 		});
 
@@ -138,28 +160,28 @@ public class InvoiceCellList extends CellTable<Invoice>{
 		date.setFieldUpdater(new FieldUpdater<Invoice, String>() {
 			public void update(int index, Invoice object, String value) {
 				if(!value.equals(object.getDate())) {
-//					object.setDate(value);
-//					presenter.invoiceUpdate(object);
+					//					object.setDate(value);
+					//					presenter.invoiceUpdate(object);
 				}
 			}
 		});
 
 		budget.setFieldUpdater(new FieldUpdater<Invoice, String>() {
 			public void update(int index, Invoice object, String value) {
-//				if(!value.equals(object.getCategory())) {
-//					object.setCategory(value);
-//					presenter.invoiceUpdate(object);
-//				}
+				//				if(!value.equals(object.getCategory())) {
+				//					object.setCategory(value);
+				//					presenter.invoiceUpdate(object);
+				//				}
 			}
 		});
 
 		price.setFieldUpdater(new FieldUpdater<Invoice, String>() {
 			public void update(int index, Invoice object, String value) {
 				Float price = new Float(value);
-//				if(price != object.getPrice()) {
-//					object.setPrice(price);
-//					presenter.invoiceUpdate(object);
-//				}
+				//				if(price != object.getPrice()) {
+				//					object.setPrice(price);
+				//					presenter.invoiceUpdate(object);
+				//				}
 			}
 		});
 
@@ -167,17 +189,17 @@ public class InvoiceCellList extends CellTable<Invoice>{
 			public void update(int index, Invoice object, String value) {
 				if(!value.equals(object.getExtra())) {
 					object.setExtra(value);
-//					presenter.invoiceUpdate(object);
+					//					presenter.invoiceUpdate(object);
 				}
 			}
 		});
-		
+
 		delete.setFieldUpdater(new FieldUpdater<Invoice, String>() {
 
 			@Override
 			public void update(int index, Invoice object, String value) {
-//				presenter.deleteInvoice(object);
-				
+				//				presenter.deleteInvoice(object);
+
 			}
 		});
 

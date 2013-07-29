@@ -22,9 +22,10 @@ public class InvoiceListView extends ViewImpl implements
 	}
 
 	@Inject
-	public InvoiceListView(final Binder binder) {
+	public InvoiceListView(final Binder binder, InvoiceCellList cellList) {
 		widget = binder.createAndBindUi(this);
-		cellList = new InvoiceCellList();
+//		cellList = new InvoiceCellList();
+		this.cellList = cellList;
 		container.add(cellList);
 	}
 
@@ -35,6 +36,11 @@ public class InvoiceListView extends ViewImpl implements
 
 	@Override
 	public HasData<Invoice> getCellTable() {
+		return cellList;
+	}
+	
+	@Override
+	public InvoiceCellList getCellList() {
 		return cellList;
 	}
 }
