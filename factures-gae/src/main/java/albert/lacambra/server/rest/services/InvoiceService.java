@@ -85,7 +85,7 @@ public class InvoiceService extends BasicService implements IInvoiceService {
 		Key<PersistedBudget> budgetKey = PersistedBudget.key(bracelet.getMeKey(), budgetId);
 		Key<PersistedInvoice> key = PersistedInvoice.key(budgetKey, invoiceId);
 		ofy().delete().key(key);
-		PersistedInvoice invoice = ofy().load().key(key).getValue();
+		PersistedInvoice invoice = ofy().load().key(key).now();
 		List<PersistedInvoice> l = 
 				ofy()
 				.load()

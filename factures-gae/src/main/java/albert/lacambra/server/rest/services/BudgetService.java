@@ -27,7 +27,7 @@ public class BudgetService extends BasicService implements IBudgetService {
 	public DTOBudget getBudget(Long id) {
 
 		Key<PersistedBudget> key = PersistedBudget.key(bracelet.getMeKey(), id);
-		PersistedBudget bg = ofy().load().key(key).getValue();
+		PersistedBudget bg = ofy().load().key(key).now();
 
 		if ( bg == null ){
 			throw new WebApplicationException(

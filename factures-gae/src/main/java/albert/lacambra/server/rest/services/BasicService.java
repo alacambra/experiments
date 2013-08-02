@@ -27,8 +27,7 @@ public abstract class BasicService {
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
 		Key<Person> key = Person.key(user.getEmail());
-		Person p = ofy().load().key(key).getValue();
-		
+		Person p = ofy().load().key(key).now();
 		if ( p == null ) {
 			p = new Person(user.getEmail(), user.getNickname());
 			key = ofy().save().entity(p).now();
