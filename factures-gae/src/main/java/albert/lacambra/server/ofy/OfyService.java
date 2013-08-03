@@ -8,7 +8,7 @@ import albert.lacambra.server.models.PeriodicCost;
 import albert.lacambra.server.models.PersistedBudget;
 import albert.lacambra.server.models.PersistedInvoice;
 import albert.lacambra.server.models.Person;
-import albert.lacambra.server.models.VariableCost;
+import albert.lacambra.server.models.IndividualCost;
 
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyFactory;
@@ -27,7 +27,7 @@ public class OfyService
 		factory().register(PersistedBudget.class);
 		factory().register(Person.class);
 		factory().register(Cost.class);
-		factory().register(VariableCost.class);
+		factory().register(IndividualCost.class);
 		factory().register(PeriodicCost.class);
 	}   
 

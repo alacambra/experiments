@@ -10,6 +10,8 @@ public class PeriodicCost extends Cost {
 	private Long start;
 	private Long end;
 	private Boolean isFixedCost;
+	private Integer foreseenCost;
+	private PeriodStep step = PeriodStep.MONTH;
 	
 	public static Key<PeriodicCost> key(Key<PersistedBudget> parent, Long id) {
 		return Key.create(parent, PeriodicCost.class, id);
@@ -22,23 +24,51 @@ public class PeriodicCost extends Cost {
 	public Long getStart() {
 		return start;
 	}
+	
 	public Long getEnd() {
 		return end;
 	}
+	
 	public Boolean getIsFixedCost() {
 		return isFixedCost;
 	}
-	public void setPeriodStep(PeriodStep periodStep) {
+	
+	public Integer getForeseenCost() {
+		return foreseenCost;
+	}
+	
+	public PeriodStep getStep() {
+		return step;
+	}
+	
+	public PeriodicCost setPeriodStep(PeriodStep periodStep) {
 		this.periodStep = periodStep;
+		return this;
 	}
-	public void setStart(Long start) {
+	
+	public PeriodicCost setStart(Long start) {
 		this.start = start;
+		return this;
 	}
-	public void setEnd(Long end) {
+	
+	public PeriodicCost setEnd(Long end) {
 		this.end = end;
+		return this;
 	}
-	public void setIsFixedCost(Boolean isFixedCost) {
+	
+	public PeriodicCost setIsFixedCost(Boolean isFixedCost) {
 		this.isFixedCost = isFixedCost;
+		return this;
+	}
+	
+	public PeriodicCost setForeseenCost(Integer foreseenCost) {
+		this.foreseenCost = foreseenCost;
+		return this;
+	}
+	
+	public PeriodicCost setStep(PeriodStep step) {
+		this.step = step;
+		return this;
 	}
 
 }

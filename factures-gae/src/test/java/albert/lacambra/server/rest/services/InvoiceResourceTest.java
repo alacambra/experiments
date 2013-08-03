@@ -32,7 +32,7 @@ public class InvoiceResourceTest {
 		fact.register(PersistedInvoice.class);
 		fact.register(PersistedBudget.class);
 		fact.register(Cost.class);
-		fact.register(VariableCost.class);
+		fact.register(IndividualCost.class);
 		fact.register(PeriodicCost.class);
 	}
 	
@@ -47,13 +47,13 @@ public class InvoiceResourceTest {
 		pb.setName("budgettest");
 		Key<PersistedBudget> key = ofy().save().entity(pb).now();
 
-		VariableCost cost = new VariableCost();
+		IndividualCost cost = new IndividualCost();
 		cost.setBudget(key);
 		cost.setConcept("concept");
 		cost.setCost(123);
-		Key<VariableCost> k = ofy().save().entity(cost).now();
+		Key<IndividualCost> k = ofy().save().entity(cost).now();
 		ofy().clear();
-		VariableCost cost1 = ofy().load().key(k).now();
+		IndividualCost cost1 = ofy().load().key(k).now();
 		
 		System.err.println(cost1.toString());
 		

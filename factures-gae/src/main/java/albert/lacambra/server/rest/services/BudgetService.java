@@ -16,6 +16,7 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 
 import albert.lacambra.client.models.DTOBudget;
+import albert.lacambra.server.models.NewPersistedBudget;
 import albert.lacambra.server.models.PersistedBudget;
 import albert.lacambra.server.models.PersistedInvoice;
 
@@ -153,6 +154,27 @@ public class BudgetService extends BasicService implements IBudgetService {
 	public Response saveBudget(DTOBudget dto) {
 
 		PersistedBudget pb = new PersistedBudget(dto).setOwner(bracelet.getMeKey());
+
+		long id = 0;
+
+		try{
+			id = ofy().save().entity(pb).now().getId();
+		} catch (Throwable e ) {
+			log.severe(e.getMessage());
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity("Error parsing dates").build();
+		}
+
+		return Response.status(Status.CREATED).header("x-insertedid", String.valueOf(id)).build();
+	}
+	
+	/**
+	 * new version of saveBudget
+	 * @param dto
+	 * @return
+	 */
+	public Response addBudget(DTOBudget dto) {
+
+		NewPersistedBudget pb = new NewPersistedBudget(dto).setOwner(bracelet.getMeKey());
 
 		long id = 0;
 

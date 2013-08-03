@@ -7,8 +7,14 @@ public class DTOBudget {
 	protected Long start;
 	protected Long end;
 	protected String name;
-	
-	
+
+	/*
+	 * New fields. 
+	 * Will replace start, end and assignation
+	 */
+	protected Integer year;
+	protected Integer amount;
+
 	public int getAssignation() {
 		return assignation;
 	}
@@ -45,5 +51,82 @@ public class DTOBudget {
 		return this;
 	}
 	
+	public Integer getYear() {
+		return year;
+	}
+	public Integer getAmount() {
+		return amount;
+	}
+	public DTOBudget setId(Long id) {
+		this.id = id;
+		return this;
+	}
+
+	public DTOBudget setYear(Integer year) {
+		this.year = year;
+		return this;
+	}
 	
+	public DTOBudget setAmount(Integer amount) {
+		this.amount = amount;
+		return this;
+	}
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

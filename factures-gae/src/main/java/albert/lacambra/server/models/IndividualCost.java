@@ -4,10 +4,10 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.EntitySubclass;
 
 @EntitySubclass
-public class VariableCost extends Cost {
+public class IndividualCost extends Cost {
 	
-	public static Key<VariableCost> key(Key<PersistedBudget> parent, Long id) {
-		return Key.create(parent, VariableCost.class, id);
+	public static Key<IndividualCost> key(Key<PersistedBudget> parent, Long id) {
+		return Key.create(parent, IndividualCost.class, id);
 	}
 	
 	private Long date;
