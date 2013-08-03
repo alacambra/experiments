@@ -177,7 +177,7 @@
 					<execution>
 						<phase>install</phase>
 						<goals>
-							<goal>compile</goal>
+<!-- 							<goal>compile</goal> -->
 						</goals>
 					</execution>
 				</executions>

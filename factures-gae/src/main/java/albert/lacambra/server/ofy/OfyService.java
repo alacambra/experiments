@@ -3,9 +3,12 @@
 
 package albert.lacambra.server.ofy;
 
+import albert.lacambra.server.models.Cost;
+import albert.lacambra.server.models.PeriodicCost;
 import albert.lacambra.server.models.PersistedBudget;
 import albert.lacambra.server.models.PersistedInvoice;
 import albert.lacambra.server.models.Person;
+import albert.lacambra.server.models.VariableCost;
 
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyFactory;
@@ -23,7 +26,10 @@ public class OfyService
 		factory().register(PersistedInvoice.class);
 		factory().register(PersistedBudget.class);
 		factory().register(Person.class);
-	}
+		factory().register(Cost.class);
+		factory().register(VariableCost.class);
+		factory().register(PeriodicCost.class);
+	}   
 
 	public static Objectify ofy() {
 		return ObjectifyService.ofy();
