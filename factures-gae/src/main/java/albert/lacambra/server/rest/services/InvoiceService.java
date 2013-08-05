@@ -1,16 +1,11 @@
 package albert.lacambra.server.rest.services;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
 
 import com.googlecode.objectify.Key;
 
@@ -55,7 +50,7 @@ public class InvoiceService extends BasicService implements IInvoiceService {
 
 
 	@Override
-	public List<DTOInvoice> getInvoices() throws JsonGenerationException, JsonMappingException, IOException {
+	public List<DTOInvoice> getInvoices(){
 		
 		List<PersistedInvoice> l = 
 				ofy()
@@ -102,6 +97,20 @@ public class InvoiceService extends BasicService implements IInvoiceService {
 //		
 //		ofy().delete().entity(invoice);
 		
+	}
+
+	@Override
+	public DTOInvoice getInvoice(Long budgetId, Long invoiceId) {
+		Key<PersistedBudget> budgetKey = PersistedBudget.key(bracelet.getMeKey(), budgetId);
+		Key<PersistedInvoice> key = PersistedInvoice.key(budgetKey, invoiceId);
+		ofy().load().key(key).now();
+		return null;
+	}
+
+	@Override
+	public List<DTOInvoice> getInvoices(Integer year) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 

@@ -40,22 +40,22 @@ public class InvoiceResourceTest {
 	public void addVaribleCost() {
 
 
-		PersistedBudget pb = new PersistedBudget().setOwner(Person.key("test@test.com"));
-
-		long id = 0;
-
-		pb.setName("budgettest");
-		Key<PersistedBudget> key = ofy().save().entity(pb).now();
-
-		IndividualCost cost = new IndividualCost();
-		cost.setBudget(key);
-		cost.setConcept("concept");
-		cost.setCost(123);
-		Key<IndividualCost> k = ofy().save().entity(cost).now();
-		ofy().clear();
-		IndividualCost cost1 = ofy().load().key(k).now();
-		
-		System.err.println(cost1.toString());
+//		NewPersistedBudget pb = new NewPersistedBudget().setOwner(Person.key("test@test.com"));
+//
+//		long id = 0;
+//
+//		pb.setName("budgettest");
+//		Key<NewPersistedBudget> key = ofy().save().entity(pb).now();
+//
+//		IndividualCost cost = new IndividualCost();
+//		cost.setBudget(key);
+//		cost.setConcept("concept");
+//		cost.setCost(123);
+//		Key<IndividualCost> k = ofy().save().entity(cost).now();
+//		ofy().clear();
+//		IndividualCost cost1 = ofy().load().key(k).now();
+//		
+//		System.err.println(cost1.toString());
 		
 	}
 

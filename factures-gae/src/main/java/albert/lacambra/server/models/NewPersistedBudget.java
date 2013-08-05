@@ -5,10 +5,12 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 import albert.lacambra.client.models.DTOBudget;
 
 import com.googlecode.objectify.Key;
+import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Parent;
 
+@Entity
 public class NewPersistedBudget {
 
 	public static Key<NewPersistedBudget> key(Key<Person> owner, Long id) {
@@ -32,7 +34,6 @@ public class NewPersistedBudget {
 	public NewPersistedBudget(){}
 	
 	public NewPersistedBudget(DTOBudget dtoBudget) {
-
 		this();
 		id = dtoBudget.getId();
 		year = dtoBudget.getYear();

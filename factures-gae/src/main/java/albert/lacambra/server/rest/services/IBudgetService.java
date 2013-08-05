@@ -29,7 +29,8 @@ public interface IBudgetService {
 	@GET
 	@Path("year/{year:[0-9]{4}}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<DTOBudget> getBudgetsForYear(@PathParam("year") String year) throws JsonGenerationException, JsonMappingException, IOException ;
+	public List<DTOBudget> getBudgetsForYear(@PathParam("year") String year) 
+			throws JsonGenerationException, JsonMappingException, IOException ;
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -42,6 +43,14 @@ public interface IBudgetService {
 	@GET
 	@Path("update")
 	Response update();
+
+	List<DTOBudget> getBudgetsForYear(Integer year)
+			throws JsonGenerationException, JsonMappingException, IOException;
+
+	@PUT
+	@Path("{id:[0-9]+}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	Response updateBudget(@PathParam("id") Long id, DTOBudget dto);
 }
 
 

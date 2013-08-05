@@ -23,7 +23,9 @@ import albert.lacambra.server.models.PersistedInvoice;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.cmd.Query;
 
-public class BudgetService extends BasicService implements IBudgetService {
+public class BudgetService extends BasicService 
+//implements IBudgetService 
+{
 
 	public DTOBudget getBudget(Long id) {
 
@@ -40,7 +42,8 @@ public class BudgetService extends BasicService implements IBudgetService {
 		return bg.getDTOBudget();
 	}
 
-	public List<DTOBudget> getBudgetsForYear(String year) throws JsonGenerationException, JsonMappingException, IOException {
+	public List<DTOBudget> getBudgetsForYear(String year) 
+			throws JsonGenerationException, JsonMappingException, IOException {
 
 		Query<PersistedBudget> query = ofy().load().type(PersistedBudget.class).ancestor(bracelet.getMeKey());
 
@@ -97,7 +100,7 @@ public class BudgetService extends BasicService implements IBudgetService {
 		return budgets;
 	}
 
-	@Override
+	
 	public Response update() {
 
 		List<PersistedBudget> l = ofy().load().type(PersistedBudget.class).ancestor(bracelet.getMeKey()).list();
@@ -150,7 +153,7 @@ public class BudgetService extends BasicService implements IBudgetService {
 		return budgets;
 	}
 
-	@Override
+	
 	public Response saveBudget(DTOBudget dto) {
 
 		PersistedBudget pb = new PersistedBudget(dto).setOwner(bracelet.getMeKey());
@@ -186,6 +189,13 @@ public class BudgetService extends BasicService implements IBudgetService {
 		}
 
 		return Response.status(Status.CREATED).header("x-insertedid", String.valueOf(id)).build();
+	}
+
+	
+	public List<DTOBudget> getBudgetsForYear(Integer year)
+			throws JsonGenerationException, JsonMappingException, IOException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 

@@ -36,5 +36,5 @@ public abstract class BasicService {
 		bracelet = new Bracelet();
 		bracelet.login(key);
 	}
-	
+
 }
