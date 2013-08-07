@@ -5,6 +5,7 @@ import albert.lacambra.client.models.CostDTO;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Ignore;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Parent;
 
@@ -15,8 +16,8 @@ public abstract class Cost<T> {
 	@Id protected Long id;
 	@Index private Integer year;
 	
-	@Index
-	protected Integer cost;
+	@Index protected Integer cost;
+	@Ignore protected Long budgetId; 
 	
 	protected String concept;
 	@Parent protected Key<NewPersistedBudget> budget;
@@ -37,6 +38,10 @@ public abstract class Cost<T> {
 	
 	public String getTags() {
 		return tags;
+	}
+	
+	public Long getBudgetId() {
+		return budgetId;
 	}
 	
 	public T setCost(Integer cost) {
@@ -75,6 +80,11 @@ public abstract class Cost<T> {
 	
 	public T setYear(Integer year) {
 		this.year = year;
+		return (T) this;
+	}
+	
+	public T setBudgetId(Long budgetId) {
+		this.budgetId = budgetId;
 		return (T) this;
 	}
 	

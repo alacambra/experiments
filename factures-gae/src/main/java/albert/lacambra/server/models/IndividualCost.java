@@ -9,7 +9,7 @@ import com.googlecode.objectify.annotation.Index;
 @EntitySubclass
 public class IndividualCost extends Cost<IndividualCost> {
 
-	public static Key<IndividualCost> key(Key<PersistedBudget> parent, Long id) {
+	public static Key<IndividualCost> key(Key<NewPersistedBudget> parent, Long id) {
 		return Key.create(parent, IndividualCost.class, id);
 	}
 

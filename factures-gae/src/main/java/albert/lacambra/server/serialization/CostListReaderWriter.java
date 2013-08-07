@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.List;
 
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
@@ -16,6 +18,7 @@ import javax.ws.rs.ext.Provider;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+import albert.lacambra.client.models.DTOInvoice;
 import albert.lacambra.client.models.IndividualCostDTO;
 import albert.lacambra.client.models.PeriodicCostDTO;
 import albert.lacambra.server.models.Cost;
@@ -24,25 +27,45 @@ import albert.lacambra.server.models.PeriodicCost;
 
 @Provider
 @Produces({MediaType.APPLICATION_JSON, "*/*"})
-public class IndividualCostReaderWriter 
-	implements MessageBodyWriter<Cost<?>>, MessageBodyReader<Cost<?>>{
+public class CostListReaderWriter 
+implements MessageBodyWriter<Cost<?>>, MessageBodyReader<Cost<?>>{
 
 	@Override
 	public boolean isWriteable(Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType) {
-		
-		try {
-			type.asSubclass(Cost.class);
-			return true;
-		} catch (ClassCastException e) {
-			return false;
+
+		boolean isWritable;
+
+		if (List.class.isAssignableFrom(type)
+				&& genericType instanceof ParameterizedType) {
+
+			ParameterizedType parameterizedType = (ParameterizedType) genericType;
+
+			Type[] actualTypeArgs = (parameterizedType.getActualTypeArguments());
+			
+//			try {
+//				actualTypeArgs[0].asSubclass(Cost.class);
+//				return true;
+//			} catch (ClassCastException e) {
+//				return false;
+//			}
+
+			
+			isWritable = (actualTypeArgs.length == 1 &&
+					actualTypeArgs[0].equals(DTOInvoice.class));
+
+		} else {
+			isWritable = false;
 		}
+
+		return isWritable;
+
 	}
 
 	@Override
 	public long getSize(Cost<?> t, Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType) {
-		
+
 		return -1;
 	}
 
@@ -52,7 +75,7 @@ public class IndividualCostReaderWriter
 			MultivaluedMap<String, Object> httpHeaders,
 			OutputStream entityStream) throws IOException,
 			WebApplicationException {
-		
+
 		ObjectMapper m = new ObjectMapper();
 		entityStream.write(m.writeValueAsBytes(t.getDTO()));
 	}
@@ -60,30 +83,30 @@ public class IndividualCostReaderWriter
 	@Override
 	public boolean isReadable(Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType) {
-		
+
 		try {
 			type.asSubclass(Cost.class);
 			return true;
 		} catch (ClassCastException e) {
 			return false;
 		}
-		
+
 	}
 
 	@Override
 	public Cost<?> readFrom(Class<Cost<?>> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType,
 			MultivaluedMap<String, String> httpHeaders, InputStream entityStream)
-			throws IOException, WebApplicationException {
-		
+					throws IOException, WebApplicationException {
+
 		ObjectMapper m = new ObjectMapper();
-		
+
 		if ( type.isAssignableFrom(IndividualCost.class )) {
 			return new IndividualCost(m.readValue(entityStream, IndividualCostDTO.class));
 		} else if ( type.isAssignableFrom(PeriodicCost.class )) {
 			return new PeriodicCost(m.readValue(entityStream, PeriodicCostDTO.class));
 		} 
-		
+
 		throw new RuntimeException("Not assignable type: " + type.getCanonicalName());
 	}
 }

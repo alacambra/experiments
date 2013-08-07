@@ -1,6 +1,5 @@
 package albert.lacambra.server.models;
 
-import albert.lacambra.client.models.CostDTO;
 import albert.lacambra.client.models.PeriodicCostDTO;
 
 import com.googlecode.objectify.Key;
@@ -39,7 +38,9 @@ public class PeriodicCost extends Cost<PeriodicCost> {
 		.setIsFixedCost(costDTO.getIsFixedCost())
 		.setPeriodStep(costDTO.getPeriodStep())
 		.setStart(costDTO.getStart())
+		.setBudgetId(costDTO.getBudgetId())
 		.setTags(costDTO.getTags());
+		
 	}
 
 	public PeriodStep getPeriodStep() {
@@ -90,7 +91,7 @@ public class PeriodicCost extends Cost<PeriodicCost> {
 	public PeriodicCostDTO getPeriodicCostDTO() {
 
 		return new PeriodicCostDTO()
-//		.setBudgetId(getBudget().getId())
+		.setBudgetId(getBudget().getId())
 		.setConcept(getConcept())
 		.setCost(getCost())
 		.setStart(getStart())
@@ -102,6 +103,7 @@ public class PeriodicCost extends Cost<PeriodicCost> {
 		.setTags(getTags());
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public PeriodicCostDTO getDTO() {
 		return getPeriodicCostDTO();

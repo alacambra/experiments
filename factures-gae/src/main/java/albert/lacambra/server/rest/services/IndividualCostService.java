@@ -10,32 +10,31 @@ import com.googlecode.objectify.Key;
 
 import albert.lacambra.server.models.IndividualCost;
 import albert.lacambra.server.models.NewPersistedBudget;
-import albert.lacambra.server.models.PeriodicCost;
 
-public class PeriodicCostService extends BasicService implements IPeriodicCostService {
+public class IndividualCostService extends BasicService implements IIndividualCostService {
 
 	@Override
-	public PeriodicCost getPeriodicCost(Long budgetId, Long costId) {
+	public IndividualCost getIndividualCost(Long budgetId, Long costId) {
 		
 		Key<NewPersistedBudget> budgetKey = NewPersistedBudget.key(bracelet.getMeKey(), budgetId);
-		Key<PeriodicCost> key = PeriodicCost.key(budgetKey, costId);
-		PeriodicCost pc = ofy().load().key(key).now();
-		pc = new PeriodicCost();
+		Key<IndividualCost> key = IndividualCost.key(budgetKey, costId);
+		IndividualCost pc = ofy().load().key(key).now();
+		pc = new IndividualCost();
 		pc.setConcept("lalalala");
 		return pc;
 	}
 
 	@Override
-	public List<PeriodicCost> getPeriodicCosts(Integer year) {
+	public List<IndividualCost> getIndividualCosts(Integer year) {
 		
-		List<PeriodicCost> l = 
-				ofy().load().type(PeriodicCost.class).filter("year =", year).list();
+		List<IndividualCost> l = 
+				ofy().load().type(IndividualCost.class).filter("year =", year).list();
 		
 		return l;
 	}
 
 	@Override
-	public Response savePeriodicCost(PeriodicCost cost) {
+	public Response saveIndividualCost(IndividualCost cost) {
 		
 		Key<NewPersistedBudget> budgetKey = NewPersistedBudget.key(bracelet.getMeKey(), cost.getBudgetId());
 		cost.setBudget(budgetKey);
@@ -45,30 +44,69 @@ public class PeriodicCostService extends BasicService implements IPeriodicCostSe
 	}
 
 	@Override
-	public Response updatePeriodicCost(Long id, PeriodicCost cost) {
+	public Response updateIndividualCost(Long id, IndividualCost cost) {
 		Key<NewPersistedBudget> budgetKey = NewPersistedBudget.key(bracelet.getMeKey(), cost.getBudgetId());
 		ofy().save().entities(cost.setBudget(budgetKey).setId(id));
 		return null;
 	}
 
 	@Override
-	public void deletePeriodicCost(Long budgetId, Long costId) {
+	public void deleteIndividualCost(Long budgetId, Long costId) {
 		Key<NewPersistedBudget> budgetKey = NewPersistedBudget.key(bracelet.getMeKey(), budgetId);
-		Key<PeriodicCost> costKey = PeriodicCost.key(budgetKey, costId);
+		Key<IndividualCost> costKey = IndividualCost.key(budgetKey, costId);
 		ofy().delete().key(costKey);
 	}
-
-	@Override
-	public IndividualCost getIndividualCost(Long budgetId, Long invoiceId) {
-		IndividualCost cost = new IndividualCost();
-		cost.setConcept("lololo");
-		return cost;
-	}
-
-	@Override
-	public Response savePeriodicCost(IndividualCost cost) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

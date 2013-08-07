@@ -13,28 +13,29 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import albert.lacambra.client.models.IndividualCostDTO;
+import albert.lacambra.server.models.IndividualCost;
 
 public interface IIndividualCostService {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{budgetId:[0-9]+}/{invoiceId:[0-9]+}")
-	public IndividualCostDTO getIndividualCost(
+	public IndividualCost getIndividualCost(
 			@PathParam("budgetId") Long budgetId, @PathParam("invoiceId") Long invoiceId);
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("year/{year:[0-9]{4}}")
-	public List<IndividualCostDTO> getIndividualCosts(@PathParam("invoiceId") Integer year);
+	public List<IndividualCost> getIndividualCosts(@PathParam("invoiceId") Integer year);
 	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response saveIndividualCost(IndividualCostDTO invoice);
+	public Response saveIndividualCost(IndividualCost invoice);
 	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/{id:[0-9]+}")
-	public Response updateIndividualCost( @PathParam("invoiceId") Long id, IndividualCostDTO invoice);
+	public Response updateIndividualCost( @PathParam("invoiceId") Long id, IndividualCost invoice);
 	
 	@DELETE
 	@Path("/{budgetId:[0-9]+}/{invoiceId:[0-9]+}")
