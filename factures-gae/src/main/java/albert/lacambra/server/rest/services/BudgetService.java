@@ -19,7 +19,7 @@ import albert.lacambra.server.models.NewPersistedBudget;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.cmd.Query;
 
-public class NewBudgetService extends BasicService implements IBudgetService {
+public class BudgetService extends BasicService implements IBudgetService {
 
 	@Override
 	public DTOBudget getBudget(Long id) {

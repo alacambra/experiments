@@ -35,8 +35,8 @@ public interface IPeriodicCostService {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("year/{year:[0-9]{4}}")
-	public List<PeriodicCost> getPeriodicCosts(@PathParam("invoiceId") Integer year);
+	@Path("/year/{year:[0-9]{4}}")
+	public List<PeriodicCost> getPeriodicCosts(@PathParam("year") Integer year);
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)

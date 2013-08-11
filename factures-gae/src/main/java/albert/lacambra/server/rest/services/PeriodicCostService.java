@@ -31,6 +31,8 @@ public class PeriodicCostService extends BasicService implements IPeriodicCostSe
 		List<PeriodicCost> l = 
 				ofy().load().type(PeriodicCost.class).filter("year =", year).list();
 		
+		l.add(new PeriodicCost().setConcept("my new concept"));
+		
 		return l;
 	}
 

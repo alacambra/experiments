@@ -91,7 +91,7 @@ public class PeriodicCost extends Cost<PeriodicCost> {
 	public PeriodicCostDTO getPeriodicCostDTO() {
 
 		return new PeriodicCostDTO()
-		.setBudgetId(getBudget().getId())
+//		.setBudgetId(getBudget().getId())
 		.setConcept(getConcept())
 		.setCost(getCost())
 		.setStart(getStart())

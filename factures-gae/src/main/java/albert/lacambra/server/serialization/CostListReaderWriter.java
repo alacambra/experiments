@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Produces;
@@ -18,7 +19,7 @@ import javax.ws.rs.ext.Provider;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
-import albert.lacambra.client.models.DTOInvoice;
+import albert.lacambra.client.models.CostDTO;
 import albert.lacambra.client.models.IndividualCostDTO;
 import albert.lacambra.client.models.PeriodicCostDTO;
 import albert.lacambra.server.models.Cost;
@@ -28,7 +29,7 @@ import albert.lacambra.server.models.PeriodicCost;
 @Provider
 @Produces({MediaType.APPLICATION_JSON, "*/*"})
 public class CostListReaderWriter 
-implements MessageBodyWriter<Cost<?>>, MessageBodyReader<Cost<?>>{
+implements MessageBodyWriter<List<Cost<?>>>, MessageBodyReader<List<Cost<?>>>{
 
 	@Override
 	public boolean isWriteable(Class<?> type, Type genericType,
@@ -42,17 +43,14 @@ implements MessageBodyWriter<Cost<?>>, MessageBodyReader<Cost<?>>{
 			ParameterizedType parameterizedType = (ParameterizedType) genericType;
 
 			Type[] actualTypeArgs = (parameterizedType.getActualTypeArguments());
-			
-//			try {
-//				actualTypeArgs[0].asSubclass(Cost.class);
-//				return true;
-//			} catch (ClassCastException e) {
-//				return false;
-//			} 
 
-			
-			isWritable = (actualTypeArgs.length == 1 &&
-					actualTypeArgs[0].equals(DTOInvoice.class));
+			try {
+				Class<?> t = (Class<?>) actualTypeArgs[0];
+				t.asSubclass(Cost.class);
+				isWritable = true;
+			} catch (ClassCastException e) {
+				isWritable = false;
+			} 
 
 		} else {
 			isWritable = false;
@@ -63,21 +61,27 @@ implements MessageBodyWriter<Cost<?>>, MessageBodyReader<Cost<?>>{
 	}
 
 	@Override
-	public long getSize(Cost<?> t, Class<?> type, Type genericType,
+	public long getSize(List<Cost<?>> t, Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType) {
 
 		return -1;
 	}
 
 	@Override
-	public void writeTo(Cost<?> t, Class<?> type, Type genericType,
+	public void writeTo(List<Cost<?>> t, Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType,
 			MultivaluedMap<String, Object> httpHeaders,
 			OutputStream entityStream) throws IOException,
 			WebApplicationException {
 
 		ObjectMapper m = new ObjectMapper();
-		entityStream.write(m.writeValueAsBytes(t.getDTO()));
+		List<CostDTO<?>> dtos = new ArrayList<CostDTO<?>>();
+
+		for (Cost<?> c : t) {
+			dtos.add(c.getDTO());
+		}
+
+		entityStream.write(m.writeValueAsBytes(dtos));
 	}
 
 	@Override
@@ -94,18 +98,44 @@ implements MessageBodyWriter<Cost<?>>, MessageBodyReader<Cost<?>>{
 	}
 
 	@Override
-	public Cost<?> readFrom(Class<Cost<?>> type, Type genericType,
+	public List<Cost<?>> readFrom(Class<List<Cost<?>>> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType,
 			MultivaluedMap<String, String> httpHeaders, InputStream entityStream)
 					throws IOException, WebApplicationException {
 
 		ObjectMapper m = new ObjectMapper();
 
-		if ( type.isAssignableFrom(IndividualCost.class )) {
-			return new IndividualCost(m.readValue(entityStream, IndividualCostDTO.class));
-		} else if ( type.isAssignableFrom(PeriodicCost.class )) {
-			return new PeriodicCost(m.readValue(entityStream, PeriodicCostDTO.class));
-		} 
+		if (List.class.isAssignableFrom(type)
+				&& genericType instanceof ParameterizedType) {
+
+			ParameterizedType parameterizedType = (ParameterizedType) genericType;
+
+			Type[] actualTypeArgs = (parameterizedType.getActualTypeArguments());
+
+			Class<?> t = (Class<?>) actualTypeArgs[0];
+			if ( t.isAssignableFrom(IndividualCost.class )) {
+
+				List<Cost<?>> costs = new ArrayList<Cost<?>>();
+				List<CostDTO<?>> dtos = m.readValue(entityStream, List.class);
+
+				for (CostDTO<?> c : dtos) {
+					costs.add(new IndividualCost((IndividualCostDTO)c));
+				}
+
+				return costs;
+			} else if ( t.isAssignableFrom(PeriodicCost.class )) {
+
+				List<Cost<?>> costs = new ArrayList<Cost<?>>();
+				List<CostDTO<?>> dtos = m.readValue(entityStream, List.class);
+
+				for (CostDTO<?> c : dtos) {
+					costs.add(new PeriodicCost((PeriodicCostDTO)c));
+				}
+
+				return costs;
+			} 
+
+		}
 
 		throw new RuntimeException("Not assignable type: " + type.getCanonicalName());
 	}
