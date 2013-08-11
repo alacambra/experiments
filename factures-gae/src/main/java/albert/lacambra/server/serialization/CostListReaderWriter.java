@@ -48,7 +48,7 @@ implements MessageBodyWriter<Cost<?>>, MessageBodyReader<Cost<?>>{
 //				return true;
 //			} catch (ClassCastException e) {
 //				return false;
-//			}
+//			} 
 
 			
 			isWritable = (actualTypeArgs.length == 1 &&

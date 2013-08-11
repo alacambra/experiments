@@ -21,6 +21,7 @@ import com.googlecode.objectify.cmd.Query;
 
 public class NewBudgetService extends BasicService implements IBudgetService {
 
+	@Override
 	public DTOBudget getBudget(Long id) {
 
 		Key<NewPersistedBudget> key = NewPersistedBudget.key(bracelet.getMeKey(), id);
@@ -98,6 +99,7 @@ public class NewBudgetService extends BasicService implements IBudgetService {
 //		return Response.status(Status.NO_CONTENT).build();
 	}
 
+	@Override
 	public List<DTOBudget> getAllBudgets() throws JsonGenerationException, JsonMappingException, IOException {
 
 		List<NewPersistedBudget> l = ofy().load().type(NewPersistedBudget.class).ancestor(bracelet.getMeKey()).list();
@@ -153,6 +155,7 @@ public class NewBudgetService extends BasicService implements IBudgetService {
 	 * @param dto
 	 * @return
 	 */
+	@Override
 	public Response addBudget(DTOBudget dto) {
 
 		NewPersistedBudget pb = new NewPersistedBudget(dto).setOwner(bracelet.getMeKey());
