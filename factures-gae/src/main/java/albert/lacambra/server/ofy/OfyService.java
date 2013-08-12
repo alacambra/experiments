@@ -4,7 +4,7 @@
 package albert.lacambra.server.ofy;
 
 import albert.lacambra.server.models.Cost;
-import albert.lacambra.server.models.NewPersistedBudget;
+import albert.lacambra.server.models.PersistedBudget;
 import albert.lacambra.server.models.PeriodicCost;
 import albert.lacambra.server.models.PersistedBudget;
 import albert.lacambra.server.models.PersistedInvoice;
@@ -30,7 +30,7 @@ public class OfyService
 		factory().register(Cost.class);
 		factory().register(IndividualCost.class);
 		factory().register(PeriodicCost.class);
-		factory().register(NewPersistedBudget.class);
+		factory().register(PersistedBudget.class);
 	}   
 
 	public static Objectify ofy() {

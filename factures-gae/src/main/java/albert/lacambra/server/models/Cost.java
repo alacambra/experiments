@@ -20,7 +20,7 @@ public abstract class Cost<T> {
 	@Ignore protected Long budgetId; 
 	
 	protected String concept;
-	@Parent protected Key<NewPersistedBudget> budget;
+	@Parent protected Key<PersistedBudget> budget;
 	
 	protected String tags;
 	
@@ -32,7 +32,7 @@ public abstract class Cost<T> {
 		return concept;
 	}
 	
-	public Key<NewPersistedBudget> getBudget() {
+	public Key<PersistedBudget> getBudget() {
 		return budget;
 	}
 	
@@ -55,7 +55,7 @@ public abstract class Cost<T> {
 	}
 	
 	
-	public T setBudget(Key<NewPersistedBudget> budget) {
+	public T setBudget(Key<PersistedBudget> budget) {
 		this.budget = budget;
 		return (T) this;
 	}

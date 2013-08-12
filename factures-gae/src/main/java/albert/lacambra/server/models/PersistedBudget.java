@@ -3,41 +3,47 @@ package albert.lacambra.server.models;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import albert.lacambra.client.models.DTOBudget;
+
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
-import com.googlecode.objectify.annotation.Ignore;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Parent;
 
-@Entity(name="Budget")
+@Entity
 public class PersistedBudget {
 
 	public static Key<PersistedBudget> key(Key<Person> owner, Long id) {
 		return Key.create(owner, PersistedBudget.class, id);
 	}
 
-	@Id private Long id;
-	@JsonIgnore @Parent Key<Person> owner;
-	private String name;
-	@Index
-	private Long start;
-	@Index
-	private Long end;
-	private Integer assignation;
-	@Ignore private int used;
+	@Id 
+	private Long id;
 
-	public PersistedBudget() {}
+	@JsonIgnore 
+	@Parent 
+	private Key<Person> owner;
+
+	private String name;
+
+	@Index
+	private Integer year;
+	private Integer amount;
+	private Integer total;
+
+	public PersistedBudget(){}
 	
 	public PersistedBudget(DTOBudget dtoBudget) {
-		
 		this();
 		id = dtoBudget.getId();
-		start = dtoBudget.getStart();
-		end = dtoBudget.getEnd();
+		year = dtoBudget.getYear();
 		name = dtoBudget.getName();
-		assignation = dtoBudget.getAssignation();
-		
+		amount = dtoBudget.getAmount();
+
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	public Key<Person> getOwner() {
@@ -48,20 +54,16 @@ public class PersistedBudget {
 		return name;
 	}
 
-	public Long getStart() {
-		return start;
+	public Integer getYear() {
+		return year;
 	}
 
-	public Long getEnd() {
-		return end;
+	public Integer getAmount() {
+		return amount;
 	}
 
-	public Integer getAssignation() {
-		return assignation;
-	}
-
-	public int getUsed() {
-		return used;
+	public Integer getTotal() {
+		return total;
 	}
 
 	public PersistedBudget setId(Long id) {
@@ -79,107 +81,28 @@ public class PersistedBudget {
 		return this;
 	}
 
-	public PersistedBudget setStart(Long start) {
-		this.start = start;
+	public PersistedBudget setYear(Integer year) {
+		this.year = year;
 		return this;
 	}
 
-	public PersistedBudget setEnd(Long end) {
-		this.end = end;
+	public PersistedBudget setAmount(Integer amount) {
+		this.amount = amount;
 		return this;
 	}
 
-	public PersistedBudget setAssignation(Integer assignation) {
-		this.assignation = assignation;
+	public PersistedBudget setTotal(Integer total) {
+		this.total = total;
 		return this;
-	}
-
-	public PersistedBudget setUsed(int used) {
-		this.used = used;
-		return this;
-	}
-
-	public Long getId() {
-		return id;
 	}
 
 	public DTOBudget getDTOBudget() {
 
 		return new DTOBudget()
 		.setId(id)
-		.setStart(start)
-		.setEnd(end)
+		.setYear(year)
 		.setName(name)
-		.setAssignation(assignation);
+		.setAmount(amount);
 
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

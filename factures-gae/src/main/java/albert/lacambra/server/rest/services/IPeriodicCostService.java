@@ -24,15 +24,6 @@ public interface IPeriodicCostService {
 	public PeriodicCost getPeriodicCost(
 			@PathParam("budgetId") Long budgetId, @PathParam("invoiceId") Long invoiceId);
 
-	/*
-	 * just for test
-	 */
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/test/{budgetId:[0-9]+}/{invoiceId:[0-9]+}")
-	public IndividualCost getIndividualCost(
-			@PathParam("budgetId") Long budgetId, @PathParam("invoiceId") Long invoiceId);
-
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/year/{year:[0-9]{4}}")
@@ -40,20 +31,12 @@ public interface IPeriodicCostService {
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response savePeriodicCost(PeriodicCost cost);
+	public Long savePeriodicCost(PeriodicCost cost);
 	
-	/*
-	 * just for test
-	 */
-	@PUT
-	@Path("/test")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response savePeriodicCost(IndividualCost cost);
-
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/{id:[0-9]+}")
-	public Response updatePeriodicCost( @PathParam("invoiceId") Long id, PeriodicCost invoice);
+	public void updatePeriodicCost( @PathParam("invoiceId") Long id, PeriodicCost invoice);
 
 	@DELETE
 	@Path("/{budgetId:[0-9]+}/{invoiceId:[0-9]+}")

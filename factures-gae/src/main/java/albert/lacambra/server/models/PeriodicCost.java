@@ -16,12 +16,12 @@ public class PeriodicCost extends Cost<PeriodicCost> {
 	private Long end;
 	private Integer foreseenCost;
 
-	public static Key<PeriodicCost> key(Key<NewPersistedBudget> parent, Long id) {
+	public static Key<PeriodicCost> key(Key<PersistedBudget> parent, Long id) {
 		return Key.create(parent, PeriodicCost.class, id);
 	}
 
 	public PeriodicCost(){}
-	public PeriodicCost(Key<NewPersistedBudget> budget, PeriodicCostDTO costDTO){
+	public PeriodicCost(Key<PersistedBudget> budget, PeriodicCostDTO costDTO){
 
 		this(costDTO);
 		this.budget = budget;
@@ -91,7 +91,7 @@ public class PeriodicCost extends Cost<PeriodicCost> {
 	public PeriodicCostDTO getPeriodicCostDTO() {
 
 		return new PeriodicCostDTO()
-//		.setBudgetId(getBudget().getId())
+		.setBudgetId(getBudget().getId())
 		.setConcept(getConcept())
 		.setCost(getCost())
 		.setStart(getStart())

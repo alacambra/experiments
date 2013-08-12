@@ -8,32 +8,26 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 
-import albert.lacambra.client.models.DTOBudget;
+import albert.lacambra.server.models.PersistedBudget;
 
 public interface IBudgetService {
 
-	public abstract DTOBudget getBudget(Long id);
+	PersistedBudget getBudget(Long id);
 
-	public abstract List<DTOBudget> getBudgetsForYear(Integer year)
-			throws JsonGenerationException, JsonMappingException, IOException;
+	List<PersistedBudget> getBudgetsForYear(Integer year);
 
-	public abstract Response update();
+	List<PersistedBudget> getAllBudgets();
 
-	public abstract List<DTOBudget> getAllBudgets()
-			throws JsonGenerationException, JsonMappingException, IOException;
-
-	public abstract Response saveBudget(DTOBudget dto);
-
-	public abstract Response updateBudget(Long id, DTOBudget dto);
+	void updateBudget(Long id, PersistedBudget dto);
 
 	/**
 	 * new version of saveBudget
 	 * @param dto
 	 * @return
 	 */
-	public abstract Response addBudget(DTOBudget dto);
+	Long addBudget(PersistedBudget dto);
 
-	public abstract List<DTOBudget> getBudgetsForYear(String year)
+	List<PersistedBudget> getBudgetsForYear(String year)
 			throws JsonGenerationException, JsonMappingException, IOException;
 
 }

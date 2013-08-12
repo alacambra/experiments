@@ -30,12 +30,12 @@ public interface IIndividualCostService {
 	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response saveIndividualCost(IndividualCost invoice);
+	public Long saveIndividualCost(IndividualCost invoice);
 	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/{id:[0-9]+}")
-	public Response updateIndividualCost( @PathParam("invoiceId") Long id, IndividualCost invoice);
+	public void updateIndividualCost( @PathParam("invoiceId") Long id, IndividualCost invoice);
 	
 	@DELETE
 	@Path("/{budgetId:[0-9]+}/{invoiceId:[0-9]+}")

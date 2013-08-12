@@ -16,28 +16,28 @@ import javax.ws.rs.ext.Provider;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
-import albert.lacambra.client.models.DTOBudget;
+import albert.lacambra.server.models.PersistedBudget;
 
 @Provider
 @Produces({MediaType.APPLICATION_JSON, "*/*"})
-public class BudgetReaderWriter implements MessageBodyWriter<DTOBudget>, MessageBodyReader<DTOBudget>{
+public class BudgetReaderWriter implements MessageBodyWriter<PersistedBudget>, MessageBodyReader<PersistedBudget>{
 
 	@Override
 	public boolean isWriteable(Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType) {
 		
-		return type.isAssignableFrom(DTOBudget.class);
+		return type.isAssignableFrom(PersistedBudget.class);
 	}
 
 	@Override
-	public long getSize(DTOBudget t, Class<?> type, Type genericType,
+	public long getSize(PersistedBudget t, Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType) {
 		
 		return -1;
 	}
 
 	@Override
-	public void writeTo(DTOBudget t, Class<?> type, Type genericType,
+	public void writeTo(PersistedBudget t, Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType,
 			MultivaluedMap<String, Object> httpHeaders,
 			OutputStream entityStream) throws IOException,
@@ -50,18 +50,17 @@ public class BudgetReaderWriter implements MessageBodyWriter<DTOBudget>, Message
 	@Override
 	public boolean isReadable(Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType) {
-		return type.isAssignableFrom(DTOBudget.class);
+		return type.isAssignableFrom(PersistedBudget.class);
 	}
 
 	@Override
-	public DTOBudget readFrom(Class<DTOBudget> type, Type genericType,
+	public PersistedBudget readFrom(Class<PersistedBudget> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType,
 			MultivaluedMap<String, String> httpHeaders, InputStream entityStream)
 			throws IOException, WebApplicationException {
 		
 		ObjectMapper m = new ObjectMapper();
-		
-		return m.readValue(entityStream, DTOBudget.class);
+		return m.readValue(entityStream, PersistedBudget.class);
 	}
 }
 
