@@ -9,6 +9,9 @@ import com.googlecode.objectify.annotation.Index;
 @EntitySubclass
 public class IndividualCost extends Cost<IndividualCost> {
 
+	@Index
+	private Long date;
+	
 	public static Key<IndividualCost> key(Key<PersistedBudget> parent, Long id) {
 		return Key.create(parent, IndividualCost.class, id);
 	}
@@ -35,9 +38,6 @@ public class IndividualCost extends Cost<IndividualCost> {
 		.setTags(costDTO.getTags());
 
 	}
-
-	@Index
-	private Long date;
 
 	public Long getDate() {
 		return date;

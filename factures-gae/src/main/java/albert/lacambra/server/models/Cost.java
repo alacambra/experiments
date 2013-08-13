@@ -14,13 +14,14 @@ import com.googlecode.objectify.annotation.Parent;
 public abstract class Cost<T> {
 	
 	@Id protected Long id;
+	@Parent protected Key<PersistedBudget> budget;
+	
 	@Index private Integer year;
 	
 	@Index protected Integer cost;
 	@Ignore protected Long budgetId; 
 	
 	protected String concept;
-	@Parent protected Key<PersistedBudget> budget;
 	
 	protected String tags;
 	

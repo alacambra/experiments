@@ -1,9 +1,12 @@
 package albert.lacambra.server.models;
 
+import java.util.Set;
+
 import albert.lacambra.client.models.PeriodicCostDTO;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.EntitySubclass;
+import com.googlecode.objectify.annotation.Ignore;
 import com.googlecode.objectify.annotation.Index;
 
 @EntitySubclass
@@ -14,6 +17,12 @@ public class PeriodicCost extends Cost<PeriodicCost> {
 	
 	private Long start;
 	private Long end;
+	
+	@Ignore
+	private Set<PeriodicCostEntry> costEntries;
+	/*
+	 * What was that????
+	 */
 	private Integer foreseenCost;
 
 	public static Key<PeriodicCost> key(Key<PersistedBudget> parent, Long id) {
@@ -55,7 +64,7 @@ public class PeriodicCost extends Cost<PeriodicCost> {
 		return end;
 	}
 
-	public Boolean getIsFixedCost() {
+	public Boolean isFixedCost() {
 		return isFixedCost;
 	}
 
@@ -87,6 +96,15 @@ public class PeriodicCost extends Cost<PeriodicCost> {
 		this.foreseenCost = foreseenCost;
 		return this;
 	}
+	
+	public Set<PeriodicCostEntry> getCostEntries() {
+		return costEntries;
+	}
+	
+	public PeriodicCost setCostEntries(Set<PeriodicCostEntry> costEntries) {
+		this.costEntries = costEntries;
+		return this;
+	}
 
 	public PeriodicCostDTO getPeriodicCostDTO() {
 
@@ -108,7 +126,6 @@ public class PeriodicCost extends Cost<PeriodicCost> {
 	public PeriodicCostDTO getDTO() {
 		return getPeriodicCostDTO();
 	}
-
 }
 
 
