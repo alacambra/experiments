@@ -2,12 +2,9 @@ package albert.lacambra.server.rest.services;
 
 import static albert.lacambra.server.ofy.OfyService.ofy;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
@@ -36,24 +33,6 @@ public class PeriodicCostService extends BasicService implements IPeriodicCostSe
 		List<PeriodicCost> l = 
 				ofy().load().type(PeriodicCost.class).filter("year =", year).list();
 		
-		for ( PeriodicCost cost : l ) {
-			if ( cost.isFixedCost()) continue;
-
-			Set<PeriodicCostEntry> costEntries = new HashSet<PeriodicCostEntry>();
-			
- 			List<Object> entries = 
-					ofy().load().ancestor(
-					PeriodicCost.key(cost.getBudget(), cost.getId())).list();
-			
- 			for ( Object costEntry : entries ) {
- 				if ( costEntry instanceof PeriodicCostEntry ) {
- 					costEntries.add((PeriodicCostEntry) costEntries);
- 				}
- 			}
- 			
- 			cost.setCostEntries(costEntries);
-		}
-
 		return l;
 	}
 
@@ -112,22 +91,22 @@ public class PeriodicCostService extends BasicService implements IPeriodicCostSe
 	}
 
 	@Override
-	public Long updateCostEntry(Long budgetId, Long costId, Long entryId,
-			PeriodicCostEntry entry) {
-		// TODO Auto-generated method stub
-		return null;
+	public void updateCostEntry(Long budgetId, Long costId, Long entryId, PeriodicCostEntry entry) {
+		entry.setCostKey(PeriodicCost.key(PersistedBudget.key(bracelet.getMeKey(), budgetId), costId));
+		entry.setId(entryId);
+		ofy().save().entity(entry).now();
 	}
 
 	@Override
-	public Long deleteCostEntry(Long budgetId, Long costId, Long entryId,
-			PeriodicCostEntry entry) {
-		// TODO Auto-generated method stub
-		return null;
+	public void deleteCostEntry(Long budgetId, Long costId, Long entryId) {
+		
+		ofy().delete().key(
+				PeriodicCostEntry.key(
+						PeriodicCost.key(
+								PersistedBudget.key(
+										bracelet.getMeKey(), budgetId), costId), entryId)).now();
 	}
 }
-
-
-
 
 
 

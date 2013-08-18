@@ -11,16 +11,28 @@ public class PeriodicCostEntry {
 	@Id 
 	private Long id;
 
+	/**
+	 * Variable periodic cost where this entry belongs
+	 */
 	@Parent 
 	protected Key<PeriodicCost> costKey;
 
+	/**
+	 * How much
+	 */
 	private Integer cost;
+	
+	/**
+	 * This entry is the "stepNumber" entry of the parent variable periodic cost. 
+	 */
 	private int stepNumber;
 
 	public static Key<PeriodicCostEntry> key(Key<PeriodicCost> parent, Long id) {
 		return Key.create(parent, PeriodicCostEntry.class, id);
 	}
 
+	public PeriodicCostEntry(){}
+	
 	public PeriodicCostEntry(Key<PeriodicCost> costKey) {
 		super();
 		this.costKey = costKey;

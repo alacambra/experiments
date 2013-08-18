@@ -1,5 +1,7 @@
 package albert.lacambra.server.models;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import albert.lacambra.client.models.PeriodicCostDTO;
@@ -8,6 +10,8 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.EntitySubclass;
 import com.googlecode.objectify.annotation.Ignore;
 import com.googlecode.objectify.annotation.Index;
+
+import static albert.lacambra.server.ofy.OfyService.ofy;
 
 @EntitySubclass
 public class PeriodicCost extends Cost<PeriodicCost> {
@@ -18,8 +22,6 @@ public class PeriodicCost extends Cost<PeriodicCost> {
 	private Long start;
 	private Long end;
 	
-	@Ignore
-	private Set<PeriodicCostEntry> costEntries;
 	/*
 	 * What was that????
 	 */
@@ -98,14 +100,22 @@ public class PeriodicCost extends Cost<PeriodicCost> {
 	}
 	
 	public Set<PeriodicCostEntry> getCostEntries() {
+		
+		if ( isFixedCost ) return null;
+		
+		Set<PeriodicCostEntry> costEntries = new HashSet<PeriodicCostEntry>();
+		
+		List<Object> entries = ofy().load().ancestor(this).list();
+		
+		for (Object entry : entries ) {
+			if ( entry instanceof PeriodicCostEntry ) {
+				costEntries.add((PeriodicCostEntry) entry);
+			}
+		}
+		
 		return costEntries;
 	}
 	
-	public PeriodicCost setCostEntries(Set<PeriodicCostEntry> costEntries) {
-		this.costEntries = costEntries;
-		return this;
-	}
-
 	public PeriodicCostDTO getPeriodicCostDTO() {
 
 		return new PeriodicCostDTO()
@@ -125,6 +135,10 @@ public class PeriodicCost extends Cost<PeriodicCost> {
 	@Override
 	public PeriodicCostDTO getDTO() {
 		return getPeriodicCostDTO();
+	}
+
+	public Key<PeriodicCost> getKey() {
+		return PeriodicCost.key(budget, id);
 	}
 }
 

@@ -45,7 +45,7 @@ public interface IPeriodicCostService {
 	@PUT
 	@Path("/costentry/{budgetId:[0-9]+}/{costId:[0-9]+}/{entryId:[0-9]+}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Long updateCostEntry(
+	public void updateCostEntry(
 			@PathParam("budgetId") Long budgetId, 
 			@PathParam("costId") Long costId, 
 			@PathParam("entryId") Long entryId,
@@ -54,20 +54,19 @@ public interface IPeriodicCostService {
 	@DELETE
 	@Path("/costentry/{budgetId:[0-9]+}/{costId:[0-9]+}/{entryId:[0-9]+}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Long deleteCostEntry(
+	public void deleteCostEntry(
 			@PathParam("budgetId") Long budgetId, 
 			@PathParam("costId") Long costId, 
-			@PathParam("entryId") Long entryId,
-			PeriodicCostEntry entry);
+			@PathParam("entryId") Long entryId);
 	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/{id:[0-9]+}")
-	public void updatePeriodicCost( @PathParam("invoiceId") Long id, PeriodicCost invoice);
+	public void updatePeriodicCost( @PathParam("periodicCostId") Long id, PeriodicCost periodicCost);
 
 	@DELETE
-	@Path("/{budgetId:[0-9]+}/{invoiceId:[0-9]+}")
-	public void deletePeriodicCost(@PathParam("budgetId") Long budgetId, @PathParam("invoiceId") Long invoiceId);
+	@Path("/{budgetId:[0-9]+}/{periodicCostId:[0-9]+}")
+	public void deletePeriodicCost(@PathParam("budgetId") Long budgetId, @PathParam("periodicCostId") Long periodicCostId);
 }
 
 

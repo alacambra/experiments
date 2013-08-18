@@ -5,6 +5,7 @@ import org.junit.Before;
 
 import albert.lacambra.server.models.IndividualCost;
 import albert.lacambra.server.models.PeriodicCost;
+import albert.lacambra.server.models.PeriodicCostEntry;
 import albert.lacambra.server.models.PersistedBudget;
 import albert.lacambra.server.models.Person;
 
@@ -93,6 +94,19 @@ public abstract class BasicTest<T> {
 		cost.setId(id);
 		return cost;
 	}
+	
+	protected PeriodicCostEntry getNewPeriodicCostEntry() {
+		PeriodicCost periodicCost = getNewPeriodicCost();
+		return getNewPeriodicCostEntry(periodicCost);
+	}	
+	
+	protected PeriodicCostEntry getNewPeriodicCostEntry(PeriodicCost periodicCost) {
+		PeriodicCostService service = new PeriodicCostService();
+		PeriodicCostEntry entry = new PeriodicCostEntry(periodicCost.getKey());
+		Long id = service.addCostEntry(periodicCost.getBudgetId(), periodicCost.getId(), entry);
+		entry.setId(id);
+		return entry;
+	}	
 }
 
 

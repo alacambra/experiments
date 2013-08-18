@@ -8,6 +8,7 @@ import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Ignore;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Parent;
+import static albert.lacambra.server.ofy.OfyService.ofy;
 
 @Entity
 @SuppressWarnings("unchecked")
@@ -58,6 +59,7 @@ public abstract class Cost<T> {
 	
 	public T setBudget(Key<PersistedBudget> budget) {
 		this.budget = budget;
+		year = ofy().load().key(this.budget).now().getYear();
 		return (T) this;
 	}
 
