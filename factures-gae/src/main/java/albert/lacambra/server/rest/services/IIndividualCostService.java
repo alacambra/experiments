@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response;
 import albert.lacambra.client.models.IndividualCostDTO;
 import albert.lacambra.server.models.IndividualCost;
 
+@Path("cost/individual")
 public interface IIndividualCostService {
 
 	@GET

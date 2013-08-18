@@ -24,6 +24,10 @@ public class PeriodicCostService extends BasicService implements IPeriodicCostSe
 		Key<PersistedBudget> budgetKey = PersistedBudget.key(bracelet.getMeKey(), budgetId);
 		Key<PeriodicCost> key = PeriodicCost.key(budgetKey, costId);
 		PeriodicCost pc = ofy().load().key(key).now();
+		
+		if ( pc == null )
+			throw new WebApplicationException(Response.status(Status.NOT_FOUND).build());
+		
 		return pc;
 	}
 
