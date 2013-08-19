@@ -106,7 +106,8 @@ public class InputForms {
 			public void onClick(ClickEvent event) {
 				IndividualCostDTO costDTO = new IndividualCostDTO();
 				costDTO.setConcept(concept.getText())
-					.setCost(Integer.parseInt(cost.getText()));
+					.setCost(Integer.parseInt(cost.getText()))
+					.setDate(datePanel.getDate());
 				
 				Log.info(costDTO.serializeToJsonValue().toString());
 				
