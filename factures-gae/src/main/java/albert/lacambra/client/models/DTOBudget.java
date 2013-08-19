@@ -1,10 +1,19 @@
 package albert.lacambra.client.models;
 
-public class DTOBudget {
+import com.google.gwt.json.client.JSONNumber;
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONString;
+import com.google.gwt.json.client.JSONValue;
 
+
+public class DTOBudget implements IsJsonSerializable{
+
+	@Deprecated
 	protected int assignation;
 	protected Long id;
+	@Deprecated
 	protected Long start;
+	@Deprecated
 	protected Long end;
 	protected String name;
 
@@ -70,6 +79,22 @@ public class DTOBudget {
 	public DTOBudget setAmount(Integer amount) {
 		this.amount = amount;
 		return this;
+	}
+	@Override
+	public JSONValue serializeToJsonValue() {
+
+		JSONObject v = new JSONObject();
+
+		v.put("name", new JSONString(name));
+		v.put("year", new JSONNumber(year));
+		v.put("amount", new JSONNumber(amount));		
+		
+		return v;
+	}
+	@Override
+	public IsJsonSerializable loadFromJson(JSONValue jsonValue) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -2,6 +2,8 @@ package albert.lacambra.client.presenters;
 
 import java.util.Date;
 
+import albert.lacambra.client.mocks.InputForms;
+
 import com.allen_sauer.gwt.log.client.Log;
 import com.gwtplatform.mvp.client.ViewImpl;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -18,6 +20,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RadioButton;
@@ -46,6 +49,8 @@ NewInvoicePresenter.MyView {
 	private final String YEAR = "YYYY";
 
 
+	@UiField HTMLPanel container;
+	@UiField HTMLPanel formContainer;
 	@UiField Button button;
 	@UiField TextBox price;
 	@UiField TextBox day;
@@ -58,6 +63,11 @@ NewInvoicePresenter.MyView {
 	@Inject
 	public NewInvoiceView(final Binder binder) {
 		widget = binder.createAndBindUi(this);
+		
+		formContainer.setVisible(false);
+		InputForms inputForms = new InputForms();
+		container.add(inputForms.getWidget());
+		
 		t = new Timer(){
 			@Override
 			public void run() {

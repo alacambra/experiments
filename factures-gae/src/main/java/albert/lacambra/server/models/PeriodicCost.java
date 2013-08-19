@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import albert.lacambra.client.models.PeriodicCostDTO;
+import albert.lacambra.shared.models.PeriodStep;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.EntitySubclass;

@@ -10,9 +10,9 @@
 			font-weight: bold;
 		}
 	</ui:style>
-	<g:HTMLPanel>
+	<g:HTMLPanel ui:field="container">
 		<g:Label ui:field="infoLabel"></g:Label>
-		<g:HTMLPanel height='500px'>
+		<g:HTMLPanel height='500px' ui:field="formContainer">
 			price:
 			<br />
 			<g:TextBox ui:field="price"></g:TextBox>
