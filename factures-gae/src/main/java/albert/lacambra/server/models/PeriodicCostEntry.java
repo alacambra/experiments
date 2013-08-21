@@ -1,5 +1,7 @@
 package albert.lacambra.server.models;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -14,6 +16,7 @@ public class PeriodicCostEntry {
 	/**
 	 * Variable periodic cost where this entry belongs
 	 */
+	@JsonIgnore
 	@Parent 
 	protected Key<PeriodicCost> costKey;
 

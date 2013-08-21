@@ -6,7 +6,7 @@ import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
 
 
-public class DTOBudget implements IsJsonSerializable{
+public class DTOBudget{
 
 	@Deprecated
 	protected int assignation;
@@ -80,23 +80,6 @@ public class DTOBudget implements IsJsonSerializable{
 		this.amount = amount;
 		return this;
 	}
-	@Override
-	public JSONValue serializeToJsonValue() {
-
-		JSONObject v = new JSONObject();
-
-		v.put("name", new JSONString(name));
-		v.put("year", new JSONNumber(year));
-		v.put("amount", new JSONNumber(amount));		
-		
-		return v;
-	}
-	@Override
-	public IsJsonSerializable loadFromJson(JSONValue jsonValue) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
 
 

@@ -2,8 +2,11 @@ package albert.lacambra.client.mocks;
 
 import java.util.Date;
 
+import albert.lacambra.client.models.Budget;
 import albert.lacambra.client.models.DTOBudget;
+import albert.lacambra.client.models.IndividualCost;
 import albert.lacambra.client.models.IndividualCostDTO;
+import albert.lacambra.client.models.PeriodicCost;
 import albert.lacambra.client.models.PeriodicCostDTO;
 import albert.lacambra.shared.models.PeriodStep;
 
@@ -68,7 +71,7 @@ public class InputForms {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				PeriodicCostDTO costDTO = new PeriodicCostDTO();
+				PeriodicCost costDTO = new PeriodicCost();
 				costDTO.setConcept(concept.getText())
 					.setCost(Integer.parseInt(cost.getText()))
 					.setEnd(endDatePanel.getDate())
@@ -104,12 +107,12 @@ public class InputForms {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				IndividualCostDTO costDTO = new IndividualCostDTO();
-				costDTO.setConcept(concept.getText())
+				IndividualCost individualCost = new IndividualCost();
+				individualCost.setConcept(concept.getText())
 					.setCost(Integer.parseInt(cost.getText()))
 					.setDate(datePanel.getDate());
 				
-				Log.info(costDTO.serializeToJsonValue().toString());
+				Log.info(individualCost.serializeToJsonValue().toString());
 				
 			}
 		});
@@ -134,7 +137,7 @@ public class InputForms {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				DTOBudget dtoBudget = new DTOBudget()
+				Budget dtoBudget = (Budget) new Budget()
 					.setAmount(Integer.parseInt(amount.getText()))
 					.setYear(Integer.parseInt(year.getText()))
 					.setName(name.getText());

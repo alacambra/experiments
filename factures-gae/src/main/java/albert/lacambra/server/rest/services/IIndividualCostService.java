@@ -10,12 +10,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
-import albert.lacambra.client.models.IndividualCostDTO;
 import albert.lacambra.server.models.IndividualCost;
+import albert.lacambra.shared.ResourceLocator;
 
-@Path("cost/individual")
+@Path(ResourceLocator.individualCostBase)
 public interface IIndividualCostService {
 
 	@GET
@@ -27,7 +25,7 @@ public interface IIndividualCostService {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("year/{year:[0-9]{4}}")
-	public List<IndividualCost> getIndividualCosts(@PathParam("invoiceId") Integer year);
+	public List<IndividualCost> getIndividualCosts(@PathParam("year") Integer year);
 	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)

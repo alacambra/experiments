@@ -28,6 +28,7 @@ public class PersistedBudget {
 
 	@Index
 	private Integer year;
+	@Index
 	private Integer amount;
 	private Integer total;
 
@@ -96,6 +97,7 @@ public class PersistedBudget {
 		return this;
 	}
 
+	@JsonIgnore
 	public DTOBudget getDTOBudget() {
 
 		return new DTOBudget()

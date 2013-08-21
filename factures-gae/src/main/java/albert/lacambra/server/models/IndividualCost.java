@@ -32,6 +32,7 @@ public class IndividualCost extends Cost<IndividualCost> {
 	public IndividualCost(IndividualCostDTO costDTO) {
 
 		setConcept(costDTO.getConcept())
+		.setBudgetId(costDTO.getBudgetId())
 		.setCost(costDTO.getCost())
 		.setDate(costDTO.getDate())
 		.setId(costDTO.getId())

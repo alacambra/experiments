@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.List;
 
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
@@ -18,46 +16,28 @@ import javax.ws.rs.ext.Provider;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
-import albert.lacambra.server.models.PersistedBudget;
-import albert.lacambra.server.models.PersistedInvoice;
+import albert.lacambra.server.models.PeriodicCostEntry;
 
 @Provider
 @Produces({MediaType.APPLICATION_JSON, "*/*"})
-public class BudgetListReaderWriter 
-implements MessageBodyWriter<List<PersistedBudget>>, MessageBodyReader<List<PersistedBudget>>{
+public class PeriodicCostEntryReaderWriter implements MessageBodyWriter<PeriodicCostEntry>, MessageBodyReader<PeriodicCostEntry>{
 
 	@Override
 	public boolean isWriteable(Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType) {
 		
-	    boolean isWritable;
-	    
-	    if (List.class.isAssignableFrom(type)
-	        && genericType instanceof ParameterizedType) {
-	    	
-	      ParameterizedType parameterizedType = (ParameterizedType) genericType;
-	      
-	      Type[] actualTypeArgs = (parameterizedType.getActualTypeArguments());
-	      
-	      isWritable = (actualTypeArgs.length == 1 &&
-	    		  actualTypeArgs[0].equals(PersistedBudget.class));
-	      
-	    } else {
-	      isWritable = false;
-	    }
-
-	    return isWritable;
+		return type.isAssignableFrom(PeriodicCostEntry.class);
 	}
 
 	@Override
-	public long getSize(List<PersistedBudget> t, Class<?> type, Type genericType,
+	public long getSize(PeriodicCostEntry t, Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType) {
 		
 		return -1;
 	}
 
 	@Override
-	public void writeTo(List<PersistedBudget> t, Class<?> type, Type genericType,
+	public void writeTo(PeriodicCostEntry t, Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType,
 			MultivaluedMap<String, Object> httpHeaders,
 			OutputStream entityStream) throws IOException,
@@ -70,18 +50,17 @@ implements MessageBodyWriter<List<PersistedBudget>>, MessageBodyReader<List<Pers
 	@Override
 	public boolean isReadable(Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType) {
-		return type.isAssignableFrom(PersistedInvoice.class);
+		return type.isAssignableFrom(PeriodicCostEntry.class);
 	}
 
 	@Override
-	public List<PersistedBudget> readFrom(Class<List<PersistedBudget>> type, Type genericType,
+	public PeriodicCostEntry readFrom(Class<PeriodicCostEntry> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType,
 			MultivaluedMap<String, String> httpHeaders, InputStream entityStream)
 			throws IOException, WebApplicationException {
 		
 		ObjectMapper m = new ObjectMapper();
-		
-		return m.readValue(entityStream, List.class);
+		return m.readValue(entityStream, PeriodicCostEntry.class);
 	}
 }
 
