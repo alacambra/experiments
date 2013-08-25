@@ -9,6 +9,8 @@ import albert.lacambra.client.models.IndividualCostDTO;
 import albert.lacambra.client.models.PeriodicCost;
 import albert.lacambra.client.models.PeriodicCostDTO;
 import albert.lacambra.client.restservices.BudgetProvider;
+import albert.lacambra.client.restservices.IndividualCostProvider;
+import albert.lacambra.client.restservices.PeriodicCostProvider;
 import albert.lacambra.client.restservices.utils.AsyncCallback;
 import albert.lacambra.client.restservices.utils.ResponseException;
 import albert.lacambra.shared.models.PeriodStep;
@@ -83,6 +85,22 @@ public class InputForms {
 					.setPeriodStep(periodStepPanel.getPeriodStep());
 				
 				Log.info(costDTO.serializeToJsonValue().toString());
+				PeriodicCostProvider provider = new PeriodicCostProvider(null);
+				provider.addPeriodicCost(costDTO, new AsyncCallback<Long>() {
+					
+					@Override
+					public void onSuccess(Long result) {
+						Log.info("PeriodicCost added wih ID " + result);
+						
+					}
+					
+					@Override
+					public void onFailure(ResponseException caught) {
+						
+					}
+				});
+				
+				
 				
 			}
 		});
@@ -116,7 +134,21 @@ public class InputForms {
 					.setDate(datePanel.getDate());
 				
 				Log.info(individualCost.serializeToJsonValue().toString());
-				
+				IndividualCostProvider provider = new IndividualCostProvider(null);
+				provider.addIndividualCost(individualCost, new AsyncCallback<Long>() {
+					
+					@Override
+					public void onSuccess(Long result) {
+						Log.info("IndividualCost added wih ID " + result);
+						
+					}
+					
+					@Override
+					public void onFailure(ResponseException caught) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
 			}
 		});
 
@@ -288,6 +320,45 @@ public class InputForms {
 			});
 		}
 	}
-
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
