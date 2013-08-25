@@ -9,7 +9,7 @@
 	<inherits name='com.google.gwt.user.theme.clean.Clean' />
 	<inherits name='com.google.gwt.editor.Editor' />
 	<inherits name='com.google.web.bindery.requestfactory.RequestFactory' />
-<!-- 	<inherits name='com.gwtplatform.dispatch.Dispatch' /> -->
+	<!-- <inherits name='com.gwtplatform.dispatch.Dispatch' /> -->
 	<inherits name="com.gwtplatform.dispatch.DispatchRest" />
 	<!-- <inherits name='com.google.gwt.visualization.Visualization' /> -->
 	<inherits name="com.google.gwt.i18n.I18N" />
@@ -17,26 +17,27 @@
 	<!-- <inherits name='com.gwtplatform.dispatch.Dispatch' /> -->
 	<inherits name='com.google.gwt.user.theme.standard.Standard' />
 	<inherits name="com.allen_sauer.gwt.log.gwt-log-DEBUG" />
+	<inherits name="org.fusesource.restygwt.RestyGWT" />
 
 
 	<inherits name='com.gwtplatform.mvp.MvpWithEntryPoint' />
 	<!-- <entry-point class='albert.lacambra.client.Factures' /> -->
 
-<!-- 	<define-configuration-property name='gin.ginjector' -->
-<!-- 		is-multi-valued='false' /> -->
-<!-- 	<extend-configuration-property name='gin.ginjector.extensions' -->
-<!-- 		value='albert.lacambra.client.injection.MyClientGinjector' /> -->
-	
+	<!-- <define-configuration-property name='gin.ginjector' -->
+	<!-- is-multi-valued='false' /> -->
+	<!-- <extend-configuration-property name='gin.ginjector.extensions' -->
+	<!-- value='albert.lacambra.client.injection.MyClientGinjector' /> -->
+
 	<extend-configuration-property name="gin.ginjector.modules"
 		value="albert.lacambra.client.injection.ClientModule" />
-	
-<!-- 	<extend-configuration-property name="gin.ginjector.modules" -->
-<!-- 		value="albert.lacambra.client.restservices.RestModule " /> -->
+
+	<!-- <extend-configuration-property name="gin.ginjector.modules" -->
+	<!-- value="albert.lacambra.client.restservices.RestModule " /> -->
 
 
 	<source path='client' />
 	<source path='shared' />
-	
-	 <set-property name="log_DivLogger" value="DISABLED" />
+
+	<set-property name="log_DivLogger" value="DISABLED" />
 
 </module>

@@ -8,6 +8,9 @@ import albert.lacambra.client.models.IndividualCost;
 import albert.lacambra.client.models.IndividualCostDTO;
 import albert.lacambra.client.models.PeriodicCost;
 import albert.lacambra.client.models.PeriodicCostDTO;
+import albert.lacambra.client.restservices.BudgetProvider;
+import albert.lacambra.client.restservices.utils.AsyncCallback;
+import albert.lacambra.client.restservices.utils.ResponseException;
 import albert.lacambra.shared.models.PeriodStep;
 
 import com.allen_sauer.gwt.log.client.Log;
@@ -129,8 +132,8 @@ public class InputForms {
 		budgetsPanel.add(new Label("Budget"));
 		
 		final DefaultTextTextBox name = new DefaultTextTextBox("name");
-		final DefaultTextTextBox amount = new DefaultTextTextBox("amount");
-		final DefaultTextTextBox year = new DefaultTextTextBox("YYYY");
+		final DefaultTextTextBox amount = new DefaultTextTextBox("4");
+		final DefaultTextTextBox year = new DefaultTextTextBox("2013");
 		final Button ok = new Button("save");
 		
 		ok.addClickHandler(new ClickHandler() {
@@ -143,6 +146,20 @@ public class InputForms {
 					.setName(name.getText());
 				
 				Log.info(dtoBudget.serializeToJsonValue().toString());
+				BudgetProvider budgetProvider = new BudgetProvider(null);
+				budgetProvider.addBudget(dtoBudget, new AsyncCallback<Long>() {
+					
+					@Override
+					public void onSuccess(Long result) {
+						Log.info("Budget added wih ID " + result);
+						
+					}
+					
+					@Override
+					public void onFailure(ResponseException caught) {
+						Log.error("error", caught);
+					}
+				});
 			}
 		});
 		

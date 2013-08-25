@@ -2,16 +2,12 @@ package albert.lacambra.server.rest.services;
 
 import static albert.lacambra.server.ofy.OfyService.ofy;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
 
 import albert.lacambra.server.models.PersistedBudget;
 
@@ -47,7 +43,7 @@ public class BudgetService extends BasicService implements IBudgetService {
 
 		List<PersistedBudget> l = new ArrayList<PersistedBudget>();
 
-		l = query.filter("year ==", year).list();
+		l = query.filter("year =", year).list();
 		
 		if ( l == null ) {
 			throw new WebApplicationException(Response.status(Status.NO_CONTENT).build());
@@ -142,11 +138,6 @@ public class BudgetService extends BasicService implements IBudgetService {
 		return id;
 	}
 
-	@Override
-	public List<PersistedBudget> getBudgetsForYear(String year)
-			throws JsonGenerationException, JsonMappingException, IOException {
-		return null;
-	}
 }
 
 

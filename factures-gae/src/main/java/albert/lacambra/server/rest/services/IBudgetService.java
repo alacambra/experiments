@@ -1,6 +1,5 @@
 package albert.lacambra.server.rest.services;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -10,9 +9,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
 
 import albert.lacambra.server.models.PersistedBudget;
 import albert.lacambra.shared.ResourceLocator;
@@ -26,7 +22,7 @@ public interface IBudgetService {
 	PersistedBudget getBudget(@PathParam("id")Long id);
 
 	@GET
-	@Path("{year:[\\d]{4}}")
+	@Path("year/{year:[\\d]{4}}")
 	@Produces(MediaType.APPLICATION_JSON)
 	List<PersistedBudget> getBudgetsForYear(@PathParam("year")Integer year);
 
@@ -49,8 +45,5 @@ public interface IBudgetService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	Long addBudget(PersistedBudget dto);
-
-	List<PersistedBudget> getBudgetsForYear(String year)
-			throws JsonGenerationException, JsonMappingException, IOException;
 
 }

@@ -75,7 +75,7 @@ public class NewBudgetPresenter extends Presenter<NewBudgetPresenter.MyView, New
 
 				final Budget budget = new Budget();
 				assignDates(budget);
-				budget.setAssignation(Integer.valueOf(getView().getAssignation().getText()) * 100);
+				budget.setAmount(Integer.valueOf(getView().getAssignation().getText()) * 100);
 				budget.setName(getView().getName().getText());
 				
 				budgetProvider.addBudget(budget, new AsyncCallback<Long>() {
@@ -107,10 +107,7 @@ public class NewBudgetPresenter extends Presenter<NewBudgetPresenter.MyView, New
 			throw new IllegalArgumentException("Date must have 4 cyphers");
 		}
 		
-		DateTimeFormat format = DateTimeFormat.getFormat("yyyy-MM-dd HH:mm:ss.S"); 
-		budget.setStart(format.parse(year + "-01-01 00:00:00.0").getTime());
-		budget.setEnd(format.parse(year + "-12-31 23:59:59.9").getTime());
-		
+		budget.setYear(Integer.parseInt(year));
 	}
 }
 

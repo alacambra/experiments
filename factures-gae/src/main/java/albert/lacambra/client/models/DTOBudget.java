@@ -1,58 +1,21 @@
 package albert.lacambra.client.models;
 
-import com.google.gwt.json.client.JSONNumber;
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONString;
-import com.google.gwt.json.client.JSONValue;
-
 
 public class DTOBudget{
 
-	@Deprecated
-	protected int assignation;
 	protected Long id;
-	@Deprecated
-	protected Long start;
-	@Deprecated
-	protected Long end;
 	protected String name;
-
-	/*
-	 * New fields. 
-	 * Will replace start, end and assignation
-	 */
 	protected Integer year;
 	protected Integer amount;
 
-	public int getAssignation() {
-		return assignation;
-	}
 	public Long getId() {
 		return id;
-	}
-	public long getStart() {
-		return start;
-	}
-	public long getEnd() {
-		return end;
 	}
 	public String getName() {
 		return name;
 	}
-	public DTOBudget setAssignation(int assignation) {
-		this.assignation = assignation;
-		return this;
-	}
 	public DTOBudget setId(long id) {
 		this.id = id;
-		return this;
-	}
-	public DTOBudget setStart(long start) {
-		this.start = start;
-		return this;
-	}
-	public DTOBudget setEnd(long end) {
-		this.end = end;
 		return this;
 	}
 	public DTOBudget setName(String name) {
