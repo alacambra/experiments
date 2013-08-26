@@ -25,7 +25,7 @@ public class PeriodicCostProvider implements CollectionProvider<PeriodicCost> {
 
 	HashMap<Long, PeriodicCost> individualCost = new HashMap<Long, PeriodicCost>();
 	private EventBus eventBus;
-	IPeriodicCostService periodicCostService;
+	PeriodicCostService periodicCostService;
 
 	@Inject
 	public PeriodicCostProvider(EventBus eventBus) {
@@ -34,7 +34,7 @@ public class PeriodicCostProvider implements CollectionProvider<PeriodicCost> {
 		
 		Resource resource = new Resource( GWT.getHostPageBaseURL()+ "rest/" + ResourceLocator.periodicCostBase);
 
-		periodicCostService = GWT.create(IPeriodicCostService.class);
+		periodicCostService = GWT.create(PeriodicCostService.class);
 		((RestServiceProxy)periodicCostService).setResource(resource);
 
 	}

@@ -18,11 +18,11 @@ import albert.lacambra.client.models.PeriodicCost;
 import albert.lacambra.client.models.PeriodicCostEntry;
 import albert.lacambra.shared.ResourceLocator;
 
-public interface IPeriodicCostService extends RestService{
+public interface PeriodicCostService extends RestService{
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/{budgetId:[0-9]+}/{costId:[0-9]+}")
+	@Path("/{budgetId}/{costId}")
 	public void getPeriodicCost(
 			@PathParam("budgetId") Long budgetId, 
 			@PathParam("costId") Long costId, 
@@ -30,7 +30,7 @@ public interface IPeriodicCostService extends RestService{
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/year/{year:[0-9]{4}}")
+	@Path("/year/{year}")
 	public void getPeriodicCosts(
 			@PathParam("year") Integer year, MethodCallback<List<PeriodicCost>> callback);
 
@@ -40,7 +40,7 @@ public interface IPeriodicCostService extends RestService{
 	public void savePeriodicCost(PeriodicCost cost, MethodCallback<Long> callback);
 	
 	@PUT
-	@Path(ResourceLocator.periodicCostEntry + "/{budgetId:[0-9]+}/{costId:[0-9]+}")
+	@Path(ResourceLocator.periodicCostEntry + "/{budgetId}/{costId}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	public void addCostEntry(
@@ -50,7 +50,7 @@ public interface IPeriodicCostService extends RestService{
 			MethodCallback<Long> callback);
 	
 	@PUT
-	@Path(ResourceLocator.periodicCostEntry + "/costentry/{budgetId:[0-9]+}/{costId:[0-9]+}/{entryId:[0-9]+}")
+	@Path(ResourceLocator.periodicCostEntry + "/costentry/{budgetId}/{costId}/{entryId}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void updateCostEntry(
 			@PathParam("budgetId") Long budgetId, 
@@ -60,7 +60,7 @@ public interface IPeriodicCostService extends RestService{
 			MethodCallback<Void> callback);
 	
 	@DELETE
-	@Path(ResourceLocator.periodicCostEntry + "/{budgetId:[0-9]+}/{costId:[0-9]+}/{entryId:[0-9]+}")
+	@Path(ResourceLocator.periodicCostEntry + "/{budgetId}/{costId}/{entryId}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void deleteCostEntry(
 			@PathParam("budgetId") Long budgetId, 
@@ -70,12 +70,12 @@ public interface IPeriodicCostService extends RestService{
 	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("/{periodicCostId:[0-9]+}")
+	@Path("/{periodicCostId}")
 	public void updatePeriodicCost(
 			@PathParam("periodicCostId") Long id, PeriodicCost periodicCost, MethodCallback<Void> callback);
 
 	@DELETE
-	@Path("/{budgetId:[0-9]+}/{periodicCostId:[0-9]+}")
+	@Path("/{budgetId}/{periodicCostId}")
 	public void deletePeriodicCost(
 			@PathParam("budgetId") Long budgetId, 
 			@PathParam("periodicCostId") Long periodicCostId, 
