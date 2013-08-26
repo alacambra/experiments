@@ -25,7 +25,6 @@ public class IndividualCostProvider implements CollectionProvider<IndividualCost
 
 	HashMap<Long, IndividualCost> individualCost = new HashMap<Long, IndividualCost>();
 	private EventBus eventBus;
-	@Inject RestServices restServices;
 	IndividualCostService individualCostService;
 
 	@Inject

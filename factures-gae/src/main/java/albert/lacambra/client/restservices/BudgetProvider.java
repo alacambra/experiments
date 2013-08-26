@@ -25,7 +25,6 @@ public class BudgetProvider implements CollectionProvider<Budget> {
 
 	HashMap<Long, Budget> budgets = new HashMap<Long, Budget>();
 	private EventBus eventBus;
-	@Inject RestServices restServices;
 	IBudgetService budgetService;
 
 	@Inject

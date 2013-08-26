@@ -25,7 +25,6 @@ public class PeriodicCostProvider implements CollectionProvider<PeriodicCost> {
 
 	HashMap<Long, PeriodicCost> individualCost = new HashMap<Long, PeriodicCost>();
 	private EventBus eventBus;
-	@Inject RestServices restServices;
 	IPeriodicCostService periodicCostService;
 
 	@Inject

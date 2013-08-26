@@ -5,12 +5,7 @@ import com.google.inject.Provides;
 import com.google.inject.Singleton;
 
 import albert.lacambra.client.restservices.BudgetProvider;
-import albert.lacambra.client.restservices.IRequestBuilder;
-import albert.lacambra.client.restservices.IRestClient;
 import albert.lacambra.client.restservices.InvoiceProvider;
-import albert.lacambra.client.restservices.RequestBuilder;
-import albert.lacambra.client.restservices.RestClient;
-import albert.lacambra.client.restservices.RestServices;
 
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 import com.gwtplatform.mvp.client.gin.DefaultModule;
@@ -42,10 +37,6 @@ public class ClientModule extends AbstractPresenterModule {
 		bindConstant().annotatedWith(DefaultPlace.class).to(
 				NameTokens.newinvoice);
 		
-		bind(IRestClient.class).to(RestClient.class).in(Singleton.class);
-		bind(IRequestBuilder.class).to(RequestBuilder.class).in(Singleton.class);
-		
-
 		bindPresenter(MainPresenter.class, MainPresenter.MyView.class,
 				MainView.class, MainPresenter.MyProxy.class);
 
@@ -64,19 +55,7 @@ public class ClientModule extends AbstractPresenterModule {
 		
 		bind(InvoiceProvider.class).in(Singleton.class);
 		bind(BudgetProvider.class).in(Singleton.class);
-		bind(RestServices.class).in(Singleton.class);
 		
-	}
-	
-	@Provides
-	public IRestClient.EndPointProvider getEndPoint() {
-		return new IRestClient.EndPointProvider() {
-
-			@Override
-			public String getEndPoint() {
-				return "/rest/";
-			}
-		};
 	}
 }
 

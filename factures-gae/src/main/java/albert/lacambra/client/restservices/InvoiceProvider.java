@@ -22,7 +22,6 @@ public class InvoiceProvider implements CollectionProvider<Invoice> {
 
 	HashMap<Long, Invoice> invoices = new HashMap<Long, Invoice>();
 	private EventBus eventBus;
-	@Inject RestServices restServices;
 	
 	@Inject
 	public InvoiceProvider(EventBus eventBus) {
@@ -65,41 +64,41 @@ public class InvoiceProvider implements CollectionProvider<Invoice> {
 	}
 	
 	public void addInvoice(final Invoice invoice, final AsyncCallback<Long> callback) {
-		restServices.addInvoice(invoice, new AsyncCallback<Long>() {
-			
-			@Override
-			public void onSuccess(Long id) {
-				invoices.put(id, invoice);
-				eventBus.fireEvent(new InvoiceAddedEvent(invoice));
-				callback.onSuccess(id);
-			}
-			
-			@Override
-			public void onFailure(ResponseException caught) {
-				callback.onFailure(caught);
-			}
-		});
+//		restServices.addInvoice(invoice, new AsyncCallback<Long>() {
+//			
+//			@Override
+//			public void onSuccess(Long id) {
+//				invoices.put(id, invoice);
+//				eventBus.fireEvent(new InvoiceAddedEvent(invoice));
+//				callback.onSuccess(id);
+//			}
+//			
+//			@Override
+//			public void onFailure(ResponseException caught) {
+//				callback.onFailure(caught);
+//			}
+//		});
 	}
 	
 	public void getAllInvoices(AsyncCallback<List<Invoice>> callback) {
-		restServices.getAllInvoices(callback);
+//		restServices.getAllInvoices(callback);
 	}
 	
 	public void deleteInvoice(final Invoice invoice, final AsyncCallbackNoReturnValue callback) {
-		restServices.deleteInvoice(invoice, new AsyncCallbackNoReturnValue() {
-			
-			@Override
-			public void onSuccess() {
-				invoices.remove(invoice);
-				eventBus.fireEvent(new InvoiceRemovedEvent(invoice));
-				callback.onSuccess();
-			}
-			
-			@Override
-			public void onFailure(ResponseException caught) {
-				callback.onFailure(caught);
-			}
-		});
+//		restServices.deleteInvoice(invoice, new AsyncCallbackNoReturnValue() {
+//			
+//			@Override
+//			public void onSuccess() {
+//				invoices.remove(invoice);
+//				eventBus.fireEvent(new InvoiceRemovedEvent(invoice));
+//				callback.onSuccess();
+//			}
+//			
+//			@Override
+//			public void onFailure(ResponseException caught) {
+//				callback.onFailure(caught);
+//			}
+//		});
 	}
 
 	@Override
