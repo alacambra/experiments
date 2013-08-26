@@ -6,6 +6,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import javax.ws.rs.WebApplicationException;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,7 +33,7 @@ public class PeriodicCostServiceTest extends BasicTest<PeriodicCostService>{
 
 	@Test
 	public void getPeriodicCosts() {
-		getNewPeriodicCost();
+		PeriodicCost cost = getNewPeriodicCost();
 		List<PeriodicCost> l = target.getPeriodicCosts(2014);
 		assertTrue(l.size() == 1);
 	}
@@ -60,8 +62,14 @@ public class PeriodicCostServiceTest extends BasicTest<PeriodicCostService>{
 	public void deletePeriodicCost() {
 		PeriodicCost cost = getNewPeriodicCost();
 		target.deletePeriodicCost(cost.getBudgetId(), cost.getId());
-		cost = target.getPeriodicCost(cost.getBudgetId(), cost.getId());
-		assertNull(cost);
+
+		try {
+			cost = target.getPeriodicCost(cost.getBudgetId(), cost.getId());
+		} catch ( WebApplicationException e ) {
+			assertTrue(true);	
+			return;
+		}
+		assertTrue(false);
 	}
 
 	@Test

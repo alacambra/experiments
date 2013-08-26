@@ -1,5 +1,7 @@
 package albert.lacambra.server.rest.services;
 
+import java.util.Date;
+
 import org.junit.After;
 import org.junit.Before;
 
@@ -70,10 +72,11 @@ public abstract class BasicTest<T> {
 	}
 	
 	protected PeriodicCost getNewPeriodicCost(){
-		PersistedBudget bg = getNewBudget();
+		PersistedBudget bg = getNewBudget().setYear(2014);
 		
 		PeriodicCost cost = new PeriodicCost()
 		.setBudget(PersistedBudget.key(Person.key("test@test.com"), bg.getId()))
+		.setStart(new Date().getTime()).setEnd(new Date().getTime() + 10)
 		.setBudgetId(bg.getId());
 		
 		PeriodicCostService service = new PeriodicCostService();

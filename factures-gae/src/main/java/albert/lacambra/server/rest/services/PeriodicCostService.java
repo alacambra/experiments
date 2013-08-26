@@ -2,6 +2,7 @@ package albert.lacambra.server.rest.services;
 
 import static albert.lacambra.server.ofy.OfyService.ofy;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -12,6 +13,7 @@ import javax.ws.rs.core.Response.Status;
 
 import com.googlecode.objectify.Key;
 
+import albert.lacambra.server.models.Cost;
 import albert.lacambra.server.models.PeriodicCostEntry;
 import albert.lacambra.server.models.PersistedBudget;
 import albert.lacambra.server.models.PeriodicCost;
@@ -34,10 +36,17 @@ public class PeriodicCostService extends BasicService implements IPeriodicCostSe
 	@Override
 	public List<PeriodicCost> getPeriodicCosts(Integer year) {
 
-		List<PeriodicCost> l = 
-				ofy().load().type(PeriodicCost.class).filter("year =", year).list();
+		List<Cost> l = 
+				ofy().load().type(Cost.class).filter("year =", year).list();
 		
-		return l;
+		List<PeriodicCost> periodicCosts = new ArrayList<PeriodicCost>();
+
+		for ( Cost c : l ){
+			if ( c instanceof PeriodicCost)
+				periodicCosts.add((PeriodicCost) c);
+		}
+		
+		return periodicCosts;
 	}
 
 	@Override
@@ -84,7 +93,7 @@ public class PeriodicCostService extends BasicService implements IPeriodicCostSe
 	public void deletePeriodicCost(Long budgetId, Long costId) {
 		Key<PersistedBudget> budgetKey = PersistedBudget.key(bracelet.getMeKey(), budgetId);
 		Key<PeriodicCost> costKey = PeriodicCost.key(budgetKey, costId);
-		ofy().delete().key(costKey);
+		ofy().delete().key(costKey).now();
 	}
 
 	@Override
