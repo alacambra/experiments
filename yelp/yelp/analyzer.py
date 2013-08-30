@@ -1,9 +1,12 @@
 import numpy as np
 from matplotlib import pyplot as plt
-import thread
-import threading
 import multiprocessing
 
+def getToalCols(filename):
+    f = open(filename, "r");
+    for line in f:
+        row = line[:-1].split("\t")
+        return len(row)
 
 def plotForCol(filename, col, samples):
     values = []
@@ -34,22 +37,25 @@ def plotter(result_queue, filename, col, samples):
     
     (x,y) = plotForCol(filename, col, samples)
     result_queue.put((col, x, y))
+    return (col, x,y)
     
-def multiprocessingRunner(filename):
+def multiprocessingRunner(filename, samples, ignore = []):
     processs = []
     result_queue = multiprocessing.Queue()
-    
-    for n in range(1,12): # start 4 processes crawling for the result
-        if n == 2: continue
+    totalCols = getToalCols(filename)
+    for n in range(0,totalCols): # start 4 processes crawling for the result
+       
+        if n in ignore: continue
         print n
-        process = multiprocessing.Process(target=plotter, args=[result_queue, filename, n, 1000])
+        process = multiprocessing.Process(target=plotter, args=[result_queue, filename, n, samples])
         process.start()
         processs.append(process)
     
     result = []
     
-    for i in range(1, 11):
+    for i in range(0, totalCols-len(ignore)):
         result.append(result_queue.get()) # waits until any of the proccess have `.put()` a result
+        print str(i) + " ready"
     
     for process in processs: # then kill them all off
         process.terminate()
@@ -61,28 +67,29 @@ def multiprocessingRunner(filename):
         
     plt.show()
     
-def runAllWithThreads(f):
-   
-    th = []
-    
-    for i in range(1,12):
+def monoRunner(filename, samples, ignore = []):
+    result_queue = multiprocessing.Queue()
+    totalCols = getToalCols(filename)
+    result = []
+    for n in range(0,totalCols): # start 4 processes crawling for the result
        
-        if i == 2: continue
-        thread = threading.Thread(target=plotter, args=(f, i, 2))
-        th.append(thread)
-        thread.start()
+        if n in ignore: continue
+        print n
+        res = plotter(result_queue, filename, n, samples)
+        result.append(res)
+    
+    for res in result:
+        fig = plt.figure(res[0])
+        ax = fig.add_subplot(111)
+        ax.plot(res[1], res[2])
         
-    for t in th:
-        t.join()
-
-    #plt.show()
-
+    plt.show()
+    
 if __name__ == '__main__':
     d = "/home/albert/sql/";
-    #runAll(d + "all_valorations.txt")
-    multiprocessingRunner(d + "all_valorations.txt")
-    # reviewUsefulGraph(f)
-    #plotForCol(f, 1, 1)
+    #multiprocessingRunner(d + "all_valorations.txt", 10, [0,2])
+    #multiprocessingRunner([d + "all_valorations_bussines.txt"], 500, [])
+    multiprocessingRunner([d + "all_valorations_bussines.txt", d + "all_valorations_bussines_open.txt"], 500, [])
     
     
     
