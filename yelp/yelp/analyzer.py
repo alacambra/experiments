@@ -1,6 +1,7 @@
 import numpy as np
 from matplotlib import pyplot as plt
 import multiprocessing
+from functools import total_ordering
 
 def getToalCols(filename):
     f = open(filename, "r");
@@ -36,24 +37,34 @@ def plotForCol(filename, col, samples):
 def plotter(result_queue, filename, col, samples):    
     
     (x,y) = plotForCol(filename, col, samples)
-    result_queue.put((col, x, y))
-    return (col, x,y)
+    res = (filename + "(" + str(col) + ")", x,y)
+    result_queue.put(res)
     
-def multiprocessingRunner(filename, samples, ignore = []):
+    #used for monorunner
+    return res
+    
+def multiprocessingRunner(filesname, samples):
     processs = []
     result_queue = multiprocessing.Queue()
-    totalCols = getToalCols(filename)
-    for n in range(0,totalCols): # start 4 processes crawling for the result
-       
-        if n in ignore: continue
-        print n
-        process = multiprocessing.Process(target=plotter, args=[result_queue, filename, n, samples])
-        process.start()
-        processs.append(process)
+    allCols = 0;
+    allIgnores = 0;
+    for filename in filesname:
+        ignore = filename[1]
+        allIgnores = allIgnores + len(ignore)        
+        totalCols = getToalCols(filename[0])
+        allCols = allCols + totalCols
+         
+        for n in range(0,totalCols): # start 4 processes crawling for the result
+           
+            if n in ignore: continue
+            print n
+            process = multiprocessing.Process(target=plotter, args=[result_queue, filename[0], n, samples])
+            process.start()
+            processs.append(process)
     
     result = []
     
-    for i in range(0, totalCols-len(ignore)):
+    for i in range(0, allCols-allIgnores):
         result.append(result_queue.get()) # waits until any of the proccess have `.put()` a result
         print str(i) + " ready"
     
@@ -89,7 +100,7 @@ if __name__ == '__main__':
     d = "/home/albert/sql/";
     #multiprocessingRunner(d + "all_valorations.txt", 10, [0,2])
     #multiprocessingRunner([d + "all_valorations_bussines.txt"], 500, [])
-    multiprocessingRunner([d + "all_valorations_bussines.txt", d + "all_valorations_bussines_open.txt"], 500, [])
+    multiprocessingRunner([(d + "all_valorations_bussines.txt", []), (d + "all_valorations_bussines_open.txt", [])], 5000)
     
     
     
