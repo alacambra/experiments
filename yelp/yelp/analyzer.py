@@ -1,10 +1,8 @@
 import numpy as np
 from matplotlib import pyplot as plt
-import math
 import thread
 import threading
-from threading import Lock
-from matplotlib.pyplot import figure
+import multiprocessing
 
 
 def plotForCol(filename, col, samples):
@@ -32,26 +30,36 @@ def plotForCol(filename, col, samples):
     y = values
     return (x,y)
 
-def runAll(f):
-    
-    for i in range(1,12):
-        if i == 2: continue
-        
-        print i
-        (x,y) = plotForCol(f, i, 2)
-        
-        fig = plt.figure(i)
-        ax = fig.add_subplot(111)
-        ax.plot(x,y)
-
-    plt.show()
-    
-def plotter(filename, col, samples):    
+def plotter(result_queue, filename, col, samples):    
     
     (x,y) = plotForCol(filename, col, samples)
-    fig = plt.figure(col)
-    ax = fig.add_subplot(111)
-    ax.plot(x,y)
+    result_queue.put((col, x, y))
+    
+def multiprocessingRunner(filename):
+    processs = []
+    result_queue = multiprocessing.Queue()
+    
+    for n in range(1,12): # start 4 processes crawling for the result
+        if n == 2: continue
+        print n
+        process = multiprocessing.Process(target=plotter, args=[result_queue, filename, n, 1000])
+        process.start()
+        processs.append(process)
+    
+    result = []
+    
+    for i in range(1, 11):
+        result.append(result_queue.get()) # waits until any of the proccess have `.put()` a result
+    
+    for process in processs: # then kill them all off
+        process.terminate()
+    
+    for res in result:
+        fig = plt.figure(res[0])
+        ax = fig.add_subplot(111)
+        ax.plot(res[1], res[2])
+        
+    plt.show()
     
 def runAllWithThreads(f):
    
@@ -72,7 +80,7 @@ def runAllWithThreads(f):
 if __name__ == '__main__':
     d = "/home/albert/sql/";
     #runAll(d + "all_valorations.txt")
-    runAllWithThreads(d + "all_valorations.txt")
+    multiprocessingRunner(d + "all_valorations.txt")
     # reviewUsefulGraph(f)
     #plotForCol(f, 1, 1)
     
