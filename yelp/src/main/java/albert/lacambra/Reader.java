@@ -8,6 +8,14 @@ import java.net.URL;
 import java.util.Map.Entry;
 
 import org.hibernate.Session;
+
+import albert.lacambra.models.Bussines;
+import albert.lacambra.models.Category;
+import albert.lacambra.models.Chekin;
+import albert.lacambra.models.ChekinInfo;
+import albert.lacambra.models.Review;
+import albert.lacambra.models.User;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javassist.tools.reflect.Loader;

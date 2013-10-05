@@ -1,4 +1,4 @@
-package albert.lacambra;
+package albert.lacambra.models;
 
 public class Votes {
 	

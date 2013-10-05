@@ -26,16 +26,16 @@
 		<property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
 
 		<!-- Echo all executed SQL to stdout -->
-		<property name="show_sql">false</property>
+		<property name="show_sql">true</property>
 
 		<!-- Drop and re-create the database schema on startup -->
 		<property name="hbm2ddl.auto">update</property>
 
-		<mapping class="albert.lacambra.Bussines" />
-		<mapping class="albert.lacambra.Review" />
-		<mapping class="albert.lacambra.Chekin" />
-		<mapping class="albert.lacambra.Category" />
-		<mapping class="albert.lacambra.User" />
+		<mapping class="albert.lacambra.models.Bussines" />
+		<mapping class="albert.lacambra.models.Review" />
+		<mapping class="albert.lacambra.models.Chekin" />
+		<mapping class="albert.lacambra.models.Category" />
+		<mapping class="albert.lacambra.models.User" />
 	</session-factory>
 
 </hibernate-configuration>

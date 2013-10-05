@@ -1,4 +1,4 @@
-package albert.lacambra;
+package albert.lacambra.models;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

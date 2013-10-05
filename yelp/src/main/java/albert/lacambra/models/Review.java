@@ -1,4 +1,4 @@
-package albert.lacambra;
+package albert.lacambra.models;
 
 import java.util.Date;
 
@@ -23,18 +23,20 @@ public class Review {
 	String user_id;
 	@Index(name = "bussiness_id_index")
 	String business_id;
-	
+
 	Integer funny;
 	Integer useful;
 	Integer cool;
-	
+	Integer words;
+	Integer useful_words;
+
 	@Column(columnDefinition="TEXT")
 	String text;
 	Integer stars;
-	
+
 	@Temporal(value = TemporalType.DATE)
 	Date date;
-	
+
 	@Transient
 	public void setVotes(Votes votes) {
 		this.funny = votes.getFunny();
@@ -113,7 +115,20 @@ public class Review {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	
-	
-	
+
+	public Integer getWords() {
+		return words;
+	}
+
+	public Integer getUseful_words() {
+		return useful_words;
+	}
+
+	public void setWords(Integer words) {
+		this.words = words;
+	}
+
+	public void setUseful_words(Integer useful_words) {
+		this.useful_words = useful_words;
+	}
 }
