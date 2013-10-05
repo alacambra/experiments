@@ -100,7 +100,7 @@ if __name__ == '__main__':
     d = "/home/albert/sql/";
     #multiprocessingRunner(d + "all_valorations.txt", 10, [0,2])
     #multiprocessingRunner([d + "all_valorations_bussines.txt"], 500, [])
-    multiprocessingRunner([(d + "all_valorations_bussines.txt", []), (d + "all_valorations_bussines_open.txt", [])], 5000)
+    multiprocessingRunner([(d + "all_valorations_bussines.txt", []), (d + "all_valorations_bussines_open.txt", [])], 50)
     
     
     
