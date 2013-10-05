@@ -16,7 +16,7 @@ import javax.ws.rs.ext.Provider;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
-import albert.lacambra.client.models.DTOInvoice;
+import albert.lacambra.server.models.DTOInvoice;
 
 @Provider
 @Produces({MediaType.APPLICATION_JSON, "*/*"})

@@ -3,16 +3,16 @@ package albert.lacambra.client.mocks;
 import java.util.Date;
 
 import albert.lacambra.client.models.Budget;
-import albert.lacambra.client.models.DTOBudget;
 import albert.lacambra.client.models.IndividualCost;
-import albert.lacambra.client.models.IndividualCostDTO;
 import albert.lacambra.client.models.PeriodicCost;
-import albert.lacambra.client.models.PeriodicCostDTO;
 import albert.lacambra.client.restservices.BudgetProvider;
 import albert.lacambra.client.restservices.IndividualCostProvider;
 import albert.lacambra.client.restservices.PeriodicCostProvider;
 import albert.lacambra.client.restservices.utils.AsyncCallback;
 import albert.lacambra.client.restservices.utils.ResponseException;
+import albert.lacambra.server.models.DTOBudget;
+import albert.lacambra.server.models.IndividualCostDTO;
+import albert.lacambra.server.models.PeriodicCostDTO;
 import albert.lacambra.shared.models.PeriodStep;
 
 import com.allen_sauer.gwt.log.client.Log;

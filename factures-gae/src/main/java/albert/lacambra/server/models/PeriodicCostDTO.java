@@ -1,9 +1,4 @@
-package albert.lacambra.client.models;
-
-import com.google.gwt.json.client.JSONNumber;
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONString;
-import com.google.gwt.json.client.JSONValue;
+package albert.lacambra.server.models;
 
 import albert.lacambra.shared.models.PeriodStep;
 

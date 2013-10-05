@@ -1,5 +1,7 @@
 package albert.lacambra.client.models;
 
+import albert.lacambra.server.models.PeriodicCostDTO;
+
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;

@@ -1,4 +1,4 @@
-package albert.lacambra.client.models;
+package albert.lacambra.server.models;
 
 @SuppressWarnings("unchecked")
 public class CostDTO<T> {

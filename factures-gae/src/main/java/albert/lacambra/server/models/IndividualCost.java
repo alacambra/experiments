@@ -1,7 +1,5 @@
 package albert.lacambra.server.models;
 
-import albert.lacambra.client.models.IndividualCostDTO;
-
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.EntitySubclass;
 import com.googlecode.objectify.annotation.Index;

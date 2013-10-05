@@ -19,12 +19,12 @@ import javax.ws.rs.ext.Provider;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
-import albert.lacambra.client.models.CostDTO;
-import albert.lacambra.client.models.IndividualCostDTO;
-import albert.lacambra.client.models.PeriodicCostDTO;
 import albert.lacambra.server.models.Cost;
+import albert.lacambra.server.models.CostDTO;
 import albert.lacambra.server.models.IndividualCost;
+import albert.lacambra.server.models.IndividualCostDTO;
 import albert.lacambra.server.models.PeriodicCost;
+import albert.lacambra.server.models.PeriodicCostDTO;
 
 @Provider
 @Produces({MediaType.APPLICATION_JSON, "*/*"})
