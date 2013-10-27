@@ -24,56 +24,6 @@
 	</properties>
 
 	<dependencies>
-
-		<!-- Client side dependencies -->
-
-		<dependency>
-			<groupId>com.google.gwt</groupId>
-			<artifactId>gwt-user</artifactId>
-			<version>${gwt.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.google.gwt</groupId>
-			<artifactId>gwt-servlet</artifactId>
-			<version>${gwt.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.allen-sauer.gwt.log</groupId>
-			<artifactId>gwt-log</artifactId>
-			<version>3.1.8</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.google.gwt.inject</groupId>
-			<artifactId>gin</artifactId>
-			<version>2.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.gwtplatform</groupId>
-			<artifactId>gwtp-mvp-client</artifactId>
-			<version>${gwtp.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.gwtplatform</groupId>
-			<artifactId>gwtp-dispatch-rest</artifactId>
-			<version>${gwtp.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.gwtplatform</groupId>
-			<artifactId>gwtp-dispatch-client</artifactId>
-			<version>${gwtp.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.fusesource.restygwt</groupId>
-			<artifactId>restygwt</artifactId>
-			<version>1.3</version>
-		</dependency>
-		<!-- Server side dependencies -->
-
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
@@ -162,28 +112,28 @@
 		<plugins>
 
 			<!-- GWT Maven Plugin -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>gwt-maven-plugin</artifactId>
-				<version>${gwt.version}</version>
-				<executions>
-					<execution>
-						<phase>install</phase>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<runTarget>factures-gae.html</runTarget>
-					<!-- <hostedWebapp>${webappDirectory}</hostedWebapp> -->
-					<style>DETAILED</style>
-					<module>albert.lacambra.factures</module>
-					<server>com.google.appengine.tools.development.gwt.AppEngineLauncher</server>
-					<appEngineHome>${appEngineSdk}</appEngineHome>
-					<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
-				</configuration>
-			</plugin>
+<!-- 			<plugin> -->
+<!-- 				<groupId>org.codehaus.mojo</groupId> -->
+<!-- 				<artifactId>gwt-maven-plugin</artifactId> -->
+<!-- 				<version>${gwt.version}</version> -->
+<!-- 				<executions> -->
+<!-- 					<execution> -->
+<!-- 						<phase>install</phase> -->
+<!-- 						<goals> -->
+<!-- 							<goal>compile</goal> -->
+<!-- 						</goals> -->
+<!-- 					</execution> -->
+<!-- 				</executions> -->
+<!-- 				<configuration> -->
+<!-- 					<runTarget>factures-gae.html</runTarget> -->
+<!-- 					<hostedWebapp>${webappDirectory}</hostedWebapp> -->
+<!-- 					<style>DETAILED</style> -->
+<!-- 					<module>albert.lacambra.factures</module> -->
+<!-- 					<server>com.google.appengine.tools.development.gwt.AppEngineLauncher</server> -->
+<!-- 					<appEngineHome>${appEngineSdk}</appEngineHome> -->
+<!-- 					<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory> -->
+<!-- 				</configuration> -->
+<!-- 			</plugin> -->
 
 			<!-- Copy static web files before executing gwt:run -->
 			<plugin>
