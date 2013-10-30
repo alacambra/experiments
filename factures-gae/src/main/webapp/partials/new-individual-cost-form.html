@@ -1,0 +1,54 @@
+<div class="container-fluid">
+	<form>
+		<fieldset>
+			<legend> Add new invoice </legend>
+			<label>Date</label> <input data-bind="value: inv.day" type="text"
+				placeholder="DD" size="2" maxlength="2"> <span>/</span> <input
+				data-bind="value: inv.month" type="text" placeholder="MM" size="2"
+				maxlength="2"> <span>/</span> <input
+				data-bind="value: inv.year" type="text" placeholder="YYYY" size="4"
+				maxlength="4"> <label>Invoice price</label> <input
+				data-bind="value: inv.price" type="text" placeholder=""> <label>Invoice
+				concept</label> <input type="text" data-bind="value: inv.concept"
+				placeholder=""> <label>Budget</label> <label class="radio">
+				<input type="radio" name="bg" value="o1" data-bind="checked: inv.bg">
+				Check me out1
+			</label> <label class="radio"> <input type="radio" name="bg"
+				value="o2" data-bind="checked: inv.bg"> Check me out 2
+			</label> <label class="radio"> <input type="radio" name="bg"
+				value="o3" data-bind="checked: inv.bg"> Check me out3
+			</label>
+
+			<button type="submit" data-bind="click: send" class="btn">
+				Submit</button>
+		</fieldset>
+	</form>
+</div>
+
+
+<!-- <div class="container-fluid"> -->
+<!-- 	<div class="row-fluid"> -->
+<!-- 		<div class="span2"> -->
+<!-- 			<!--Sidebar content--> -->
+
+<!-- 			Search: <input ng-model="query"> Sort by: <select -->
+<!-- 				ng-model="orderProp"> -->
+<!-- 				<option value="name">Alphabetical</option> -->
+<!-- 				<option value="age">Newest</option> -->
+<!-- 			</select> -->
+
+<!-- 		</div> -->
+<!-- 		<div class="span10"> -->
+<!-- 			<!--Body content--> -->
+
+<!-- 			<ul class="phones"> -->
+<!-- 				<li ng-repeat="phone in phones | filter:query | orderBy:orderProp" -->
+<!-- 					class="thumbnail"><a href="#/phones/{{phone.id}}" -->
+<!-- 					class="thumb"><img ng-src="{{phone.imageUrl}}"></a> <a -->
+<!-- 					href="#/phones/{{phone.id}}">{{phone.name}}</a> -->
+<!-- 					<p>{{phone.snippet}}</p></li> -->
+<!-- 			</ul> -->
+
+<!-- 		</div> -->
+<!-- 	</div> -->
+<!-- </div> -->
