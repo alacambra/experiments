@@ -2,24 +2,17 @@
 	<form>
 		<fieldset>
 			<legend> Add new individual cost </legend>
-			
-			<label>Date</label> 
-			<input  type="text" placeholder="DD" size="2" maxlength="2" ng-model="ic.day"> 
-			<span>/</span> 
-			<input type="text" placeholder="MM" size="2" maxlength="2" ng-model="ic.month"> 
-			<span>/</span> 
-			<input type="text" placeholder="YYYY" size="4" maxlength="4" ng-model="ic.year"> 
-			
-			<label>Invoice price</label>
-			<input type="text" placeholder="price" ng-model="ic.price"> 
-			
-			<label>Invoice concept</label> 
-			<input type="text" placeholder="concept" ng-model="ic.concept"> 
-			
-			<label>Budget</label>
+
+			<label>Date</label>
+			<input type="text" ng-model="ic.date" date-format /><br> <label>Invoice
+				price</label> <input type="text" placeholder="price" ng-model="ic.price">
+
+			<label>Invoice concept</label> <input type="text"
+				placeholder="concept" ng-model="ic.concept"> <label>Budget</label>
 			<div ng-repeat="b in budgets">
-			<label class="radio">
-			<input type="radio" ng-model="ic.budget" name="bg" value="{{b.id}}" >{{b.name}}</label> 
+				<label class="radio"> <input type="radio"
+					ng-model="ic.budget" name="bg" value="{{b.id}}">{{b.name}}
+				</label>
 			</div>
 			<button ng-click="save(ic)">SAVE</button>
 		</fieldset>

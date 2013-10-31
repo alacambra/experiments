@@ -19,12 +19,10 @@ function InsertIndividualCostCtrl($scope, $http, $log) {
 	};
 	
 	$scope.ic = {
-			'day' : dd,
-			'month' : mm,
-			'year' : yyyy,
-			'price' : null,
+			'date' : new Date().getTime(),
+			'cost' : null,
 			'concept' : null,
-			'budget' : null
+			'budgetId' : null
 	};
 	$scope.budgets = [
 		{
