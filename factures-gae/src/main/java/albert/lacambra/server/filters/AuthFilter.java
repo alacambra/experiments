@@ -49,6 +49,7 @@ public class AuthFilter extends AbstractFilter
 			
 			try {
 				chain.doFilter(request, response);
+				log.info("done");
 			} catch (Throwable e) {
 				log.log(Level.SEVERE, "error: " + e.getMessage(), e);
 				throw new RuntimeException(e);
