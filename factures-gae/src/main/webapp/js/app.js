@@ -35,6 +35,10 @@ facturesApp.config(['$routeProvider',
 		templateUrl: 'partials/new-individual-cost-form.html',
 		controller: 'NewIndividualCostController'
 	}).
+	when('/budget/new', {
+		templateUrl: 'partials/new-budget-form.html',
+		controller: 'NewIndividualCostController'
+	}).
 	otherwise({
 		redirectTo: '/individualcost/new'
 	});

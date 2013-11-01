@@ -5,13 +5,13 @@
 
 			<label>Date</label>
 			<input type="text" ng-model="ic.date" date-format /><br> <label>Invoice
-				price</label> <input type="text" placeholder="price" ng-model="ic.price">
+				price</label> <input type="text" placeholder="price" ng-model="ic.cost">
 
 			<label>Invoice concept</label> <input type="text"
 				placeholder="concept" ng-model="ic.concept"> <label>Budget</label>
 			<div ng-repeat="b in budgets">
 				<label class="radio"> <input type="radio"
-					ng-model="ic.budget" name="bg" value="{{b.id}}">{{b.name}}
+					ng-model="ic.budgetId" name="bg" value="{{b.id}}">{{b.name}}
 				</label>
 			</div>
 			<button ng-click="save(ic)">SAVE</button>
