@@ -2,10 +2,11 @@
 
 /* App Module */
 
-var facturesApp = angular.module('facturesApp', [
-                                                 'ngRoute',
-                                                 'facturesControllers'
-                                                 ]);
+var facturesApp = angular.module(
+    'facturesApp',[
+        'ngRoute',
+        'ui.bootstrap'
+        ])
 
 facturesApp.directive('dateFormat', function($filter) {
 	var dateFilter = $filter('date');
@@ -14,7 +15,6 @@ facturesApp.directive('dateFormat', function($filter) {
 		require: 'ngModel',
 		link: function(scope, element, attr, ngModelCtrl) {
 			ngModelCtrl.$formatters.unshift(function(value) {
-				console.log(value)
 				return dateFilter(value, 'dd-MM-yyyy');
 			});
 

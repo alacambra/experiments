@@ -1,87 +1,134 @@
 'use strict';
 
-/* Controllers */
+facturesApp.controller('NewIndividualCostController', ['$scope', '$http', '$log',
+    function NewIndividualCostController($scope, $http, $log) {
+        $scope.$log = $log;
 
-var facturesControllers = angular.module('facturesControllers', []);
+        $scope.save = function(cost) {
+            $http.put('rest/individualcost/', cost).success(function(data) {
+                $scope.$log.info(data);
+                $scope.resetNewIndividualCostForm()
+            });
+        };
 
-facturesControllers.controller('NewIndividualCostController', ['$scope', '$http', '$log', 
-function InsertIndividualCostCtrl($scope, $http, $log) {
-	$scope.$log = $log
-	$scope.save = function(cost) {
-		$http.put('rest/individualcost/', cost).success(function(data) {
-			 $scope.$log.info(data);
-		});
-	};
-	
-	$http.get('rest/budget/').success(function(data) {
-		 $scope.$log.info(data);
-		 $scope.budgets = data;
-	});
-	
-	$scope.saveBg = function(bg) {
-		$http.put('rest/budget/', bg).success(function(data) {
-			$scope.$log.info(data);
-		});
-	};
-	
-	$scope.ic = {
-			'date' : new Date().getTime(),
-			'cost' : 12,
-			'concept' : "test",
-			'budgetId' : null
-	};
-	
-	$scope.bg = {
-			'year' : new Date().getFullYear() + "",
-			'amount' : "12",
-			'name' : "b" + new Date().getTime(),
-	};
-	
-//	$scope.budgets = [
-//		{
-//			"assignation":10000,
-//			"id":54008,
-//			"start":1356994800000,
-//			"end":1388530799900,
-//			"name":"Intendencia"
-//		},
-//		{
-//			"assignation":500000,
-//			"id":55009,
-//			"start":1356994800000,
-//			"end":1388530799900,
-//			"name":"Menjar"
-//		},
-//		{
-//			"assignation":100000,
-//			"id":55011,
-//			"start":1356994800000,
-//			"end":1388530799900,
-//			"name":"Oci"
-//		},
-//		{
-//			"assignation":50000,
-//			"id":62004,
-//			"start":1356994800000,
-//			"end":1388530799900,
-//			"name":"roba"
-//		},
-//		{
-//			"assignation":180000,
-//			"id":63008,
-//			"start":1356994800000,
-//			"end":1388530799900,
-//			"name":"Restaurant"
-//		},
-//		{
-//			"assignation":60000,
-//			"id":79001,
-//			"start":1356994800000,
-//			"end":1388530799900,
-//			"name":"cotxe"
-//		}];
+        var p = $http.get('rest/budget/');
+
+        p.success(function(data) {
+
+            $scope.$log.info(data);
+            $scope.budgets = data;
+
+        }).error(function(data, status, headers, config) {
+
+                if(status===401){
+                    window.location = data;
+                }
+
+            });;
+
+        $scope.saveBg = function(bg) {
+            $http.put('rest/budget/', bg).success(function(data) {
+                $scope.$log.info(data);
+                $scope.resetBgForm();
+            })
+        };
+
+        $scope.resetNewIndividualCostForm = function() {
+            $scope.ic = {
+                'date' : new Date().getTime(),
+                'cost' : "",
+                'concept' : "",
+                'budgetId' : null
+            };
+        }
+
+        $scope.resetBgForm = function() {
+            $scope.bg = {
+                'year' : new Date().getFullYear() + "",
+                'amount' : "",
+                'name' : ""
+            };
+        }
+
+        $scope.resetBgForm()
+        $scope.resetNewIndividualCostForm()
+    }]);
+
+facturesApp.controller("NavigationController", ['$scope', '$location',
+    function NavigationController($scope, $location) {
+
+        $scope.goToNewIndividualCost = function() {
+
+            $location.path("/individualcost/new")
+            updatePlace("newIndividualCostPlace")
+
+        }
+
+        $scope.goToNewBudget = function() {
+
+            $location.path("/budget/new")
+            updatePlace("newBudgetPlace")
+        }
+
+        $scope.place = {
+            'newBudgetPlace' : false,
+            'newIndividualCostPlace' : true
+        }
+
+        var updatePlace = function(newPlace) {
+            for (var place in $scope.place) {
+                if( place === newPlace) {
+                    $scope.place[place] = true;
+                } else {
+                    $scope.place[place] = false;
+                }
+
+            }
+        }
+
+    }]);
 
 
-}]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

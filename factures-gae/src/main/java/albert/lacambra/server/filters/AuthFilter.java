@@ -38,11 +38,11 @@ public class AuthFilter extends AbstractFilter
 		
 		if ( user == null ) {
 			
-			String url = userService.createLoginURL("/factures-gae.html");
+			String url = userService.createLoginURL("/index.html");
 			log.info("redirecting to " + url);
 			response.setStatus(Status.UNAUTHORIZED.getStatusCode());
 			response.getWriter().print(url);
-			
+//			response.sendRedirect(userService.createLoginURL(request.getRequestURI()));
 			
 		} else {
 			
