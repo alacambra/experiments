@@ -1,0 +1,17 @@
+<div class="container-fluid">
+	<form>
+		<fieldset>
+			<legend>Add new budget</legend>
+
+			<label>Budget name</label>
+			<input type="text" placeholder="name" ng-model="bg.name"/><br> 
+			<label>Assigned amount</label>
+			<input type="text" placeholder="assignation" ng-model="bg.amount">
+			<label>Year</label>
+			<input type="text" placeholder="concept" ng-model="bg.year">
+			<button ng-click="saveBg(bg)">SAVE</button>
+		</fieldset>
+	</form>
+	<pre>budget = {{bg | json}}</pre>
+</div>
+
