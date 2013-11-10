@@ -20,7 +20,7 @@
 		<gwt.version>2.5.1</gwt.version>
 		<maven.compiler.source>1.6</maven.compiler.source>
 		<maven.compiler.target>1.6</maven.compiler.target>
-		<appEngineSdk>/home/albert/workspace-gwt/appengine-java-sdk-1.8.2/</appEngineSdk>
+		<appEngineSdk>/home/albert/workspace-gwt/appengine-java-sdk-${gae.version}/</appEngineSdk>
 	</properties>
 
 	<dependencies>

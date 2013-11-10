@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,18 +18,27 @@ public class IndividualCostServiceTest extends BasicTest<IndividualCostService>{
 	@Before
 	public void setup() {
 		super.setup();
-		target = new IndividualCostService();
+		target = injector.getInstance(IndividualCostService.class);
 	}
-
 //		IndividualCostService service = new IndividualCostService();
 //		service.getIndividualCost(budgetId, costId)
 	
 	@Test
-	public void getIndividualCosts(){
+	public void getIndividualCost(){
 	
 		IndividualCost cost = getNewIndividualCost();
 		IndividualCost c2 = target.getIndividualCost(cost.getBudgetId(), cost.getId());
 		assertEquals(cost.getId(), c2.getId());
+	}
+	
+	@Test
+	public void getIndividualCostsByYear(){
+		
+		IndividualCost cost = getNewIndividualCost(2013);
+		List<IndividualCost> c = target.getIndividualCosts(2013);
+		assertEquals(0, c.size());
+		c = target.getIndividualCosts(2014);
+		assertEquals(1, c.size());
 	}
 
 	@Test

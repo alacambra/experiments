@@ -15,6 +15,10 @@
                 <input type="text" placeholder="concept" ng-model="ic.concept">
             </div>
             <div>
+                <label>Tags info</label>
+                <input type="text" placeholder="tags" ng-model="ic.tags">
+            </div>
+            <div>
                 <label>Budget</label>
                 <div ng-repeat="b in budgets">
                     <input type="radio" ng-model="ic.budgetId" name="bg" value="{{b.id}}">{{b.name}}

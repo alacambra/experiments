@@ -38,7 +38,8 @@ facturesApp.controller('NewIndividualCostController', ['$scope', '$http', '$log'
                 'date' : new Date().getTime(),
                 'cost' : "",
                 'concept' : "",
-                'budgetId' : null
+                'budgetId' : null,
+                'tags': null
             };
         }
 
@@ -52,6 +53,11 @@ facturesApp.controller('NewIndividualCostController', ['$scope', '$http', '$log'
 
         $scope.resetBgForm()
         $scope.resetNewIndividualCostForm()
+    }]);
+
+facturesApp.controller('ListCostsController', ['$scope', '$http', '$log',
+    function ListCostsController($scope, $http, $log) {
+        $scope.$log = $log;
     }]);
 
 facturesApp.controller("NavigationController", ['$scope', '$location',

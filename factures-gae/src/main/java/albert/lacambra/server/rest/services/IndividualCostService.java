@@ -2,15 +2,21 @@ package albert.lacambra.server.rest.services;
 
 import static albert.lacambra.server.ofy.OfyService.ofy;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.google.inject.Inject;
 import com.googlecode.objectify.Key;
 
+import albert.lacambra.server.models.Cost;
 import albert.lacambra.server.models.IndividualCost;
 import albert.lacambra.server.models.PersistedBudget;
 
 public class IndividualCostService extends BasicService implements IIndividualCostService {
 
+	@Inject IBudgetService budgetService;
+	
+	
 	@Override
 	public IndividualCost getIndividualCost(Long budgetId, Long costId) {
 		
@@ -23,8 +29,14 @@ public class IndividualCostService extends BasicService implements IIndividualCo
 	@Override
 	public List<IndividualCost> getIndividualCosts(Integer year) {
 		
-		List<IndividualCost> l = 
-				ofy().load().type(IndividualCost.class).filter("year =", year).list();
+		List<PersistedBudget> budgets = budgetService.getBudgetsForYear(year);
+		List<IndividualCost> l = new ArrayList<IndividualCost>();
+		
+		for (PersistedBudget budget:budgets) {
+//			Key<PersistedBudget> budgetKey = PersistedBudget.key(bracelet.getMeKey(), budgetId);
+			l.addAll(ofy().load().type(IndividualCost.class).filterKey(bracelet.getMeKey()).list());
+//							bracelet.getMeKey(), PersistedBudget.key(bracelet.getMeKey(), budget.getId())));
+		}
 		
 		return l;
 	}

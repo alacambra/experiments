@@ -13,8 +13,12 @@ import albert.lacambra.server.models.Person;
 
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
 public abstract class BasicTest<T> {
+	
+	protected Injector injector = Guice.createInjector(new GuiceModule());
 	protected static final LocalServiceTestHelper helper = 
 			new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig())
 	.setEnvIsLoggedIn(true)
@@ -60,7 +64,15 @@ public abstract class BasicTest<T> {
 	
 	protected IndividualCost getNewIndividualCost(){
 		PersistedBudget bg = getNewBudget();
-		
+		return getNewIndividualCost(bg);
+	}
+	
+	protected IndividualCost getNewIndividualCost(int year){
+		PersistedBudget bg = getNewBudget(year);
+		return getNewIndividualCost(bg);
+	}
+	
+	private IndividualCost getNewIndividualCost(PersistedBudget bg) {
 		IndividualCost cost = new IndividualCost()
 		.setBudget(PersistedBudget.key(Person.key("test@test.com"), bg.getId()))
 		.setBudgetId(bg.getId());

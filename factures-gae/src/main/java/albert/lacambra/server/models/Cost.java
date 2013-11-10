@@ -15,9 +15,6 @@ public abstract class Cost<T> {
 	
 	@Id protected Long id;
 	@Parent protected Key<PersistedBudget> budget;
-	
-	@Index private Integer year;
-	
 	@Index protected Integer cost;
 	@Ignore protected Long budgetId; 
 	
@@ -55,10 +52,8 @@ public abstract class Cost<T> {
 		return (T) this;
 	}
 	
-	
 	public T setBudget(Key<PersistedBudget> budget) {
 		this.budget = budget;
-		year = ofy().load().key(this.budget).now().getYear();
 		return (T) this;
 	}
 
@@ -73,15 +68,6 @@ public abstract class Cost<T> {
 	
 	public T setId(Long id) {
 		this.id = id;
-		return (T) this;
-	}
-	
-	public Integer getYear() {
-		return year;
-	}
-	
-	public T setYear(Integer year) {
-		this.year = year;
 		return (T) this;
 	}
 	
