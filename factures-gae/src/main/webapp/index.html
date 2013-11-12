@@ -25,6 +25,11 @@
                 Budget
             </a>
         </li>
+        <li ng-class="{'active' : place.individualCostList}">
+            <a ng-click="goToIndividualCostList()">
+                Individual Cost list
+            </a>
+        </li>
     </ul>
 </div>
 <div ng-view>
