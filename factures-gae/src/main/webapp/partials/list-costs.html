@@ -1,0 +1,28 @@
+<table class="table table-bordered">
+    <tr ng-repeat="ic in individualCosts">
+        <td>{{date}}</td>
+        <td>{{price}}</td>
+        <td>{{concept}}</td>
+        <td>{{tag}}</td>
+    </tr>
+</table>
+
+
+<label ng-click="goToNewBudget()">Date</label>
+<input type="text" ng-model="ic.date" date-format />
+</div>
+<div>
+    <label>Invoice price </label>
+    <input type="text" placeholder="price" ng-model="ic.cost">
+</div>
+<div>
+    <label>Invoice concept</label>
+    <input type="text" placeholder="concept" ng-model="ic.concept">
+</div>
+<div>
+    <label>Budget</label>
+    <div ng-repeat="b in budgets">
+        <input type="radio" ng-model="ic.budgetId" name="bg" value="{{b.id}}">{{b.name}}
+    </div>
+</div>
+<div>

@@ -21,7 +21,7 @@ public class PeriodicCostServiceTest extends BasicTest<PeriodicCostService>{
 	@Before
 	public void setup() {
 		super.setup();
-		target = new PeriodicCostService();
+		target = injector.getInstance(PeriodicCostService.class);
 	}
 
 	@Test

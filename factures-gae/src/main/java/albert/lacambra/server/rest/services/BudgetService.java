@@ -9,17 +9,21 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import albert.lacambra.server.auth.Bracelet;
 import albert.lacambra.server.models.PersistedBudget;
 
+import com.google.inject.Inject;
+import com.google.inject.servlet.RequestScoped;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.cmd.Query;
 
 public class BudgetService extends BasicService implements IBudgetService {
 
-	public BudgetService() {
-		super();
+	@Inject
+	public BudgetService(Bracelet bracelet) {
+		super(bracelet);
 	}
-	
+
 	@Override
 	public PersistedBudget getBudget(Long id) {
 

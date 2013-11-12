@@ -16,7 +16,7 @@ public class BudgetServiceTest extends BasicTest<BudgetService>{
 	@Before
 	public void setup() {
 		super.setup();
-		target = new BudgetService();
+		target = injector.getInstance(BudgetService.class);
 	}
 
 	@Test

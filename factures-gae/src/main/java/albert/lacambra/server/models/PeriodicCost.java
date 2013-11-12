@@ -8,12 +8,11 @@ import albert.lacambra.shared.models.PeriodStep;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.EntitySubclass;
-import com.googlecode.objectify.annotation.Ignore;
 import com.googlecode.objectify.annotation.Index;
 
 import static albert.lacambra.server.ofy.OfyService.ofy;
 
-@EntitySubclass
+@EntitySubclass(index=true)
 public class PeriodicCost extends Cost<PeriodicCost> {
 
 	@Index private PeriodStep periodStep;

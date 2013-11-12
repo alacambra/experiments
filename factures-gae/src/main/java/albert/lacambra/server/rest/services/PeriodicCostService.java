@@ -8,17 +8,25 @@ import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import com.google.inject.Inject;
 import com.googlecode.objectify.Key;
 
+import albert.lacambra.server.auth.Bracelet;
 import albert.lacambra.server.models.Cost;
 import albert.lacambra.server.models.PeriodicCostEntry;
 import albert.lacambra.server.models.PersistedBudget;
 import albert.lacambra.server.models.PeriodicCost;
 
 public class PeriodicCostService extends BasicService implements IPeriodicCostService {
+
+	@Inject
+	public PeriodicCostService(Bracelet bracelet) {
+		super(bracelet);
+	}
 
 	@Override
 	public PeriodicCost getPeriodicCost(Long budgetId, Long costId) {

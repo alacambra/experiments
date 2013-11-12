@@ -4,13 +4,17 @@
     "http://java.sun.com/dtd/web-app_2_3.dtd">
 
 <web-app>
-	<context-param>
-		<param-name>resteasy.scan</param-name>
-		<param-value>true</param-value>
-	</context-param>
+<!-- 	<context-param> -->
+<!-- 		<param-name>resteasy.scan</param-name> -->
+<!-- 		<param-value>true</param-value> -->
+<!-- 	</context-param> -->
 	<context-param>
 		<param-name>resteasy.servlet.mapping.prefix</param-name>
 		<param-value>/rest</param-value>
+	</context-param>
+	<context-param>
+		<param-name>resteasy.guice.modules</param-name>
+		<param-value>albert.lacambra.server.guice.GuiceModule</param-value>
 	</context-param>
 	<filter>
 		<filter-name>AuthFilter</filter-name>

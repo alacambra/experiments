@@ -5,17 +5,24 @@ import static albert.lacambra.server.ofy.OfyService.ofy;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.core.Context;
+
 import com.google.inject.Inject;
 import com.googlecode.objectify.Key;
 
+import albert.lacambra.server.auth.Bracelet;
 import albert.lacambra.server.models.Cost;
 import albert.lacambra.server.models.IndividualCost;
 import albert.lacambra.server.models.PersistedBudget;
 
 public class IndividualCostService extends BasicService implements IIndividualCostService {
 
+	@Inject
+	public IndividualCostService(Bracelet bracelet) {
+		super(bracelet);
+	}
+
 	@Inject IBudgetService budgetService;
-	
 	
 	@Override
 	public IndividualCost getIndividualCost(Long budgetId, Long costId) {
@@ -33,8 +40,20 @@ public class IndividualCostService extends BasicService implements IIndividualCo
 		List<IndividualCost> l = new ArrayList<IndividualCost>();
 		
 		for (PersistedBudget budget:budgets) {
-//			Key<PersistedBudget> budgetKey = PersistedBudget.key(bracelet.getMeKey(), budgetId);
-			l.addAll(ofy().load().type(IndividualCost.class).filterKey(bracelet.getMeKey()).list());
+			List<Cost> allCosts = 
+					ofy()
+					.load()
+					.type(Cost.class)
+					.ancestor(budget.key(bracelet.getMeKey(), budget.getId())).list();
+			
+			for(Cost<?> cost : allCosts) {
+				if (cost instanceof IndividualCost){
+					l.add((IndividualCost) cost);
+				}
+			}
+			
+			//			Key<PersistedBudget> budgetKey = PersistedBudget.key(bracelet.getMeKey(), budgetId);
+//			l.addAll(ofy().load().type(IndividualCost.class).filterKey(bracelet.getMeKey()).list());
 //							bracelet.getMeKey(), PersistedBudget.key(bracelet.getMeKey(), budget.getId())));
 		}
 		

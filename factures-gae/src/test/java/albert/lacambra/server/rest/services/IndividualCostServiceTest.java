@@ -20,8 +20,6 @@ public class IndividualCostServiceTest extends BasicTest<IndividualCostService>{
 		super.setup();
 		target = injector.getInstance(IndividualCostService.class);
 	}
-//		IndividualCostService service = new IndividualCostService();
-//		service.getIndividualCost(budgetId, costId)
 	
 	@Test
 	public void getIndividualCost(){
@@ -34,7 +32,7 @@ public class IndividualCostServiceTest extends BasicTest<IndividualCostService>{
 	@Test
 	public void getIndividualCostsByYear(){
 		
-		IndividualCost cost = getNewIndividualCost(2013);
+		IndividualCost cost = getNewIndividualCost(2014);
 		List<IndividualCost> c = target.getIndividualCosts(2013);
 		assertEquals(0, c.size());
 		c = target.getIndividualCosts(2014);

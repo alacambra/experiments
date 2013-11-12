@@ -4,7 +4,7 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.EntitySubclass;
 import com.googlecode.objectify.annotation.Index;
 
-@EntitySubclass
+@EntitySubclass(index=true)
 public class IndividualCost extends Cost<IndividualCost> {
 
 	@Index

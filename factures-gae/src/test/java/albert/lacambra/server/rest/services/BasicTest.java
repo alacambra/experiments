@@ -49,7 +49,7 @@ public abstract class BasicTest<T> {
 		.setName("bgTest")
 		.setYear(year);
 		
-		BudgetService service = new BudgetService();
+		BudgetService service = injector.getInstance(BudgetService.class);
 		
 		Long id = service.addBudget(budget);
 		budget.setId(id);
@@ -58,7 +58,7 @@ public abstract class BasicTest<T> {
 	}
 
 	protected PersistedBudget getBudget(Long id) {
-		BudgetService service = new BudgetService();
+		BudgetService service = injector.getInstance(BudgetService.class);
 		return service.getBudget(id);
 	}
 	
@@ -77,7 +77,7 @@ public abstract class BasicTest<T> {
 		.setBudget(PersistedBudget.key(Person.key("test@test.com"), bg.getId()))
 		.setBudgetId(bg.getId());
 		
-		IndividualCostService service = new IndividualCostService();
+		IndividualCostService service = injector.getInstance(IndividualCostService.class);
 		Long id = service.saveIndividualCost(cost);
 		cost.setId(id);
 		return cost;
@@ -91,7 +91,7 @@ public abstract class BasicTest<T> {
 		.setStart(new Date().getTime()).setEnd(new Date().getTime() + 10)
 		.setBudgetId(bg.getId());
 		
-		PeriodicCostService service = new PeriodicCostService();
+		PeriodicCostService service = injector.getInstance(PeriodicCostService.class);
 		Long id = service.savePeriodicCost(cost);
 		cost.setId(id);
 		return cost;
@@ -104,7 +104,7 @@ public abstract class BasicTest<T> {
 		.setBudget(PersistedBudget.key(Person.key("test@test.com"), bg.getId()))
 		.setBudgetId(bg.getId());
 		
-		PeriodicCostService service = new PeriodicCostService();
+		PeriodicCostService service = injector.getInstance(PeriodicCostService.class);
 		Long id = service.savePeriodicCost(cost);
 		cost.setId(id);
 		return cost;
@@ -116,7 +116,7 @@ public abstract class BasicTest<T> {
 	}	
 	
 	protected PeriodicCostEntry getNewPeriodicCostEntry(PeriodicCost periodicCost) {
-		PeriodicCostService service = new PeriodicCostService();
+		PeriodicCostService service = injector.getInstance(PeriodicCostService.class);
 		PeriodicCostEntry entry = new PeriodicCostEntry(periodicCost.getKey());
 		Long id = service.addCostEntry(periodicCost.getBudgetId(), periodicCost.getId(), entry);
 		entry.setId(id);

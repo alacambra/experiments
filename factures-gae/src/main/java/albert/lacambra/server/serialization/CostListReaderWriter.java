@@ -89,8 +89,11 @@ implements MessageBodyWriter<List<Cost<?>>>, MessageBodyReader<List<Cost<?>>>{
 			Annotation[] annotations, MediaType mediaType) {
 
 		try {
-			type.asSubclass(Cost.class);
-			return true;
+			if (List.class.isAssignableFrom(type))
+					//			type.asSubclass(Cost.class);
+				return true;
+			else
+				return false;
 		} catch (ClassCastException e) {
 			return false;
 		}
