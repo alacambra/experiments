@@ -2,6 +2,18 @@
  * Created by albert on 11/10/13.
  */
 
+angular.module('httpInterceptor',[]).config(
+    function($httpProvider) {
+        $httpProvider.interceptors.push("requestInterceptor")
+    })
+    .factory("requestInterceptor", function($q){
+        return{
+            'request': function(config){
+//                return $q.accept();
+            }
+        }
+    });
+
 var RestServices = function(endpoint) {
     this.endpoint = endpoint;
 

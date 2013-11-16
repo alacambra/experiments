@@ -17,12 +17,15 @@ import com.googlecode.objectify.Key;
 
 import albert.lacambra.server.auth.Bracelet;
 import albert.lacambra.server.models.Cost;
+import albert.lacambra.server.models.IndividualCost;
 import albert.lacambra.server.models.PeriodicCostEntry;
 import albert.lacambra.server.models.PersistedBudget;
 import albert.lacambra.server.models.PeriodicCost;
 
 public class PeriodicCostService extends BasicService implements IPeriodicCostService {
 
+	@Inject IBudgetService budgetService;
+	
 	@Inject
 	public PeriodicCostService(Bracelet bracelet) {
 		super(bracelet);
@@ -44,14 +47,31 @@ public class PeriodicCostService extends BasicService implements IPeriodicCostSe
 	@Override
 	public List<PeriodicCost> getPeriodicCosts(Integer year) {
 
-		List<Cost> l = 
-				ofy().load().type(Cost.class).filter("year =", year).list();
-		
+//		List<Cost> l = 
+//				ofy().load().type(Cost.class).filter("year =", year).list();
+//		
+//		List<PeriodicCost> periodicCosts = new ArrayList<PeriodicCost>();
+//
+//		for ( Cost c : l ){
+//			if ( c instanceof PeriodicCost)
+//				periodicCosts.add((PeriodicCost) c);
+//		}
+//		
+		List<PersistedBudget> budgets = budgetService.getBudgetsForYear(year);
 		List<PeriodicCost> periodicCosts = new ArrayList<PeriodicCost>();
-
-		for ( Cost c : l ){
-			if ( c instanceof PeriodicCost)
-				periodicCosts.add((PeriodicCost) c);
+		
+		for (PersistedBudget budget:budgets) {
+			List<Cost> allCosts = 
+					ofy()
+					.load()
+					.type(Cost.class)
+					.ancestor(budget.key(bracelet.getMeKey(), budget.getId())).list();
+			
+			for(Cost<?> cost : allCosts) {
+				if (cost instanceof PeriodicCost){
+					periodicCosts.add((PeriodicCost) cost);
+				}
+			}
 		}
 		
 		return periodicCosts;

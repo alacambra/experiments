@@ -1,15 +1,32 @@
+<div class="well">
+    <label>
+        Search for:<input type="text" ng-model="criteria">
+    </label>
+    <p>Filtered {{filteredICs.length}} of {{individualCosts.length}}</p>
+</div>
 <table class="table table-bordered">
     <thead>
     <tr>
-        <th>id</th>
-        <th>date</th>
-        <th>cost</th>
-        <th>concept</th>
-        <th>tags</th>
+        <!--<th>-->
+            <!--id<i ng-class="{'icon-chevron-up': isSortUp('id'), 'icon-chevron-down': isSortDown('id')}"></i>-->
+        <!--</th>-->
+        <th ng-click="sort('date')">
+            date<i ng-class="{'icon-chevron-up': isSortUp('date'), 'icon-chevron-down': isSortDown('date')}"></i>
+        </th>
+        <th ng-click="sort('cost')">
+            cost<i ng-class="{'icon-chevron-up': isSortUp('cost'), 'icon-chevron-down': isSortDown('cost')}"></i>
+        </th>
+        <th ng-click="sort('concept')">
+            concept
+            <i ng-class="{'icon-chevron-up': isSortUp('concept'), 'icon-chevron-down': isSortDown('concept')}"></i>
+        </th>
+        <th ng-click="sort('tags')">
+            tags<i ng-class="{'icon-chevron-up': isSortUp('tags'), 'icon-chevron-down': isSortDown('tags')}"></i>
+        </th>
     </tr>
     </thead>
-    <tr ng-repeat="ic in individualCosts">
-        <td>{{ic.id}}</td>
+    <tr ng-repeat="ic in filteredICs = (individualCosts | pagination:pageNo:pageSize | filter:criteria | orderBy:sortField:reverse)">
+        <!--<td>{{ic.id}}</td>-->
         <td>{{ic.date | date}}</td>
         <td>{{ic.cost}}</td>
         <td>{{ic.concept}}</td>

@@ -51,10 +51,6 @@ public class IndividualCostService extends BasicService implements IIndividualCo
 					l.add((IndividualCost) cost);
 				}
 			}
-			
-			//			Key<PersistedBudget> budgetKey = PersistedBudget.key(bracelet.getMeKey(), budgetId);
-//			l.addAll(ofy().load().type(IndividualCost.class).filterKey(bracelet.getMeKey()).list());
-//							bracelet.getMeKey(), PersistedBudget.key(bracelet.getMeKey(), budget.getId())));
 		}
 		
 		return l;

@@ -56,8 +56,12 @@ facturesApp.controller('NewIndividualCostController', ['$scope', '$http', '$log'
 
 facturesApp.controller('ListCostsController', ['$scope', '$http', '$log',
     function ListCostsController($scope, $http, $log) {
+        $scope.pageNo = 0;
+        $scope.pageSize = 2000000;
         $scope.$log = $log;
+
 //        $scope.individualCosts = test_costs
+
         var p = $http.get('rest/individualcost/year/2013/');
 
         p.success(function(data) {
@@ -65,6 +69,25 @@ facturesApp.controller('ListCostsController', ['$scope', '$http', '$log',
             $scope.$log.info(data);
             $scope.individualCosts = data
         });
+
+        $scope.sort = function(fieldName) {
+            if($scope.sortField === fieldName) {
+                $scope.reverse = !$scope.reverse;
+            } else {
+                $scope.sortField = fieldName;
+                $scope.reverse = false;
+            }
+        }
+
+        $scope.isSortUp = function(fieldName) {
+            return $scope.sortField === fieldName && !$scope.reverse;
+        };
+
+        $scope.isSortDown = function(fieldName) {
+            return $scope.sortField === fieldName && $scope.reverse;
+        };
+
+
     }]);
 
 facturesApp.controller("NavigationController", ['$scope', '$location',

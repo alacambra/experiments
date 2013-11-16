@@ -5,28 +5,39 @@
 var facturesApp = angular.module(
     'facturesApp',[
         'ngRoute',
-//        'ui.bootstrap'
-    ])
+        'arrayFilters',
+        'httpInterceptor'
+    ]);
 
-facturesApp.directive('dateFormat', function($filter) {
-    var dateFilter = $filter('date');
+angular.module('arrayFilters', []).filter("pagination", function(){
+    return function(inputArray, selectedPage, pageSize){
 
-    return {
-        require: 'ngModel',
-        link: function(scope, element, attr, ngModelCtrl) {
-            ngModelCtrl.$formatters.unshift(function(value) {
-                return dateFilter(value, 'dd-MM-yyyy');
-            });
-
-            ngModelCtrl.$parsers.push(function(value) {
-                var regex = /(\d{1,2})-(\d{1,2})-(\d{4})/.exec(value);
-                if (regex !== null && regex.length) {
-                    return new Date(regex[3]+ " " + regex[2] + " " + regex[1] + " 00:01:00 GMT+1").getTime();
-                }
-            });
+        if (inputArray === undefined) {
+            return;
         }
-    };
+
+        var start = selectedPage * pageSize;
+        var end = start + pageSize;
+
+        if(end > inputArray.length) {
+            end = inputArray.length;
+        }
+
+        return inputArray.slice(start, end);
+    } ;
 });
+
+//angular.module('httpInterceptor',[]).config(
+//    function($httpProvider) {
+//        $httpProvider.interceptors.push("requestInterceptor")
+//    })
+//    .factory("requestInterceptor", function($q){
+//        return{
+//            'request': function(config){
+//                return "hello";
+//            }
+//        }
+//    });
 
 facturesApp.config(['$routeProvider',
     function($routeProvider) {
