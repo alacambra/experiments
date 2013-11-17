@@ -9,66 +9,101 @@ angular.module('httpInterceptor',[]).config(
     .factory("requestInterceptor", function($q){
         return{
             'request': function(config){
-//                return $q.accept();
+                return config
             }
         }
     });
 
+
+
 var RestServices = function(endpoint) {
     this.endpoint = endpoint;
-
-    /************************************************************
-     @GET
-     @Path("{id:[\\d]+}")
-     @Produces(MediaType.APPLICATION_JSON)
-     PersistedBudget getBudget(@PathParam("id")Long id);
-     *************************************************************/
-    var getBudget = function (budgetId) {
-        a = 0;
+    var restServicesSelf = this;
+    var _buffer = {
+        "budget":{
+            "get":{}
+        },
+        "ic":{
+            "get":{}
+        }
     };
 
+    return {
+        "bufferRestServices":function($http) {
+            var buffer = _buffer["budget"];
 
-    /************************************************************
-    @GET
-    @Path("year/{year:[\\d]{4}}")
-    @Produces(MediaType.APPLICATION_JSON)
-    List<PersistedBudget> getBudgetsForYear(@PathParam("year")Integer year);
-    *************************************************************/
+            return {
+                "getBudget":function (budgetId) {
+                    a = 0;
+                },
+                "getBudgetsForYear":function (year, callback) {
 
-    var getBudgetsForYear = function (budgetId) {
-        a = 0;
-    };
+                    if (buffer["get"].hasOwnProperty(year)) {
+                        callback(buffer["get"][year]);
+                        return;
+                    }
 
-    /************************************************************
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    List<PersistedBudget> getAllBudgets();
-    *************************************************************/
+                    $http.get(endpoint + '/budget/year/' + year).
+                        success(function(data) {
+                            buffer["get"][year] = data;
+                            callback(data)
+                        }).error(function(data, status, headers, config) {
 
-    var getAllBudgets = function (budgetId) {
-        a = 0;
-    };
+                            if(status===401){
+                                window.location = data;
+                            }
+                        });
+                },
 
-    /************************************************************
-    @PUT
-    @Path("{id:[\\d]+}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.TEXT_PLAIN)
-    void updateBudget(@PathParam("id")Long id, PersistedBudget dto);
-    *************************************************************/
+                "getAllBudgets":function () {},
 
-    var updateBudget = function (budgetId) {
-        a = 0;
-    };
+                "updateBudget":function (budget) {},
 
-    /************************************************************
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.TEXT_PLAIN)
-    Long addBudget(PersistedBudget dto);
-    *************************************************************/
+                "addBudget":function (bg) {
+                    buffer["get"] = {}
+                    return $http.put(endpoint + '/budget/', bg);
+                }
+            }
+        },
+        "individualCostService":function($http) {
 
-    var addBudget = function (budgetId) {
-        a = 0;
-    };
+            var buffer = _buffer["ic"];
+
+            return {
+                "individualCost":function getIndividualCost(budgetId, invoiceId){
+                },
+
+                "getIndividualCosts":function getIndividualCosts(year, callback){
+
+                    if (buffer["get"].hasOwnProperty(year)) {
+                        callback(buffer["get"][year]);
+                        return;
+                    }
+
+                    $http.get(endpoint + '/individualcost/year/' + year).
+                        success(function(data) {
+                            buffer["get"][year] = data;
+                            callback(data)
+                        }).error(function(data, status, headers, config) {
+
+                            if(status===401){
+                                window.location = data;
+                            }
+                        });
+                },
+                "saveIndividualCost":function saveIndividualCost(cost){
+                    buffer["get"] = {}
+                    return $http.put(endpoint + '/individualcost/', cost);
+                },
+
+                "updateIndividualCost":function updateIndividualCost(costId, invoice){
+
+                },
+
+                "deleteIndividualCost":function deleteIndividualCost(budgetId, costId){
+
+                }
+            }
+        }
+    }
 };

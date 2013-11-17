@@ -1,32 +1,26 @@
 'use strict';
 
-facturesApp.controller('NewIndividualCostController', ['$scope', '$http', '$log',
-    function NewIndividualCostController($scope, $http, $log) {
+facturesApp.controller('NewIndividualCostController', ['$scope', '$http', '$log', '$injector','$q',
+    function NewIndividualCostController($scope, $http, $log, $injector, $q) {
+        var rest = $injector.get("rest");
         $scope.$log = $log;
+
         $scope.save = function(cost) {
-            $http.put('rest/individualcost/', cost).success(function(data) {
+            rest.individualCostService($http).saveIndividualCost(cost).success(function(data) {
                 $scope.$log.info(data);
                 $scope.resetNewIndividualCostForm()
             });
         };
 
-        var p = $http.get('rest/budget/');
-
-        p.success(function(data) {
+        rest.bufferRestServices($http).getBudgetsForYear(2013, function(data) {
 
             $scope.$log.info(data);
             $scope.budgets = data;
 
-        }).error(function(data, status, headers, config) {
-
-                if(status===401){
-                    window.location = data;
-                }
-
-            });;
+        });
 
         $scope.saveBg = function(bg) {
-            $http.put('rest/budget/', bg).success(function(data) {
+            rest.bufferRestServices($http).addBudget(bg).success(function(data) {
                 $scope.$log.info(data);
                 $scope.resetBgForm();
             })
@@ -54,18 +48,16 @@ facturesApp.controller('NewIndividualCostController', ['$scope', '$http', '$log'
         $scope.resetNewIndividualCostForm()
     }]);
 
-facturesApp.controller('ListCostsController', ['$scope', '$http', '$log',
-    function ListCostsController($scope, $http, $log) {
+facturesApp.controller('ListCostsController', ['$scope', '$http', '$log', "$injector",
+    function ListCostsController($scope, $http, $log, $injector) {
         $scope.pageNo = 0;
         $scope.pageSize = 2000000;
         $scope.$log = $log;
 
+        var rest = $injector.get("rest");
 //        $scope.individualCosts = test_costs
 
-        var p = $http.get('rest/individualcost/year/2013/');
-
-        p.success(function(data) {
-
+        rest.individualCostService($http).getIndividualCosts(2013, function(data) {
             $scope.$log.info(data);
             $scope.individualCosts = data
         });

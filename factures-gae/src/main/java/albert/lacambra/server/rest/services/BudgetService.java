@@ -13,7 +13,6 @@ import albert.lacambra.server.auth.Bracelet;
 import albert.lacambra.server.models.PersistedBudget;
 
 import com.google.inject.Inject;
-import com.google.inject.servlet.RequestScoped;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.cmd.Query;
 

@@ -7,7 +7,8 @@ var facturesApp = angular.module(
         'ngRoute',
         'arrayFilters',
         'httpInterceptor'
-    ]);
+    ])
+facturesApp.value("rest", new RestServices("rest"));
 
 angular.module('arrayFilters', []).filter("pagination", function(){
     return function(inputArray, selectedPage, pageSize){
@@ -26,18 +27,6 @@ angular.module('arrayFilters', []).filter("pagination", function(){
         return inputArray.slice(start, end);
     } ;
 });
-
-//angular.module('httpInterceptor',[]).config(
-//    function($httpProvider) {
-//        $httpProvider.interceptors.push("requestInterceptor")
-//    })
-//    .factory("requestInterceptor", function($q){
-//        return{
-//            'request': function(config){
-//                return "hello";
-//            }
-//        }
-//    });
 
 facturesApp.config(['$routeProvider',
     function($routeProvider) {
