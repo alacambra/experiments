@@ -34,9 +34,8 @@ public class PeriodicCostServiceTest extends BasicTest<PeriodicCostService>{
 	@Test
 	public void getPeriodicCosts() {
 		PeriodicCost cost = getNewPeriodicCost();
-		List<PeriodicCost> l = target.getPeriodicCosts(2014);
-//		assertTrue(l.size() == 1);
-		assertTrue(true);
+		List<PeriodicCost> l = target.getAllPeriodicCosts(2014);
+		assertTrue(l.size() == 1);
 	}
 
 	@Test

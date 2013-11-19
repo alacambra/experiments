@@ -84,7 +84,7 @@ public abstract class BasicTest<T> {
 	}
 	
 	protected PeriodicCost getNewPeriodicCost(){
-		PersistedBudget bg = getNewBudget().setYear(2014);
+		PersistedBudget bg = getNewBudget(2014);
 		
 		PeriodicCost cost = new PeriodicCost()
 		.setBudget(PersistedBudget.key(Person.key("test@test.com"), bg.getId()))

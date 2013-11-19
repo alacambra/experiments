@@ -1,10 +1,12 @@
 <div class="container-fluid">
     <form>
         <fieldset>
-            <legend> Add new individual cost </legend>
+            <legend> Add new Periodic cost </legend>
             <div>
-                <label ng-click="goToNewBudget()">Date</label>
-                <input type="text" ng-model="ic.date"/>
+                <label>Start Date</label>
+                <input type="text" ng-model="pc.start"/>
+                <label>End Date</label>
+                <input type="text" ng-model="pc.end"/>
             </div>
             <div>
                 <label>Invoice price </label>

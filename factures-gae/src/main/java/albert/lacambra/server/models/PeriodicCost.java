@@ -22,7 +22,7 @@ public class PeriodicCost extends Cost<PeriodicCost> {
 	private Long end;
 	
 	/*
-	 * What was that????
+	 * For Non fixed periodic cost, how much is expected the amount to be 
 	 */
 	private Integer foreseenCost;
 
