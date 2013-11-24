@@ -59,9 +59,15 @@ facturesApp.controller('NewPeriodicCostController', ['$scope', '$http', '$log', 
         $scope.$log = $log;
 
         $scope.save = function(cost) {
-            rest.individualCostService($http).saveIndividualCost(cost).success(function(data) {
+            
+            var parts = cost.start.split('-');
+            cost.start = new Date(parts[2], parts[1]-1, parts[1]).getTime();
+            parts = cost.end.split('-');
+            cost.end = new Date(parts[2], parts[1]-1, parts[1]).getTime();
+            
+            rest.periodicCostService($http).savePeriodicCost(cost).success(function(data) {
                 $scope.$log.info(data);
-                $scope.resetNewIndividualCostForm()
+                $scope.resetNewIndividualCostForm();
             });
         };
 
@@ -89,9 +95,9 @@ facturesApp.controller('NewPeriodicCostController', ['$scope', '$http', '$log', 
                 'cost' : "",
                 'concept' : "",
                 'budgetId' : null,
-                'fixed':false,
+                'isFixedCost':false,
                 'tags': null,
-                'step':"MONTH"
+                'periodStep':"MONTH"
             };
         };
         

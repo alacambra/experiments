@@ -10,20 +10,20 @@
             </div>
             <div>
                 <span>Is fixed cost</span>
-                <input type="checkbox" ng-model="pc.fixed">
+                <input type="checkbox" ng-model="pc.isFixedCost">
             </div>
-            <div ng-show="!pc.fixed">
+            <div ng-show="!pc.isFixedCost">
                 <label>Forseen Cost</label>
                 <input type="text" placeholder="price" ng-model="pc.foreseenCost">
             </div>
-            <div ng-show="pc.fixed">
+            <div ng-show="pc.isFixedCost">
                 <label>Cost</label>
                 <input type="text" placeholder="price" ng-model="pc.cost">
             </div>
             <div>
                 <label>Step</label>
                 <select
-                    ng-model="pc.step"
+                    ng-model="pc.periodStep"
                     ng-options="s for s in steps">
                 </select>
             </div>
@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div>
-                <button ng-click="save(ic)">SAVE</button>
+                <button ng-click="save(pc)">SAVE</button>
             </div>
         </fieldset>
     </form>

@@ -3,16 +3,16 @@
  */
 
 angular.module('httpInterceptor',[]).config(
-    function($httpProvider) {
-        $httpProvider.interceptors.push("requestInterceptor")
-    })
-    .factory("requestInterceptor", function($q){
-        return{
-            'request': function(config){
-                return config
-            }
+        function($httpProvider) {
+            $httpProvider.interceptors.push("requestInterceptor")
+})
+        .factory("requestInterceptor", function($q){
+            return{
+                'request': function(config){
+                    return config
         }
-    });
+    }
+});
 
 
 
@@ -24,6 +24,9 @@ var RestServices = function(endpoint) {
             "get":{}
         },
         "ic":{
+            "get":{}
+        },
+        "pc":{
             "get":{}
         }
     };
@@ -44,15 +47,15 @@ var RestServices = function(endpoint) {
                     }
 
                     $http.get(endpoint + '/budget/year/' + year).
-                        success(function(data) {
-                            buffer["get"][year] = data;
-                            callback(data)
-                        }).error(function(data, status, headers, config) {
+                            success(function(data) {
+                                buffer["get"][year] = data;
+                        callback(data)
+                    }).error(function(data, status, headers, config) {
 
-                            if(status===401){
-                                window.location = data;
-                            }
-                        });
+                        if(status===401){
+                            window.location = data;
+                        }
+                    });
                 },
 
                 "getAllBudgets":function () {},
@@ -81,15 +84,15 @@ var RestServices = function(endpoint) {
                     }
 
                     $http.get(endpoint + '/individualcost/year/' + year).
-                        success(function(data) {
-                            buffer["get"][year] = data;
-                            callback(data)
-                        }).error(function(data, status, headers, config) {
+                            success(function(data) {
+                                buffer["get"][year] = data;
+                        callback(data)
+                    }).error(function(data, status, headers, config) {
 
-                            if(status===401){
-                                window.location = data;
-                            }
-                        });
+                        if(status===401){
+                            window.location = data;
+                        }
+                    });
                 },
                 "saveIndividualCost":function saveIndividualCost(cost){
                     buffer["get"] = {}
@@ -101,6 +104,54 @@ var RestServices = function(endpoint) {
                 },
 
                 "deleteIndividualCost":function deleteIndividualCost(budgetId, costId){
+
+                }
+            }
+        },
+        "periodicCostService":function($http) {
+
+            var buffer = _buffer["pc"];
+
+            return {
+                "getPeriodicCost":function getPeriodicCost(budgetId, costId){
+                },
+
+                "getAllPeriodicCosts":function getAllPeriodicCosts(year, callback){
+
+                    if (buffer["get"].hasOwnProperty(year)) {
+                        callback(buffer["get"][year]);
+                        return;
+                    }
+
+                    $http.get(endpoint + '/periodiccost/year/' + year).
+                            success(function(data) {
+                                buffer["get"][year] = data;
+                        callback(data)
+                    }).error(function(data, status, headers, config) {
+
+                        if(status===401){
+                            window.location = data;
+                        }
+                    });
+                },
+                "savePeriodicCost":function savePeriodicCost(cost){
+                    buffer["get"] = {}
+                    return $http.put(endpoint + '/periodiccost/', cost);
+                },
+
+                "updateCostEntry":function updateCostEntry(budgetId, costId, entryId, invoice){
+
+                },
+                
+                 "updatePeriodicCost":function updatePeriodicCost(budgetId, costId, entryId, invoice){
+
+                },
+                
+                "deleteCostEntry":function deleteCostEntry(budgetId, costId, entryId){
+
+                },
+
+                "deletePeriodicCost":function deletePeriodicCost(budgetId, costId, entryId){
 
                 }
             }
