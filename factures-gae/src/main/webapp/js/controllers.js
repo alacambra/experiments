@@ -6,6 +6,8 @@ facturesApp.controller('NewIndividualCostController', ['$scope', '$http', '$log'
         $scope.$log = $log;
 
         $scope.save = function(cost) {
+            var parts = cost.date.split('-');
+            cost.date = new Date(parts[2], parts[1]-1, parts[1]).getTime();
             rest.individualCostService($http).saveIndividualCost(cost).success(function(data) {
                 $scope.$log.info(data);
                 $scope.resetNewIndividualCostForm()
@@ -27,8 +29,11 @@ facturesApp.controller('NewIndividualCostController', ['$scope', '$http', '$log'
         };
 
         $scope.resetNewIndividualCostForm = function() {
+            
+            var today = new Date();
+            
             $scope.ic = {
-                'date' : new Date().getTime(),
+                'date' : today.getDate() + "-" + today.getMonth() + "-" + today.getFullYear(),
                 'cost' : "",
                 'concept' : "",
                 'budgetId' : null,
@@ -75,15 +80,31 @@ facturesApp.controller('NewPeriodicCostController', ['$scope', '$http', '$log', 
         };
 
         $scope.resetNewIndividualCostForm = function() {
+            
+            var today = new Date();
+            
             $scope.pc = {
-                'start' : new Date().getTime(),
-                'end' : new Date().getTime(),
+                'start' : "01-01-" + today.getFullYear(),
+                'end' : "31-12-" + today.getFullYear(),
                 'cost' : "",
                 'concept' : "",
                 'budgetId' : null,
-                'tags': null
+                'fixed':false,
+                'tags': null,
+                'step':"MONTH"
             };
-        }
+        };
+        
+        $scope.steps = [
+            "DAY",
+            "WEEK",
+            "MONTH",
+            "BIMONTH",
+            "TRIMESTER",
+            "QUARTER",
+            "SEMESTER",
+            "YEAR"
+        ];
 
         $scope.resetBgForm = function() {
             $scope.bg = {
@@ -181,34 +202,6 @@ facturesApp.controller("NavigationController", ['$scope', '$location',
 
 
 var test_costs = [{"id":4644337115725824,"cost":43,"concept":"gfbfgggg","budgetId":null,"tags":null,"date":1384296901992},{"id":4785074604081152,"cost":4,"concept":"gnfn","budgetId":null,"tags":"gfhgf","date":1384119539033},{"id":5066549580791808,"cost":5,"concept":"fgtn","budgetId":null,"tags":null,"date":1384109997075},{"id":5770237022568448,"cost":43,"concept":"gfbfgggg","budgetId":null,"tags":null,"date":1384296901992},{"id":5910974510923776,"cost":null,"concept":"","budgetId":null,"tags":null,"date":1384124712827},{"id":6192449487634432,"cost":2,"concept":"fdgdfg","budgetId":null,"tags":null,"date":1384119193436},{"id":6473924464345088,"cost":43,"concept":"gfbfgggg","budgetId":null,"tags":null,"date":1384296901992}]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

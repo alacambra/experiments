@@ -1,4 +1,4 @@
-package albert.lacambra.shared.models;
+package albert.lacambra.server.models;
 
 public enum PeriodStep {
 	 DAY(365),

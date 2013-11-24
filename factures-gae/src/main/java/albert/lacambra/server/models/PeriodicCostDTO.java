@@ -1,6 +1,5 @@
 package albert.lacambra.server.models;
 
-import albert.lacambra.shared.models.PeriodStep;
 
 public class PeriodicCostDTO extends CostDTO<PeriodicCostDTO>{
 
