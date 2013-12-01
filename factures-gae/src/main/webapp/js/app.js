@@ -10,6 +10,7 @@ var facturesApp = angular.module(
     'ui.bootstrap'
 ])
 facturesApp.value("rest", new RestServices("rest"));
+facturesApp.value("helper", new Helper());
 
 facturesApp.directive('dateFormat', function($filter) {
     var dateFilter = $filter('date');
@@ -66,8 +67,12 @@ facturesApp.config(['$routeProvider',
             controller: 'NewIndividualCostController'
         }).
                 when('/individualcost/list', {
-                    templateUrl: 'partials/list-costs.html',
-            controller: 'ListCostsController'
+                    templateUrl: 'partials/list-individualcosts.html',
+            controller: 'ListIndividualCostsController'
+        }).
+                when('/periodiccost/list', {
+                    templateUrl: 'partials/list-periodiccosts.html',
+            controller: 'ListPeriodicCostsController'
         }).
                 otherwise({
                     redirectTo: '/individualcost/new'

@@ -2,34 +2,51 @@
     <label>
         Search for:<input type="text" ng-model="criteria">
     </label>
-    <p>Filtered {{filteredICs.length}} of {{individualCosts.length}}</p>
+    <p>Filtered {{filteredICs.length}} of {{priodicCosts.length}}</p>
 </div>
 <table class="table table-bordered">
     <thead>
-    <tr>
-        <!--<th>-->
-            <!--id<i ng-class="{'icon-chevron-up': isSortUp('id'), 'icon-chevron-down': isSortDown('id')}"></i>-->
-        <!--</th>-->
-        <th ng-click="sort('date')">
-            date<i ng-class="{'icon-chevron-up': isSortUp('date'), 'icon-chevron-down': isSortDown('date')}"></i>
-        </th>
-        <th ng-click="sort('cost')">
-            cost<i ng-class="{'icon-chevron-up': isSortUp('cost'), 'icon-chevron-down': isSortDown('cost')}"></i>
-        </th>
-        <th ng-click="sort('concept')">
-            concept
-            <i ng-class="{'icon-chevron-up': isSortUp('concept'), 'icon-chevron-down': isSortDown('concept')}"></i>
-        </th>
-        <th ng-click="sort('tags')">
-            tags<i ng-class="{'icon-chevron-up': isSortUp('tags'), 'icon-chevron-down': isSortDown('tags')}"></i>
-        </th>
-    </tr>
+        <tr>
+            <th ng-click="sort('start')">
+                start<i ng-class="{'icon-chevron-up': isSortUp('start'), 'icon-chevron-down': isSortDown('start')}"></i>
+            </th>
+            <th ng-click="sort('end')">
+                end<i ng-class="{'icon-chevron-up': isSortUp('end'), 'icon-chevron-down': isSortDown('end')}"></i>
+            </th>
+            <th ng-click="sort('cost')">
+                cost<i ng-class="{'icon-chevron-up': isSortUp('cost'), 'icon-chevron-down': isSortDown('cost')}"></i>
+            </th>
+            <th ng-click="sort('foreseenCost')">
+                foreseencost<i ng-class="{'icon-chevron-up': isSortUp('foreseenCost'), 'icon-chevron-down': isSortDown('foreseenCost')}"></i>
+            </th>
+            <th ng-click="sort('isFixedCost')">
+                fix<i ng-class="{'icon-chevron-up': isSortUp('isFixedCost'), 'icon-chevron-down': isSortDown('isFixedCost')}"></i>
+            </th>
+            <th ng-click="sort('concept')">
+                concept
+                <i ng-class="{'icon-chevron-up': isSortUp('concept'), 'icon-chevron-down': isSortDown('concept')}"></i>
+            </th>
+            <th ng-click="sort('step')">
+                budget<i ng-class="{'icon-chevron-up': isSortUp('periodStep'), 'icon-chevron-down': isSortDown('periodStep')}"></i>
+            </th>
+            <th ng-click="sort('budgetId')">
+                step<i ng-class="{'icon-chevron-up': isSortUp('budgetId'), 'icon-chevron-down': isSortDown('budgetId')}"></i>
+            </th>
+            <th ng-click="sort('tags')">
+                tags<i ng-class="{'icon-chevron-up': isSortUp('tags'), 'icon-chevron-down': isSortDown('tags')}"></i>
+            </th>
+        </tr>
     </thead>
-    <tr ng-repeat="ic in filteredICs = (individualCosts | pagination:pageNo:pageSize | filter:criteria | orderBy:sortField:reverse)">
+    <tr ng-repeat="pc in filteredICs = (periodicCosts | pagination:pageNo:pageSize | filter:criteria | orderBy:sortField:reverse)">
         <!--<td>{{ic.id}}</td>-->
-        <td>{{ic.date | date}}</td>
-        <td>{{ic.cost}}</td>
-        <td>{{ic.concept}}</td>
-        <td>{{ic.tags}}</td>
+        <td>{{pc.start | date}}</td>
+        <td>{{pc.end | date}}</td>
+        <td>{{pc.cost}}</td>
+        <td>{{pc.foreseenCost}}</td>
+        <td>{{pc.isFixedCost}}</td>
+        <td>{{pc.concept}}</td>
+        <td>{{pc.budgetId}}</td>
+        <td>{{pc.periodStep}}</td>
+        <td>{{pc.tags}}</td>
     </tr>
 </table>

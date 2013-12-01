@@ -16,9 +16,8 @@
         <th ng-click="sort('cost')">
             cost<i ng-class="{'icon-chevron-up': isSortUp('cost'), 'icon-chevron-down': isSortDown('cost')}"></i>
         </th>
-        <th ng-click="sort('concept')">
-            concept
-            <i ng-class="{'icon-chevron-up': isSortUp('concept'), 'icon-chevron-down': isSortDown('concept')}"></i>
+        <th ng-click="sort('budgetId')">
+            budgetId<i ng-class="{'icon-chevron-up': isSortUp('budgetId'), 'icon-chevron-down': isSortDown('budgetId')}"></i>
         </th>
         <th ng-click="sort('tags')">
             tags<i ng-class="{'icon-chevron-up': isSortUp('tags'), 'icon-chevron-down': isSortDown('tags')}"></i>
@@ -29,7 +28,7 @@
         <!--<td>{{ic.id}}</td>-->
         <td>{{ic.date | date}}</td>
         <td>{{ic.cost}}</td>
-        <td>{{ic.concept}}</td>
+        <td>{{ic.budgetId}}</td>
         <td>{{ic.tags}}</td>
     </tr>
 </table>

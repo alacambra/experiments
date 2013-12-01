@@ -28,13 +28,17 @@
                 </select>
             </div>
             <div>
+                <label>Conecpt</label>
+                <input type="text" placeholder="tags" ng-model="pc.concept">
+            </div>
+            <div>
                 <label>Tags info</label>
-                <input type="text" placeholder="tags" ng-model="ic.tags">
+                <input type="text" placeholder="tags" ng-model="pc.tags">
             </div>
             <div>
                 <label>Budget</label>
                 <div ng-repeat="b in budgets">
-                    <input type="radio" ng-model="ic.budgetId" name="bg" value="{{b.id}}">{{b.name}}
+                    <input type="radio" ng-model="pc.budgetId" name="bg" value="{{b.id}}">{{b.name}}
                 </div>
             </div>
             <div>

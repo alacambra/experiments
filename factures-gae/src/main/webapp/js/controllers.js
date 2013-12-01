@@ -3,14 +3,15 @@
 facturesApp.controller('NewIndividualCostController', ['$scope', '$http', '$log', '$injector','$q',
     function NewIndividualCostController($scope, $http, $log, $injector, $q) {
         var rest = $injector.get("rest");
+        var helper = $injector.get("helper");
         $scope.$log = $log;
 
         $scope.save = function(cost) {
-            var parts = cost.date.split('-');
-            cost.date = new Date(parts[2], parts[1]-1, parts[1]).getTime();
-            rest.individualCostService($http).saveIndividualCost(cost).success(function(data) {
+            var clonedCost = helper.clone(cost);
+            clonedCost.date = helper.convertDateToTimeStamp(clonedCost.date);
+            rest.individualCostService($http).saveIndividualCost(clonedCost).success(function(data) {
                 $scope.$log.info(data);
-                $scope.resetNewIndividualCostForm()
+                $scope.resetNewIndividualCostForm();
             });
         };
 
@@ -25,7 +26,7 @@ facturesApp.controller('NewIndividualCostController', ['$scope', '$http', '$log'
             rest.bufferRestServices($http).addBudget(bg).success(function(data) {
                 $scope.$log.info(data);
                 $scope.resetBgForm();
-            })
+            });
         };
 
         $scope.resetNewIndividualCostForm = function() {
@@ -39,7 +40,7 @@ facturesApp.controller('NewIndividualCostController', ['$scope', '$http', '$log'
                 'budgetId' : null,
                 'tags': null
             };
-        }
+        };
 
         $scope.resetBgForm = function() {
             $scope.bg = {
@@ -47,23 +48,23 @@ facturesApp.controller('NewIndividualCostController', ['$scope', '$http', '$log'
                 'amount' : "",
                 'name' : ""
             };
-        }
+        };
 
-        $scope.resetBgForm()
-        $scope.resetNewIndividualCostForm()
+        $scope.resetBgForm();
+        $scope.resetNewIndividualCostForm();
     }]);
 
 facturesApp.controller('NewPeriodicCostController', ['$scope', '$http', '$log', '$injector','$q',
     function NewIndividualCostController($scope, $http, $log, $injector, $q) {
+        
         var rest = $injector.get("rest");
+        var helper = $injector.get("helper");
         $scope.$log = $log;
 
         $scope.save = function(cost) {
-            
-            var parts = cost.start.split('-');
-            cost.start = new Date(parts[2], parts[1]-1, parts[1]).getTime();
-            parts = cost.end.split('-');
-            cost.end = new Date(parts[2], parts[1]-1, parts[1]).getTime();
+            cost = helper.clone(cost);
+            cost.start = helper.convertDateToTimeStamp(cost.start);
+            cost.end = helper.convertDateToTimeStamp(cost.end);
             
             rest.periodicCostService($http).savePeriodicCost(cost).success(function(data) {
                 $scope.$log.info(data);
@@ -82,7 +83,7 @@ facturesApp.controller('NewPeriodicCostController', ['$scope', '$http', '$log', 
             rest.bufferRestServices($http).addBudget(bg).success(function(data) {
                 $scope.$log.info(data);
                 $scope.resetBgForm();
-            })
+            });
         };
 
         $scope.resetNewIndividualCostForm = function() {
@@ -118,14 +119,14 @@ facturesApp.controller('NewPeriodicCostController', ['$scope', '$http', '$log', 
                 'amount' : "",
                 'name' : ""
             };
-        }
+        };
 
-        $scope.resetBgForm()
-        $scope.resetNewIndividualCostForm()
+        $scope.resetBgForm();
+        $scope.resetNewIndividualCostForm();
     }]);
 
-facturesApp.controller('ListCostsController', ['$scope', '$http', '$log', "$injector",
-    function ListCostsController($scope, $http, $log, $injector) {
+facturesApp.controller('ListIndividualCostsController', ['$scope', '$http', '$log', "$injector",
+    function ListIndividualCostsController($scope, $http, $log, $injector) {
         $scope.pageNo = 0;
         $scope.pageSize = 2000000;
         $scope.$log = $log;
@@ -134,7 +135,7 @@ facturesApp.controller('ListCostsController', ['$scope', '$http', '$log', "$inje
 
         rest.individualCostService($http).getIndividualCosts(2013, function(data) {
             $scope.$log.info(data);
-            $scope.individualCosts = data
+            $scope.individualCosts = data;
         });
 
         $scope.sort = function(fieldName) {
@@ -144,7 +145,42 @@ facturesApp.controller('ListCostsController', ['$scope', '$http', '$log', "$inje
                 $scope.sortField = fieldName;
                 $scope.reverse = false;
             }
-        }
+        };
+
+        $scope.isSortUp = function(fieldName) {
+            return $scope.sortField === fieldName && !$scope.reverse;
+        };
+
+        $scope.isSortDown = function(fieldName) {
+            return $scope.sortField === fieldName && $scope.reverse;
+        };
+
+
+    }]);
+
+facturesApp.controller('ListPeriodicCostsController', ['$scope', '$http', '$log', "$injector",
+    function ListPeriodicCostsController($scope, $http, $log, $injector) {
+        $scope.pageNo = 0;
+        $scope.pageSize = 2000000;
+        $scope.$log = $log;
+
+        var rest = $injector.get("rest");
+
+        rest.periodicCostService($http).getAllPeriodicCosts(2013, function(data) {
+            $scope.$log.info(data);
+            $scope.periodicCosts = data;
+        });
+
+//        $scope.periodicCosts = [{"id":4855443348258816,"cost":43,"concept":"","budgetId":5207287069147136,"tags":"gdd","periodStep":"MONTH","start":1356994800000,"end":1388444400000,"isFixedCost":true,"foreseenCost":null},{"id":5418393301680128,"cost":null,"concept":"","budgetId":5207287069147136,"tags":"hgjghj","periodStep":"MONTH","start":1356994800000,"end":1388444400000,"isFixedCost":false,"foreseenCost":6},{"id":6262818231812096,"cost":null,"concept":"","budgetId":5207287069147136,"tags":"fdg","periodStep":"MONTH","start":1356994800000,"end":1388444400000,"isFixedCost":false,"foreseenCost":4},{"id":6614661952700416,"cost":null,"concept":"","budgetId":5207287069147136,"tags":"ghfh","periodStep":"MONTH","start":1356994800000,"end":1386802800000,"isFixedCost":false,"foreseenCost":5},{"id":5981343255101440,"cost":34,"concept":"","budgetId":5629499534213120,"tags":"fdgdfg","periodStep":"MONTH","start":1356994800000,"end":1388444400000,"isFixedCost":false,"foreseenCost":345}];
+
+        $scope.sort = function(fieldName) {
+            if($scope.sortField === fieldName) {
+                $scope.reverse = !$scope.reverse;
+            } else {
+                $scope.sortField = fieldName;
+                $scope.reverse = false;
+            }
+        };
 
         $scope.isSortUp = function(fieldName) {
             return $scope.sortField === fieldName && !$scope.reverse;
@@ -162,35 +198,41 @@ facturesApp.controller("NavigationController", ['$scope', '$location',
 
         $scope.goToNewIndividualCost = function() {
 
-            $location.path("/individualcost/new")
-            updatePlace("individualCost")
+            $location.path("/individualcost/new");
+            updatePlace("individualCost");
 
-        }
+        };
         
         $scope.goToNewPeriodicCost = function() {
 
-            $location.path("/periodiccost/new")
-            updatePlace("periodicCost")
+            $location.path("/periodiccost/new");
+            updatePlace("periodicCost");
 
-        }
+        };
 
         $scope.goToNewBudget = function() {
 
-            $location.path("/budget/new")
-            updatePlace("budget")
-        }
+            $location.path("/budget/new");
+            updatePlace("budget");
+        };
 
         $scope.goToIndividualCostList = function() {
 
-            $location.path("/individualcost/list")
-            updatePlace("individualCost")
-        }
+            $location.path("/individualcost/list");
+            updatePlace("individualCost");
+        };
+        
+        $scope.goToPeriodicCostList = function() {
+
+            $location.path("/periodiccost/list");
+            updatePlace("periodicCost");
+        };
 
         $scope.place = {
             'budget' : false,
             'periodicCost' : false,
-            'individualCost' : true,
-        }
+            'individualCost' : true
+        };
 
         var updatePlace = function(newPlace) {
             for (var place in $scope.place) {
@@ -200,17 +242,11 @@ facturesApp.controller("NavigationController", ['$scope', '$location',
                     $scope.place[place] = false;
                 }
             }
-        }
+        };
 
         //        updatePlace($location.path())
 
     }]);
-
-
-var test_costs = [{"id":4644337115725824,"cost":43,"concept":"gfbfgggg","budgetId":null,"tags":null,"date":1384296901992},{"id":4785074604081152,"cost":4,"concept":"gnfn","budgetId":null,"tags":"gfhgf","date":1384119539033},{"id":5066549580791808,"cost":5,"concept":"fgtn","budgetId":null,"tags":null,"date":1384109997075},{"id":5770237022568448,"cost":43,"concept":"gfbfgggg","budgetId":null,"tags":null,"date":1384296901992},{"id":5910974510923776,"cost":null,"concept":"","budgetId":null,"tags":null,"date":1384124712827},{"id":6192449487634432,"cost":2,"concept":"fdgdfg","budgetId":null,"tags":null,"date":1384119193436},{"id":6473924464345088,"cost":43,"concept":"gfbfgggg","budgetId":null,"tags":null,"date":1384296901992}]
-
-
-
 
 
 

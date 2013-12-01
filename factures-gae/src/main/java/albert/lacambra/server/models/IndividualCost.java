@@ -50,7 +50,7 @@ public class IndividualCost extends Cost<IndividualCost> {
 	public IndividualCostDTO getIndividualCostDTO() {
 
 		return new IndividualCostDTO()
-//		.setBudgetId(getBudget().getId())
+		.setBudgetId(getBudget().getId())
 		.setConcept(getConcept())
 		.setCost(getCost())
 		.setDate(getDate())

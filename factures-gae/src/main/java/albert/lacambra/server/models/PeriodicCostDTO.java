@@ -37,15 +37,15 @@ public class PeriodicCostDTO extends CostDTO<PeriodicCostDTO>{
 		return this;
 	}
 	public PeriodicCostDTO setIsFixedCost(Boolean isFixedCost) {
-		if ( isFixedCost && foreseenCost != null ) {
-			throw new RuntimeException("The cost is fixed and however, "
-					+ "you are trying to give a forseen or expected cost that woulkd be ignored.");
-		}
-		
-		if ( !isFixedCost && foreseenCost == null ) {
-			throw new RuntimeException("The cost is fixed and however, "
-					+ "you are notgiving a forseen or expected cost");
-		}
+//		if ( isFixedCost && foreseenCost != null ) {
+//			throw new RuntimeException("The cost is fixed and however, "
+//					+ "you are trying to give a forseen or expected cost that woulkd be ignored.");
+//		}
+//		
+//		if ( !isFixedCost && foreseenCost == null ) {
+//			throw new RuntimeException("The cost is fixed and however, "
+//					+ "you are notgiving a forseen or expected cost");
+//		}
 		
 		this.isFixedCost = isFixedCost;
 		return this;
