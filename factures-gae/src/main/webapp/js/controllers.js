@@ -15,7 +15,7 @@ facturesApp.controller('NewIndividualCostController', ['$scope', '$http', '$log'
             });
         };
 
-        rest.bufferRestServices($http).getBudgetsForYear(2013, function(data) {
+        rest.budgetRestServices($http).getBudgetsForYear(2013, function(data) {
 
             $scope.$log.info(data);
             $scope.budgets = data;
@@ -23,7 +23,7 @@ facturesApp.controller('NewIndividualCostController', ['$scope', '$http', '$log'
         });
 
         $scope.saveBg = function(bg) {
-            rest.bufferRestServices($http).addBudget(bg).success(function(data) {
+            rest.budgetRestServices($http).addBudget(bg).success(function(data) {
                 $scope.$log.info(data);
                 $scope.resetBgForm();
             });
@@ -72,7 +72,7 @@ facturesApp.controller('NewPeriodicCostController', ['$scope', '$http', '$log', 
             });
         };
 
-        rest.bufferRestServices($http).getBudgetsForYear(2013, function(data) {
+        rest.budgetRestServices($http).getBudgetsForYear(2013, function(data) {
 
             $scope.$log.info(data);
             $scope.budgets = data;
@@ -80,7 +80,7 @@ facturesApp.controller('NewPeriodicCostController', ['$scope', '$http', '$log', 
         });
 
         $scope.saveBg = function(bg) {
-            rest.bufferRestServices($http).addBudget(bg).success(function(data) {
+            rest.budgetRestServices($http).addBudget(bg).success(function(data) {
                 $scope.$log.info(data);
                 $scope.resetBgForm();
             });
