@@ -8,7 +8,7 @@
 	<artifactId>factures-gae</artifactId>
 	<packaging>war</packaging>
 	<version>1.0</version>
-	<name>GWT Maven Archetype</name>
+	<name>Factures</name>
 
 	<properties>
 		<!-- <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory> -->

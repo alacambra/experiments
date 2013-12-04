@@ -12,10 +12,10 @@ import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Parent;
 
 @Entity(name="Budget")
-public class PersistedBudget {
+public class PersistedBudgetLegacy {
 
-	public static Key<PersistedBudget> key(Key<Person> owner, Long id) {
-		return Key.create(owner, PersistedBudget.class, id);
+	public static Key<PersistedBudgetLegacy> key(Key<Person> owner, Long id) {
+		return Key.create(owner, PersistedBudgetLegacy.class, id);
 	}
 
 	@Id private Long id;
@@ -28,9 +28,9 @@ public class PersistedBudget {
 	private Integer assignation;
 	@Ignore private int used;
 
-	public PersistedBudget() {}
+	public PersistedBudgetLegacy() {}
 	
-	public PersistedBudget(DTOBudget dtoBudget) {
+	public PersistedBudgetLegacy(DTOBudget dtoBudget) {
 		
 		this();
 		id = dtoBudget.getId();
@@ -65,37 +65,37 @@ public class PersistedBudget {
 		return used;
 	}
 
-	public PersistedBudget setId(Long id) {
+	public PersistedBudgetLegacy setId(Long id) {
 		this.id = id;
 		return this;
 	}
 
-	public PersistedBudget setOwner(Key<Person> owner) {
+	public PersistedBudgetLegacy setOwner(Key<Person> owner) {
 		this.owner = owner;
 		return this;
 	}
 
-	public PersistedBudget setName(String name) {
+	public PersistedBudgetLegacy setName(String name) {
 		this.name = name;
 		return this;
 	}
 
-	public PersistedBudget setStart(Long start) {
+	public PersistedBudgetLegacy setStart(Long start) {
 		this.start = start;
 		return this;
 	}
 
-	public PersistedBudget setEnd(Long end) {
+	public PersistedBudgetLegacy setEnd(Long end) {
 		this.end = end;
 		return this;
 	}
 
-	public PersistedBudget setAssignation(Integer assignation) {
+	public PersistedBudgetLegacy setAssignation(Integer assignation) {
 		this.assignation = assignation;
 		return this;
 	}
 
-	public PersistedBudget setUsed(int used) {
+	public PersistedBudgetLegacy setUsed(int used) {
 		this.used = used;
 		return this;
 	}

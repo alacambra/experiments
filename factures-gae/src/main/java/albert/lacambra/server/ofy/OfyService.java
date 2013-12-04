@@ -10,6 +10,7 @@ import albert.lacambra.server.models.PeriodicCost;
 import albert.lacambra.server.models.PersistedInvoice;
 import albert.lacambra.server.models.Person;
 import albert.lacambra.server.models.IndividualCost;
+import albert.lacambra.server.models.legacy.PersistedBudgetLegacy;
 
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyFactory;
@@ -32,6 +33,8 @@ public class OfyService
 		factory().register(PeriodicCost.class);
 		factory().register(PersistedBudget.class);
 		factory().register(PeriodicCostEntry.class);
+		factory().register(PersistedBudgetLegacy.class);
+		factory().register(albert.lacambra.server.models.legacy.PersistedInvoice.class);
 	}   
 
 	public static Objectify ofy() {

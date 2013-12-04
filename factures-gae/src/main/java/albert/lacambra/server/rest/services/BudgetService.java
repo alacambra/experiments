@@ -11,6 +11,7 @@ import javax.ws.rs.core.Response.Status;
 
 import albert.lacambra.server.auth.Bracelet;
 import albert.lacambra.server.models.PersistedBudget;
+import albert.lacambra.server.ofy.VersionConverter;
 
 import com.google.inject.Inject;
 import com.googlecode.objectify.Key;
@@ -139,6 +140,12 @@ public class BudgetService extends BasicService implements IBudgetService {
 		}
 
 		return id;
+	}
+
+	@Override
+	public Response VersionConvert() {
+		new VersionConverter().convertAll();
+		return Response.ok().build();
 	}
 
 }

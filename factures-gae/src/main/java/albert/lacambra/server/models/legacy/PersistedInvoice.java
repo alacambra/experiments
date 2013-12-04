@@ -1,9 +1,9 @@
-package albert.lacambra.server.models;
+package albert.lacambra.server.models.legacy;
 
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
-import albert.lacambra.client.models.DTOInvoice;
+import albert.lacambra.server.models.Person;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
@@ -16,7 +16,7 @@ public class PersistedInvoice{
 
     @Id private Long id;
     
-    @JsonIgnore @Parent Key<PersistedBudget> budget;
+    @JsonIgnore @Parent Key<PersistedBudgetLegacy> budget;
     private String extra;
     @Index
     private Long date;
@@ -29,12 +29,12 @@ public class PersistedInvoice{
 		return Key.create(parent, PersistedInvoice.class, id);
 	}
     
-	public PersistedInvoice(Key<PersistedBudget> budget) { 
+	public PersistedInvoice(Key<PersistedBudgetLegacy> budget) { 
 		this();
 		this.budget = budget;
 	}
 	
-	public PersistedInvoice(Key<PersistedBudget> budget, DTOInvoice dtoInvoice) { 
+	public PersistedInvoice(Key<PersistedBudgetLegacy> budget, DTOInvoice dtoInvoice) { 
 		this();
 		this.budget = budget;
 		extra = dtoInvoice.getExtra();
@@ -42,7 +42,7 @@ public class PersistedInvoice{
 		price = dtoInvoice.getPrice();
 	}
 	
-	public PersistedInvoice(Long id, Key<PersistedBudget> budget) {
+	public PersistedInvoice(Long id, Key<PersistedBudgetLegacy> budget) {
 		this(budget);
 		this.id = id;
 	}
@@ -64,7 +64,7 @@ public class PersistedInvoice{
 		return id;
 	}
 
-	public Key<PersistedBudget> getBudget() {
+	public Key<PersistedBudgetLegacy> getBudget() {
 		return budget;
 	}
 
@@ -84,7 +84,7 @@ public class PersistedInvoice{
 		this.id = id;
 	}
 
-	public void setBudget(Key<PersistedBudget> budget) {
+	public void setBudget(Key<PersistedBudgetLegacy> budget) {
 		this.budget = budget;
 	}
 
