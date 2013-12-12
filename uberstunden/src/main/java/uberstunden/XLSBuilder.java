@@ -7,9 +7,11 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.Scanner;
 
-import junit.framework.Assert;
-
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellReference;
@@ -17,27 +19,43 @@ import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 
 
 public class XLSBuilder {
-	public static void main1(String[] args) throws Throwable {
+	public static void main(String[] args) throws Throwable {
 		SXSSFWorkbook wb = new SXSSFWorkbook(100); // keep 100 rows in memory, exceeding rows will be flushed to disk
 		Sheet sh = wb.createSheet();
-		for(int rownum = 0; rownum < 1000; rownum++){
-			Row row = sh.createRow(rownum);
-			for(int cellnum = 0; cellnum < 10; cellnum++){
-				Cell cell = row.createCell(cellnum);
-				String address = new CellReference(cell).formatAsString();
-				cell.setCellValue(address);
-			}
-
-		}
+//		for(int rownum = 0; rownum < 1000; rownum++){
+//			Row row = sh.createRow(rownum);
+//			for(int cellnum = 0; cellnum < 10; cellnum++){
+//				Cell cell = row.createCell(cellnum);
+//				String address = new CellReference(cell).formatAsString();
+//				cell.setCellValue(address);
+//			}
+//
+//		}
 
 		Calendar calendar = GregorianCalendar.getInstance();
 		calendar.setTime(new Date());
+		int month = calendar.get(Calendar.MONTH);
+		int year = calendar.get(Calendar.YEAR);
+		
+		for (int i = 0, r = 1; i < calendar.getActualMaximum(Calendar.DAY_OF_MONTH); i++, r++){
+			
+			Row row = sh.createRow(r);
+			Cell cell = row.createCell(1);
+			cell.setCellValue(i+1 + "/" + month + "/" + year);
+			HSSFCellStyle cs = new HSSFWorkbook().createCellStyle();
+			cs.setFillBackgroundColor(new HSSFColor.RED().getIndex());
+			cs.setFillForegroundColor(new HSSFColor.BLUE().getIndex());
+			cell.setCellStyle(cs);
+			
+		}
+		
+		
 //		calendar.get
 
 		// Rows with rownum < 900 are flushed and not accessible
-		for(int rownum = 0; rownum < 900; rownum++){
-			Assert.assertNull(sh.getRow(rownum));
-		}
+//		for(int rownum = 0; rownum < 900; rownum++){
+//			Assert.assertNull(sh.getRow(rownum));
+//		}
 
 		// ther last 100 rows are still in memory
 		//	        for(int rownum = 900; rownum < 1000; rownum++){
@@ -52,7 +70,7 @@ public class XLSBuilder {
 		wb.dispose();
 	}
 
-	public static void main(String[] args) {
+	public static void main1(String[] args) {
 
 		// represents the month (1-12)
 		int month;
